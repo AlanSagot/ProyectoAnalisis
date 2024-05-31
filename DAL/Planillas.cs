@@ -12,21 +12,13 @@ namespace DAL
     public class Planillas
     {
         [Key]
-        [Column("PLANILLAID")]
         public int PlanillaId { get; set; }
-
         public int Salario { get; set; }
-
-        [Column("FECHA_INGRESO")]
         public DateTime FechaIngreso { get; set; }
-
         [ForeignKey("Puesto")]
-        [Column("PUESTOID")]
         public int PuestoId { get; set; }
         public Puesto Puesto { get; set; }
-
         [ForeignKey("Sucursal")]
-        [Column("SUCURSALID")]
         public int SucursalId { get; set; }
         public Sucursal Sucursal { get; set; }
     }

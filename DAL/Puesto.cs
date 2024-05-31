@@ -12,22 +12,16 @@ namespace DAL
     public class Puesto
     {
         [Key]
-        [Column("PUESTOID")]
         public int PuestoId { get; set; }
-
         [Required]
         [MaxLength(50)]
-        [Column("NOMBRE_PUESTO")]
         public string NombrePuesto { get; set; }
-
         [Required]
         [MaxLength(300)]
         public string Departamento { get; set; }
-
         [Required]
         [MaxLength(50)]
         public string Horario { get; set; }
-
         public ICollection<Empleado> Empleados { get; set; } = new List<Empleado>();
         public ICollection<Planillas> Planillas { get; set; } = new List<Planillas>();
     }

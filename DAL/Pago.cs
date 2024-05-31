@@ -12,15 +12,11 @@ namespace DAL
     public class Pago
     {
         [Key]
-        [Column("PAGOID")]
         public int PagoId { get; set; }
-
         [Required]
         [MaxLength(250)]
         public string Detalle { get; set; }
-
         [Required]
-        [Column("COMPROBANTE_DE_PAGO", TypeName = "VARBINARY(MAX)")]
         public byte[] ComprobanteDePago { get; set; }
     }
 

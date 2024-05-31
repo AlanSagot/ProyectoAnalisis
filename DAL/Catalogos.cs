@@ -12,21 +12,14 @@ namespace DAL
     public class Catalogos
     {
         [Key]
-        [Column("CATALOGOID")]
         public int CatalogoId { get; set; }
-
         [Required]
         [MaxLength(50)]
-        [Column("NOMBRE_CATALOGO")]
         public string NombreCatalogo { get; set; }
-
         [Required]
         [MaxLength(200)]
-        [Column("DETALLE_CATALOGO")]
         public string DetalleCatalogo { get; set; }
-
         [ForeignKey("Inventario")]
-        [Column("PRODUCTOID")]
         public int ProductoId { get; set; }
         public Inventario Inventario { get; set; }
     }
