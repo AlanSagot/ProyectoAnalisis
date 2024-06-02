@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -10,11 +11,10 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    [Table("Usuarios")]
+    [Table("AspNetUsers")]
     public class ApplicationUser : IdentityUser
     {
-        [Key]
-        public int UsuarioId { get; set; }
+
         [Required]
         [MaxLength(50)]
         public string Nombre { get; set; }
@@ -28,8 +28,8 @@ namespace DAL
         [MaxLength(20)]
         public string Cedula { get; set; }
         [Required]
-        [MaxLength(50)]
-        public string Email { get; set; }
+        [DefaultValue(1)]
+        public int Estado { get; set; }
         [MaxLength(20)]
         public string Telefono { get; set; }
         [MaxLength(300)]

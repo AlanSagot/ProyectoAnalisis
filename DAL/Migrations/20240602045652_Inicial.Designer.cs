@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(LeahDBContext))]
-    [Migration("20240531173846_Inicial")]
+    [Migration("20240602045652_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -55,11 +55,8 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.ApplicationUser", b =>
                 {
-                    b.Property<int>("UsuarioId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UsuarioId"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -81,18 +78,16 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int>("Estado")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("FechaRegistro")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -143,9 +138,9 @@ namespace DAL.Migrations
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UsuarioId");
+                    b.HasKey("Id");
 
-                    b.ToTable("Usuarios");
+                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("DAL.Catalogos", b =>
@@ -289,8 +284,8 @@ namespace DAL.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
+                    b.Property<string>("UsuarioId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("EnvioId");
 
@@ -324,8 +319,8 @@ namespace DAL.Migrations
                     b.Property<int>("ProductoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
+                    b.Property<string>("UsuarioId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("FacturaId");
 
@@ -487,7 +482,7 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Sucursal", "Sucursal")
                         .WithMany("Administradores")
                         .HasForeignKey("SucursalId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Sucursal");
@@ -498,7 +493,7 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Inventario", "Inventario")
                         .WithMany("Catalogos")
                         .HasForeignKey("ProductoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Inventario");
@@ -513,13 +508,13 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Puesto", "Puesto")
                         .WithMany("Empleados")
                         .HasForeignKey("PuestoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DAL.Sucursal", "Sucursal")
                         .WithMany("Empleados")
                         .HasForeignKey("SucursalId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Planillas");
@@ -534,14 +529,12 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Inventario", "Inventario")
                         .WithMany("Envios")
                         .HasForeignKey("ProductoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DAL.ApplicationUser", "Usuario")
                         .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioId");
 
                     b.Navigation("Inventario");
 
@@ -553,20 +546,18 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Pago", "Pago")
                         .WithMany()
                         .HasForeignKey("PagoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DAL.Inventario", "Inventario")
                         .WithMany("Facturas")
                         .HasForeignKey("ProductoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DAL.ApplicationUser", "Usuario")
                         .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioId");
 
                     b.Navigation("Inventario");
 
@@ -580,7 +571,7 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Sucursal", "Sucursal")
                         .WithMany("Inventarios")
                         .HasForeignKey("SucursalId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Sucursal");
@@ -591,13 +582,13 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Puesto", "Puesto")
                         .WithMany("Planillas")
                         .HasForeignKey("PuestoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DAL.Sucursal", "Sucursal")
                         .WithMany("Planillas")
                         .HasForeignKey("SucursalId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Puesto");

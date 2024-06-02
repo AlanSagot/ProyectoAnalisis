@@ -21,7 +21,7 @@ namespace LeahMakeUp.Controllers
         // GET: Facturas
         public async Task<IActionResult> Index()
         {
-            var leahDBContext = _context.Facturas.Include(f => f.Inventario).Include(f => f.Pago).Include(f => f.Usuario);
+            var leahDBContext = _context.Facturas.Include(f => f.Inventario).Include(f => f.Pago);
             return View(await leahDBContext.ToListAsync());
         }
 
@@ -36,7 +36,6 @@ namespace LeahMakeUp.Controllers
             var factura = await _context.Facturas
                 .Include(f => f.Inventario)
                 .Include(f => f.Pago)
-                .Include(f => f.Usuario)
                 .FirstOrDefaultAsync(m => m.FacturaId == id);
             if (factura == null)
             {
@@ -51,7 +50,6 @@ namespace LeahMakeUp.Controllers
         {
             ViewData["ProductoId"] = new SelectList(_context.Inventarios, "ProductoId", "NombreProducto");
             ViewData["PagoId"] = new SelectList(_context.Pagos, "PagoId", "Detalle");
-            ViewData["UsuarioId"] = new SelectList(_context.Set<ApplicationUser>(), "UsuarioId", "Cedula");
             return View();
         }
 
@@ -60,7 +58,7 @@ namespace LeahMakeUp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FacturaId,FechaActual,Cantidad,Impuesto,ProductoId,UsuarioId,PagoId")] Factura factura)
+        public async Task<IActionResult> Create([Bind("FacturaId,FechaActual,Cantidad,Impuesto,ProductoId,PagoId")] Factura factura)
         {
             if (ModelState.IsValid)
             {
@@ -70,7 +68,6 @@ namespace LeahMakeUp.Controllers
             }
             ViewData["ProductoId"] = new SelectList(_context.Inventarios, "ProductoId", "NombreProducto", factura.ProductoId);
             ViewData["PagoId"] = new SelectList(_context.Pagos, "PagoId", "Detalle", factura.PagoId);
-            ViewData["UsuarioId"] = new SelectList(_context.Set<ApplicationUser>(), "UsuarioId", "Cedula", factura.UsuarioId);
             return View(factura);
         }
 
@@ -89,7 +86,6 @@ namespace LeahMakeUp.Controllers
             }
             ViewData["ProductoId"] = new SelectList(_context.Inventarios, "ProductoId", "NombreProducto", factura.ProductoId);
             ViewData["PagoId"] = new SelectList(_context.Pagos, "PagoId", "Detalle", factura.PagoId);
-            ViewData["UsuarioId"] = new SelectList(_context.Set<ApplicationUser>(), "UsuarioId", "Cedula", factura.UsuarioId);
             return View(factura);
         }
 
@@ -98,7 +94,7 @@ namespace LeahMakeUp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FacturaId,FechaActual,Cantidad,Impuesto,ProductoId,UsuarioId,PagoId")] Factura factura)
+        public async Task<IActionResult> Edit(int id, [Bind("FacturaId,FechaActual,Cantidad,Impuesto,ProductoId,PagoId")] Factura factura)
         {
             if (id != factura.FacturaId)
             {
@@ -127,7 +123,6 @@ namespace LeahMakeUp.Controllers
             }
             ViewData["ProductoId"] = new SelectList(_context.Inventarios, "ProductoId", "NombreProducto", factura.ProductoId);
             ViewData["PagoId"] = new SelectList(_context.Pagos, "PagoId", "Detalle", factura.PagoId);
-            ViewData["UsuarioId"] = new SelectList(_context.Set<ApplicationUser>(), "UsuarioId", "Cedula", factura.UsuarioId);
             return View(factura);
         }
 
@@ -142,7 +137,6 @@ namespace LeahMakeUp.Controllers
             var factura = await _context.Facturas
                 .Include(f => f.Inventario)
                 .Include(f => f.Pago)
-                .Include(f => f.Usuario)
                 .FirstOrDefaultAsync(m => m.FacturaId == id);
             if (factura == null)
             {

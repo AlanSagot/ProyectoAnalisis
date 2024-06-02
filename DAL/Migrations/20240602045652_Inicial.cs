@@ -12,6 +12,40 @@ namespace DAL.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    PrimerApellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    SegundoApellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Cedula = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Estado = table.Column<int>(type: "int", nullable: false),
+                    Telefono = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Direccion = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    CodigoPostal = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    FechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Pagos",
                 columns: table => new
                 {
@@ -52,41 +86,6 @@ namespace DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sucursal", x => x.SucursalId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Usuarios",
-                columns: table => new
-                {
-                    UsuarioId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    PrimerApellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    SegundoApellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Cedula = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Telefono = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    Direccion = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
-                    CodigoPostal = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    FechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Id = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Usuarios", x => x.UsuarioId);
                 });
 
             migrationBuilder.CreateTable(
@@ -192,7 +191,7 @@ namespace DAL.Migrations
                     EnvioId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Detalle = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    UsuarioId = table.Column<int>(type: "int", nullable: false),
+                    UsuarioId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Cedula = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Telefono = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
@@ -205,16 +204,15 @@ namespace DAL.Migrations
                 {
                     table.PrimaryKey("PK_Envios", x => x.EnvioId);
                     table.ForeignKey(
+                        name: "FK_Envios_AspNetUsers_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_Envios_Inventarios_ProductoId",
                         column: x => x.ProductoId,
                         principalTable: "Inventarios",
                         principalColumn: "ProductoId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Envios_Usuarios_UsuarioId",
-                        column: x => x.UsuarioId,
-                        principalTable: "Usuarios",
-                        principalColumn: "UsuarioId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -228,12 +226,17 @@ namespace DAL.Migrations
                     Cantidad = table.Column<int>(type: "int", nullable: false),
                     Impuesto = table.Column<int>(type: "int", nullable: false),
                     ProductoId = table.Column<int>(type: "int", nullable: false),
-                    UsuarioId = table.Column<int>(type: "int", nullable: false),
+                    UsuarioId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     PagoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Facturas", x => x.FacturaId);
+                    table.ForeignKey(
+                        name: "FK_Facturas_AspNetUsers_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Facturas_Inventarios_ProductoId",
                         column: x => x.ProductoId,
@@ -245,12 +248,6 @@ namespace DAL.Migrations
                         column: x => x.PagoId,
                         principalTable: "Pagos",
                         principalColumn: "PagoId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Facturas_Usuarios_UsuarioId",
-                        column: x => x.UsuarioId,
-                        principalTable: "Usuarios",
-                        principalColumn: "UsuarioId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -384,13 +381,13 @@ namespace DAL.Migrations
                 name: "Planillas");
 
             migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
                 name: "Inventarios");
 
             migrationBuilder.DropTable(
                 name: "Pagos");
-
-            migrationBuilder.DropTable(
-                name: "Usuarios");
 
             migrationBuilder.DropTable(
                 name: "Puestos");

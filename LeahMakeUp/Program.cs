@@ -5,16 +5,26 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("AuthDbContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthDbContextConnection' not found.");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<LeahDBContext>(options => options.UseSqlServer("name=ConnRSDB").LogTo(Console.WriteLine, LogLevel.Information));
 
-//Identity
+//*** Identity*******
+builder.Services.AddDbContext<AuthDbContext>(Options => Options.UseSqlServer(connectionString));
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<AuthDbContext>()
+    .AddDefaultUI();
 
-//Identity
+builder.Services.AddRazorPages();
+//*** Identity*******
+
 var app = builder.Build();
 
 
@@ -33,5 +43,8 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+//*** Identity*******
+app.MapRazorPages();
 
 app.Run();

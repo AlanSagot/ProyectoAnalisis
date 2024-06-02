@@ -16,8 +16,7 @@ namespace DAL
         [Required]
         [MaxLength(250)]
         public string Detalle { get; set; }
-        [ForeignKey("Usuario")]
-        public int UsuarioId { get; set; }
+        
         public ApplicationUser Usuario { get; set; }
         [MaxLength(20)]
         public string Cedula { get; set; }

@@ -21,8 +21,7 @@ namespace DAL
         [ForeignKey("Inventario")]
         public int ProductoId { get; set; }
         public Inventario Inventario { get; set; }
-        [ForeignKey("Usuario")]
-        public int UsuarioId { get; set; }
+       
         public ApplicationUser Usuario { get; set; }
         [ForeignKey("Pago")]
         public int PagoId { get; set; }
