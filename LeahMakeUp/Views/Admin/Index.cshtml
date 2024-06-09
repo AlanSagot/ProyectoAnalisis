@@ -1,0 +1,51 @@
+﻿@model IEnumerable<DAL.ApplicationUser>
+
+
+@{
+    ViewData["Title"] = "Lista de Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Lista de Usuarios</h2>
+<p>
+    <a class="btn btn-ligth" href="@Url.Action("CrearUsuario", "Admin")">Crear Usuario <i class="fa fa-paw" style="font-size:20px; color:#255B37"></i></a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Nombre</th>
+            <th>Primer Apellido</th>
+            <th>Segundo Apellido</th>
+            <th>Cédula</th>
+            <th>Estado</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
+            <th>Código Postal</th>
+            <th>Fecha de Registro</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var usuario in Model)
+        {
+            <tr>
+                <td>@usuario.Email</td>
+                <td>@usuario.Nombre</td>
+                <td>@usuario.PrimerApellido</td>
+                <td>@usuario.SegundoApellido</td>
+                <td>@usuario.Cedula</td>
+                <td>@(usuario.Estado == "Activo" ? "Activo" : "Inactivo")</td>
+                <td>@usuario.Telefono</td>
+                <td>@usuario.Direccion</td>
+                <td>@usuario.CodigoPostal</td>
+                <td>@usuario.FechaRegistro.ToString("dd/MM/yyyy")</td>
+                <td>
+                    <a href="@Url.Action("EditarUsuario", "Admin", new { id = usuario.Id })" class="btn btn-primary">Editar</a>
+                    <a href="@Url.Action("EliminarUsuario", "Admin", new { id = usuario.Id })" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?');">Eliminar</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

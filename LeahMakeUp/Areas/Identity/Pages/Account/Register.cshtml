@@ -33,6 +33,21 @@
                 <span asp-validation-for="Input.Cedula" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
+                <input asp-for="Input.Telefono" class="form-control" aria-required="true" placeholder="name@example.com" />
+                <label asp-for="Input.Telefono">Telefono</label>
+                <span asp-validation-for="Input.Telefono" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Direccion" class="form-control" aria-required="true" placeholder="name@example.com" />
+                <label asp-for="Input.Direccion">Direccion</label>
+                <span asp-validation-for="Input.Direccion" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.CodigoPostal" class="form-control" aria-required="true" placeholder="name@example.com" />
+                <label asp-for="Input.CodigoPostal">CodigoPostal</label>
+                <span asp-validation-for="Input.CodigoPostal" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
                 <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
                 <label asp-for="Input.Email">Email</label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
