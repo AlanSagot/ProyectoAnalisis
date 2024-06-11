@@ -52,11 +52,9 @@ namespace LeahMakeUp.Controllers
         }
 
         // POST: Inventarios/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductoId,NombreProducto,DescripcionProducto,PrecioXVenta,PrecioXCosto,Stock,FechaAgregado,FechaExpiracion,SucursalId")] Inventario inventario)
+        public async Task<IActionResult> Create([Bind("ProductoId,NombreProducto,DescripcionProducto,Marca,PrecioXVenta,PrecioXCosto,Stock,FechaAgregado,FechaExpiracion,SucursalId")] Inventario inventario)
         {
             if (ModelState.IsValid)
             {
@@ -86,11 +84,9 @@ namespace LeahMakeUp.Controllers
         }
 
         // POST: Inventarios/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductoId,NombreProducto,DescripcionProducto,PrecioXVenta,PrecioXCosto,Stock,FechaAgregado,FechaExpiracion,SucursalId")] Inventario inventario)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductoId,NombreProducto,DescripcionProducto,Marca,PrecioXVenta,PrecioXCosto,Stock,FechaAgregado,FechaExpiracion,SucursalId")] Inventario inventario)
         {
             if (id != inventario.ProductoId)
             {

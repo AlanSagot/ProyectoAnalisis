@@ -14,65 +14,72 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NombreProducto)
+                @Html.DisplayNameFor(model => model.First().NombreProducto)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DescripcionProducto)
+                @Html.DisplayNameFor(model => model.First().DescripcionProducto)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PrecioXVenta)
+                @Html.DisplayNameFor(model => model.First().Marca)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PrecioXCosto)
+                @Html.DisplayNameFor(model => model.First().PrecioXVenta)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Stock)
+                @Html.DisplayNameFor(model => model.First().PrecioXCosto)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FechaAgregado)
+                @Html.DisplayNameFor(model => model.First().Stock)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FechaExpiracion)
+                @Html.DisplayNameFor(model => model.First().FechaAgregado)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Sucursal)
+                @Html.DisplayNameFor(model => model.First().FechaExpiracion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Sucursal)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreProducto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DescripcionProducto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PrecioXVenta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PrecioXCosto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Stock)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaAgregado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaExpiracion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sucursal.Direccion)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductoId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProductoId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProductoId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreProducto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DescripcionProducto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Marca)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrecioXVenta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrecioXCosto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Stock)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaAgregado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaExpiracion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sucursal.Direccion)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ProductoId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ProductoId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ProductoId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

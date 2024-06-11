@@ -24,6 +24,11 @@
                 <span asp-validation-for="DescripcionProducto" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Marca" class="control-label"></label>
+                <input asp-for="Marca" class="form-control" />
+                <span asp-validation-for="Marca" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="PrecioXVenta" class="control-label"></label>
                 <input asp-for="PrecioXVenta" class="form-control" />
                 <span asp-validation-for="PrecioXVenta" class="text-danger"></span>
@@ -50,7 +55,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="SucursalId" class="control-label"></label>
-                <select asp-for="SucursalId" class ="form-control" asp-items="ViewBag.SucursalId"></select>
+                <select asp-for="SucursalId" class="form-control" asp-items="ViewBag.SucursalId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -64,5 +69,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
