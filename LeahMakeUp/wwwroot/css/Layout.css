@@ -1,0 +1,86 @@
+﻿/* LeahMakeUp.styles.css */
+/*Fonts*/
+@font-face {
+    font-family: Cream;
+    src: url("fonts/CreamCake.otf");
+}
+@font-face {
+    font-family: Creato;
+    src: url("fonts/CreatoDisplay-Light.otf");
+}
+@font-face {
+    font-family: Honey;
+    src: url("fonts/Honeymoon.otf");
+}
+@font-face {
+    font-family: Slims;
+    src: url("fonts/Slims.otf");
+}
+/*FinalFonts*/
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.btn-pink {
+    background-color: #f5c6d6;
+    color: #000;
+    border: 1px solid #ccc;
+    border-radius: 0 4px 4px 0;
+}
+
+.search-bar input {
+    border-radius: 4px 0 0 4px;
+}
+
+
+
+.navbar-brand img {
+    height: 50px;
+}
+
+.user-actions a.btn {
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.user-actions .btn-outline-dark {
+    border: 1px solid #000;
+}
+
+.user-actions .btn-dark {
+    background-color: #000;
+    color: #fff;
+}
+
+/*Nav rosado****************************/
+#nav2 {
+    background-color: #FFE5ED;
+    display: flex;
+    justify-content: center; 
+    font-family:Creato;
+    font-size:22px;
+
+}
+
+.navbar-nav {
+    display: flex;
+    list-style-type: none; 
+    padding: 0; 
+}
+
+.nav-item {
+    margin-right: 30px; 
+}
+
+.nav-link {
+ 
+    color: #771233;
+}
+/*Nav rosado Final*/
+
+#LoginPartial {
+    margin-left: auto;
+}

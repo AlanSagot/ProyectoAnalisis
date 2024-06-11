@@ -6,35 +6,77 @@
     <title>@ViewData["Title"] - LeahMakeUp</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
     <link rel="stylesheet" href="~/LeahMakeUp.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-0">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">LeahMakeUp</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="/css/images/Logo.png" alt="Logo" style="height: 50px;">
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
-                        </li>
+                    
+                    <div class="d-flex align-items-center">
+                        <div class="search-bar d-flex">
+                            <input type="text" class="form-control" placeholder="Busca por Categoría, Producto, etc.">
+                            <button class="btn btn-pink">Buscar</button>
+                        </div>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="AboutUs" asp-action="Index">Nosotros</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="FAQ" asp-action="Index">FAQ</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">Cart
+                        </a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Notifications" asp-action="Index">Notifications
+                        </a>
                        
-                         @if (User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Index">Usuarios</a>
-                            </li>
-                        }
-                    </ul>
-                    <partial name="_LoginPartial" />
 
+                    </div>
+                    <div id="LoginPartial">
+                        <partial name="_LoginPartial" />
+                    </div>
                 </div>
             </div>
+            
         </nav>
+      
+            <nav id="nav2" class="navbar navbar-expand-sm  box-shadow">
+            <div>
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Product" asp-action="Index">Producto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="BestSellers" asp-action="Index">Productos más vendidos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Contact" asp-action="Index">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Offers" asp-action="Index">Ofertas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Reviews" asp-action="Index">Reseñas</a>
+                    </li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Index">Usuarios</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+            </nav>
+       
     </header>
     <div class="container">
         <main role="main" class="pb-3">

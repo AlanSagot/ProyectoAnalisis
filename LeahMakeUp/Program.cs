@@ -7,6 +7,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using System.Configuration;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +29,13 @@ builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
+/*public void ConfigureServices(IServiceCollection services)
+{
+    services.Configure<SmtpSettings>(Configuration.GetSection("SmtpSettings"));
+    services.AddTransient<IEmailSender, SmtpEmailSender>();
+
+    // Otras configuraciones de servicios
+}*/
 
 
 // Configure the HTTP request pipeline.
