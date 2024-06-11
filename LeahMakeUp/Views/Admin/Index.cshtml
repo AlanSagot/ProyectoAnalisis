@@ -1,11 +1,8 @@
 ﻿@model IEnumerable<DAL.ApplicationUser>
-
-
 @{
     ViewData["Title"] = "Lista de Usuarios";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <h2>Lista de Usuarios</h2>
 <p>
     <a class="btn btn-ligth" href="@Url.Action("CrearUsuario", "Admin")">Crear Usuario </a>
