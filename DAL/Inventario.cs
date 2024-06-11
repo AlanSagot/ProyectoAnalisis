@@ -19,6 +19,8 @@ namespace DAL
         [MaxLength(500)]
         public string DescripcionProducto { get; set; }
         [Required]
+        public string Marca { get; set; }
+        [Required]
         public int PrecioXVenta { get; set; }
         [Required]
         public int PrecioXCosto { get; set; }
