@@ -82,11 +82,20 @@ namespace LeahMakeUp.Areas.Identity.Pages.Account.Manage
             {
                 if (!await _userManager.CheckPasswordAsync(user, Input.Password))
                 {
-                    ModelState.AddModelError(string.Empty, "Incorrect password.");
+                    ModelState.AddModelError(string.Empty, "¡Contraseña Incorrecta!");
                     return Page();
                 }
             }
 
+            var roles = await _userManager.GetRolesAsync(user);
+            foreach (var role in roles)
+            {
+                var resultRemoveRole = await _userManager.RemoveFromRoleAsync(user, role);
+                if (!resultRemoveRole.Succeeded)
+                {
+                   
+                }
+            }
             var result = await _userManager.DeleteAsync(user);
             var userId = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)
@@ -100,5 +109,6 @@ namespace LeahMakeUp.Areas.Identity.Pages.Account.Manage
 
             return Redirect("~/");
         }
+
     }
 }

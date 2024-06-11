@@ -26,39 +26,43 @@ namespace LeahMakeUp.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public string Username { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [TempData]
         public string StatusMessage { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "Nombre")]
+            public string Nombre { get; set; }
+
+            [Display(Name = "Primer Apellido")]
+            public string PrimerApellido { get; set; }
+
+            [Display(Name = "Segundo Apellido")]
+            public string SegundoApellido { get; set; }
+
+            [Display(Name = "Cedula")]
+            public string Cedula { get; set; }
+
+            [MaxLength(12)]
+            [Display(Name = "Telefono")]
+            public string Telefono { get; set; }
+
+            [MaxLength(200)]
+            [Display(Name = "Direccion")]
+            public string Direccion { get; set; }
+
+            [MaxLength(7)]
+            [Display(Name = "Codigo Postal")]
+            public string CodigoPostal { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -70,7 +74,14 @@ namespace LeahMakeUp.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                Nombre = user.Nombre,
+                PrimerApellido = user.PrimerApellido,
+                SegundoApellido = user.SegundoApellido,
+                Cedula = user.Cedula,
+                Telefono = user.Telefono,
+                Direccion = user.Direccion,
+                CodigoPostal = user.CodigoPostal
             };
         }
 
@@ -111,9 +122,55 @@ namespace LeahMakeUp.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            user.Nombre = Input.Nombre ?? user.Nombre;
+            user.PrimerApellido = Input.PrimerApellido ?? user.PrimerApellido;
+            user.SegundoApellido = Input.SegundoApellido ?? user.SegundoApellido;
+            user.Cedula = Input.Cedula ?? user.Cedula;
+            user.Telefono = Input.Telefono ?? user.Telefono;
+            user.Direccion = Input.Direccion ?? user.Direccion;
+            user.CodigoPostal = Input.CodigoPostal ?? user.CodigoPostal;
+
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                StatusMessage = "Unexpected error when trying to update profile.";
+                return RedirectToPage();
+            }
+
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostDeleteAsync()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+            if (roles.Count > 0)
+            {
+                var removeRolesResult = await _userManager.RemoveFromRolesAsync(user, roles);
+                if (!removeRolesResult.Succeeded)
+                {
+                    StatusMessage = "Unexpected error when trying to remove user roles.";
+                    return RedirectToPage();
+                }
+            }
+
+            var deleteResult = await _userManager.DeleteAsync(user);
+            if (!deleteResult.Succeeded)
+            {
+                StatusMessage = "Unexpected error when trying to delete user.";
+                return RedirectToPage();
+            }
+
+            await _signInManager.SignOutAsync();
+            StatusMessage = "Your account has been deleted.";
+            return Redirect("~/");
         }
     }
 }
