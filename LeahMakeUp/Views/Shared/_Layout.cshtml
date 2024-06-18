@@ -36,9 +36,12 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Sucursales" asp-action="Index">
                             Sucursales
                         </a>
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Inventarios" asp-action="Index">
-                            Inventario
-                        </a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Inventarios" asp-action="Index">
+                                Inventario
+                            </a>
+                        }
 
                     </div>
                     <div id="LoginPartial">
