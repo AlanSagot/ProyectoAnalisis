@@ -14,9 +14,22 @@ namespace LeahMakeUp.Controllers
             _logger = logger;
         }
 
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
         public IActionResult Index()
         {
             return View();
+        }
+        [HttpPost]
+        public IActionResult Search(string searchQuery)
+        {
+
+
+            ViewBag.SearchQuery = searchQuery;
+
+            return View("SearchResults");
         }
 
         public IActionResult Privacy()
