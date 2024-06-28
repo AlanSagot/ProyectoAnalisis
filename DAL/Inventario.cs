@@ -15,8 +15,13 @@ namespace DAL
         public int ProductoId { get; set; }
         [Required]
         [MaxLength(150)]
+        public string Codigo { get; set; }
+        [Required]
+        public byte[]? FotoProducto{ get; set; }
         public string NombreProducto { get; set; }
         [MaxLength(500)]
+        public string Categoria { get; set; }
+        [Required]
         public string DescripcionProducto { get; set; }
         [Required]
         public string Marca { get; set; }
