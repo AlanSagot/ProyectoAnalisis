@@ -44,6 +44,9 @@ namespace LeahMakeUp.Controllers
             return View(inventario);
         }
 
+        
+
+
         // GET: Inventarios/Create
         public IActionResult Create()
         {
@@ -54,7 +57,7 @@ namespace LeahMakeUp.Controllers
         // POST: Inventarios/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductoId,NombreProducto,DescripcionProducto,Marca,PrecioXVenta,PrecioXCosto,Stock,FechaAgregado,FechaExpiracion,SucursalId")] Inventario inventario)
+        public async Task<IActionResult> Create([Bind("ProductoId,Codigo,NombreProducto,Categoria,DescripcionProducto,Marca,PrecioXVenta,PrecioXCosto,Stock,FechaAgregado,FechaExpiracion,SucursalId")] Inventario inventario)
         {
             if (ModelState.IsValid)
             {
@@ -65,6 +68,7 @@ namespace LeahMakeUp.Controllers
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion", inventario.SucursalId);
             return View(inventario);
         }
+
 
         // GET: Inventarios/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -86,7 +90,7 @@ namespace LeahMakeUp.Controllers
         // POST: Inventarios/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductoId,NombreProducto,DescripcionProducto,Marca,PrecioXVenta,PrecioXCosto,Stock,FechaAgregado,FechaExpiracion,SucursalId")] Inventario inventario)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductoId,NombreProducto,Categoria,DescripcionProducto,Marca,PrecioXVenta,PrecioXCosto,Stock,FechaAgregado,FechaExpiracion,SucursalId")] Inventario inventario)
         {
             if (id != inventario.ProductoId)
             {

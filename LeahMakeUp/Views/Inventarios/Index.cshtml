@@ -17,8 +17,13 @@
                 @Html.DisplayNameFor(model => model.First().NombreProducto)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.First().Categoria)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.First().DescripcionProducto)
             </th>
+            
+            
             <th>
                 @Html.DisplayNameFor(model => model.First().Marca)
             </th>
@@ -49,6 +54,10 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.NombreProducto)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categoria)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DescripcionProducto)

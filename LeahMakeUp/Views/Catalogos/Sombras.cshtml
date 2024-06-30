@@ -1,0 +1,45 @@
+﻿@model IEnumerable<DAL.Inventario>
+
+@{
+    ViewData["Title"] = "Sombras";
+}
+
+<h1>@ViewBag.Categoria</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>NombreProducto</th>
+            <th>Categoria</th>
+            <th>DescripcionProducto</th>
+            <th>Marca</th>
+            <th>PrecioXVenta</th>
+            <th>PrecioXCosto</th>
+            <th>Stock</th>
+            <th>FechaAgregado</th>
+            <th>FechaExpiracion</th>
+            <th>Sucursal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.NombreProducto</td>
+                <td>@item.Categoria</td>
+                <td>@item.DescripcionProducto</td>
+                <td>@item.Marca</td>
+                <td>@item.PrecioXVenta</td>
+                <td>@item.PrecioXCosto</td>
+                <td>@item.Stock</td>
+                <td>@item.FechaAgregado.ToShortDateString()</td>
+                <td>@item.FechaExpiracion.ToShortDateString()</td>
+                <td>@item.Sucursal</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

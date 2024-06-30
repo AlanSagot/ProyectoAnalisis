@@ -1,0 +1,56 @@
+﻿@model IEnumerable<DAL.Inventario>
+
+@{
+    ViewData["Title"] = "Agregar a Labiales";
+    var productosEnCatalogo = ViewBag.ProductosEnCatalogo as List<int>;
+}
+
+<h1>Agregar a Labiales</h1>
+
+<form asp-controller="Catalogos" asp-action="LabialesAgregar" method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Seleccionar</th>
+                <th>NombreProducto</th>
+                <th>Categoria</th>
+                <th>DescripcionProducto</th>
+                <th>Marca</th>
+                <th>PrecioXVenta</th>
+                <th>PrecioXCosto</th>
+                <th>Stock</th>
+                <th>FechaAgregado</th>
+                <th>FechaExpiracion</th>
+                <th>Sucursal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" name="productosIds" value="@item.ProductoId"
+                        @(productosEnCatalogo.Contains(item.ProductoId) ? "checked" : "") />
+                    </td>
+                    <td>@item.NombreProducto</td>
+                    <td>@item.Categoria</td>
+                    <td>@item.DescripcionProducto</td>
+                    <td>@item.Marca</td>
+                    <td>@item.PrecioXVenta</td>
+                    <td>@item.PrecioXCosto</td>
+                    <td>@item.Stock</td>
+                    <td>@item.FechaAgregado.ToShortDateString()</td>
+                    <td>@item.FechaExpiracion.ToShortDateString()</td>
+                    <td>@item.Sucursal</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="form-group">
+        <input type="submit" value="Guardar Cambios" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-controller="Catalogos" asp-action="Labiales" class="nav-item nav-link">Inicio</a>
+</div>

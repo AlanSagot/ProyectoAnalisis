@@ -16,7 +16,6 @@ namespace DAL
         [Required]
         [MaxLength(150)]
         public string Codigo { get; set; }
-        [Required]
         public byte[]? FotoProducto{ get; set; }
         public string NombreProducto { get; set; }
         [MaxLength(500)]
