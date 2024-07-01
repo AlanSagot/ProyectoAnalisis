@@ -4,117 +4,269 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<!DOCTYPE html>
+<html lang="en">
 
-<h1>Inventario</h1>
+<head>
+    <meta charset="utf-8">
+    <title>EShopper - Bootstrap Shop Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
 
-<p>
-    <a asp-action="Create">Crear Nuevo</a>
-</p>
+    <!-- Favicon -->
+    <link href="~/img/favicon.ico" rel="icon">
 
-<form id="GenerarInformeForm" asp-action="GenerarInformePDF" method="get" class="form-inline">
-    <div class="form-group mb-2">
-        <label for="fechaInicio" class="mr-2">Fecha Inicio</label>
-        <input type="date" id="fechaInicio" name="fechaInicio" class="form-control" required />
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Topbar Start -->
+    <div class="container-fluid">
+        <div class="row bg-secondary py-2 px-xl-5">
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-dark" href="">Preguntas Frecuentes</a>
+                    <span class="text-muted px-2">|</span>
+                    <a class="text-dark" href="">Soporte</a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center py-3 px-xl-5">
+            <div class="col-lg-3 d-none d-lg-block">
+                <a href="" class="text-decoration-none">
+                    <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">L</span>Leah Make Up</h1>
+                </a>
+            </div>
+            <div class="col-lg-6 col-6 text-left">
+                <form action="">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Buscar productos">
+                        <div class="input-group-append">
+                            <span class="input-group-text bg-transparent text-primary">
+                                <i class="fa fa-search"></i>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-3 col-6 text-right">
+                <a href="" class="btn border">
+                    <i class="fas fa-heart text-primary"></i>
+                    <span class="badge">0</span>
+                </a>
+                <a href="" class="btn border">
+                    <i class="fas fa-shopping-cart text-primary"></i>
+                    <span class="badge">0</span>
+                </a>
+            </div>
+        </div>
     </div>
-    <div class="form-group mb-2">
-        <label for="fechaFin" class="mr-2">Fecha Fin</label>
-        <input type="date" id="fechaFin" name="fechaFin" class="form-control" required />
+    <!-- Topbar End -->
+    <!-- Navbar Start -->
+    <div class="container-fluid mb-5">
+        <div class="row border-top px-xl-5">
+            <div class="col-lg-9">
+                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                    <a href="" class="text-decoration-none d-block d-lg-none">
+                        <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Leah Make Up</h1>
+                    </a>
+                    <div class="navbar-nav mr-auto py-0 d-flex justify-content-center">
+                        <a href="index.html" class="nav-item nav-link active">Inicio</a>
+                        <a href="shop.html" class="nav-item nav-link">Productos</a>
+                        <!-- METODO DE PAGO -->
+                        <a href="~/MetodoPago" class="nav-item nav-link">Métodos de Pago</a>
+                        <a href="detail.html" class="nav-item nav-link">Ofertas</a>
+                        <a href="contact.html" class="nav-item nav-link">Contacto</a>
+                    </div>
+                    <div class="navbar-nav ml-auto py-0">
+                        <div id="LoginPartial">
+                            <partial name="_LoginPartial" />
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
     </div>
-    <div class="form-group mb-2">
-        <label for="categoria" class="mr-2">Categoría</label>
-        <select id="categoria" name="categoria" class="form-control">
-            <option value="">Todas</option>
-            @foreach (var categoria in Model.Select(i => i.Categoria).Distinct())
-            {
-                <option value="@categoria">@categoria</option>
-            }
-        </select>
-    </div>
-</form>
+    <!-- Navbar End -->
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.First().NombreProducto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().Categoria)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().DescripcionProducto)
-            </th>
-            
-            
-            <th>
-                @Html.DisplayNameFor(model => model.First().Marca)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().PrecioXVenta)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().PrecioXCosto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().Stock)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().FechaAgregado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().FechaExpiracion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().Sucursal)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <h1>Inventario</h1>
+
+    <p>
+        <a asp-action="Create">Crear Nuevo</a>
+    </p>
+
+    <form id="GenerarInformeForm" asp-action="GenerarInformePDF" method="get" class="form-inline">
+        <div class="form-group mb-2">
+            <label for="fechaInicio" class="mr-2">Fecha Inicio</label>
+            <input type="date" id="fechaInicio" name="fechaInicio" class="form-control" required />
+        </div>
+        <div class="form-group mb-2">
+            <label for="fechaFin" class="mr-2">Fecha Fin</label>
+            <input type="date" id="fechaFin" name="fechaFin" class="form-control" required />
+        </div>
+        <div class="form-group mb-2">
+            <label for="categoria" class="mr-2">Categoría</label>
+            <select id="categoria" name="categoria" class="form-control">
+                <option value="">Todas</option>
+                @foreach (var categoria in Model.Select(i => i.Categoria).Distinct())
+                {
+                    <option value="@categoria">@categoria</option>
+                }
+            </select>
+        </div>
+    </form>
+
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NombreProducto)
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().NombreProducto)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Categoria)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().DescripcionProducto)
+                </th>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Categoria)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DescripcionProducto)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Marca)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PrecioXVenta)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PrecioXCosto)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Stock)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaAgregado)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaExpiracion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Sucursal.Direccion)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ProductoId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ProductoId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ProductoId">Delete</a>
-                </td>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Marca)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().PrecioXVenta)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().PrecioXCosto)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Stock)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().FechaAgregado)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().FechaExpiracion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Sucursal)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NombreProducto)
+                    </td>
 
-<div class="text-right mb-3">
-    <button type="submit" form="GenerarInformeForm" class="btn btn-primary">Generar Informe PDF</button>
-</div>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Categoria)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DescripcionProducto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Marca)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PrecioXVenta)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PrecioXCosto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Stock)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaAgregado)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaExpiracion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sucursal.Direccion)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ProductoId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ProductoId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ProductoId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-right mb-3">
+        <button type="submit" form="GenerarInformeForm" class="btn btn-primary">Generar Informe PDF</button>
+    </div>
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-secondary text-dark mt-5 pt-5">
+        <div class="row px-xl-5 pt-5">
+            <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+                <a href="" class="text-decoration-none">
+                    <h1 class="mb-4 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border border-white px-3 mr-1">L</span>Leah Make Up</h1>
+                </a>
+                <p>Sin maquillaje soy fantástica, maquillada son una obra de arte.</p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Mall San Pedro, 3er piso</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+506 7139-7781</p>
+                <p></p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Expresso Desamparados</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+506 7286-2118</p>
+
+            </div>
+            <div class="col-lg-8 col-md-12">
+                <div class="row">
+                    <div class="col-md-4 mb-5">
+                        <h5 class="font-weight-bold text-dark mb-4">Links Rápidos</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Inicio</a>
+                            <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Productos</a>
+                            <a class="text-dark mb-2" href="detail.html"><i class="fa fa-angle-right mr-2"></i>Metodo de Pago</a>
+                            <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Ofertas</a>
+                            <a class="text-dark mb-2" href="checkout.html"><i class="fa fa-angle-right mr-2"></i>Mi Carrito</a>
+                            <a class="text-dark" href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contacto</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row border-top border-light mx-xl-5 py-4">
+            <div class="col-md-6 px-xl-0">
+                <p class="mb-md-0 text-center text-md-left text-dark">
+                    &copy; <a class="text-dark font-weight-semi-bold" href="#">Leah Make Up</a>. Nos reservamos el derecho de admisión. Diseñado
+                    por
+                    <a class="text-dark font-weight-semi-bold" href="https://sistemas.ufidelitas.ac.cr/">Grupo 2</a>
+                </p>
+            </div>
+            <div class="col-md-6 px-xl-0 text-center text-md-right">
+                <img class="img-fluid" src="~/img/pagos.png" alt="">
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+</body>

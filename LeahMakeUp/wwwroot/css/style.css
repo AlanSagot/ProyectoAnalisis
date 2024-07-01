@@ -60,7 +60,7 @@ body {
   font-weight: 400;
   line-height: 1.5;
   color: #6F6F6F;
-  text-align: left;
+  text-align: center;
   background-color: #fff;
 }
 
@@ -4033,7 +4033,7 @@ input[type="button"].btn-block {
 
 .navbar-nav {
   display: flex;
-  flex-direction: column;
+
   padding-left: 0;
   margin-bottom: 0;
   list-style: none;
