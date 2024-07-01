@@ -225,6 +225,19 @@ namespace LeahMakeUp.Controllers
             return _context.Inventarios.Any(e => e.ProductoId == id);
         }
 
+        [Route("Inventarios/Index")]
+        public async Task<IActionResult> Index(string searchString)
+        {
+            var productos = from p in _context.Inventarios
+                            select p;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                productos = productos.Where(p => p.NombreProducto.Contains(searchString));
+            }
+
+            return View(await productos.ToListAsync());
+        }
 
     }
 }

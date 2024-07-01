@@ -59,17 +59,18 @@
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
-                <form action="">
+                <form asp-action="Index" asp-controller="Productos" method="get">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Buscar productos">
+                        <input type="text" name="searchString" class="form-control" placeholder="Buscar productos">
                         <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
+                            <button type="submit" class="input-group-text bg-transparent text-primary border-0">
                                 <i class="fa fa-search"></i>
-                            </span>
+                            </button>
                         </div>
                     </div>
                 </form>
             </div>
+
             <div class="col-lg-3 col-6 text-right">
                 <a href="" class="btn border">
                     <i class="fas fa-heart text-primary"></i>
