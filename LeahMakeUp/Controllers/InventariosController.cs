@@ -1,4 +1,7 @@
-﻿using System;
+﻿using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace LeahMakeUp.Controllers
 {
@@ -17,6 +23,67 @@ namespace LeahMakeUp.Controllers
         {
             _context = context;
         }
+
+        // Método para generar informe PDF
+        public async Task<IActionResult> GenerarInformePDF(DateTime fechaInicio, DateTime fechaFin, string categoria)
+        {
+            try
+            {
+                var inventarios = await _context.Inventarios
+                    .Include(i => i.Sucursal)
+                    .Where(i => i.FechaAgregado >= fechaInicio && i.FechaAgregado <= fechaFin && (string.IsNullOrEmpty(categoria) || i.Categoria == categoria))
+                    .ToListAsync();
+
+                using (var ms = new MemoryStream())
+                {
+                    var writer = new PdfWriter(ms);
+                    var pdf = new PdfDocument(writer);
+                    var document = new Document(pdf);
+
+                    // Título del documento
+                    document.Add(new Paragraph("Informe de Inventario"));
+                    document.Add(new Paragraph($"Fecha: {DateTime.Now}"));
+                    document.Add(new Paragraph(" "));
+
+                    // Tabla de inventario
+                    var table = new Table(10);
+                    table.AddCell("ProductoId");
+                    table.AddCell("NombreProducto");
+                    table.AddCell("Categoria");
+                    table.AddCell("DescripcionProducto");
+                    table.AddCell("Marca");
+                    table.AddCell("PrecioXVenta");
+                    table.AddCell("PrecioXCosto");
+                    table.AddCell("Stock");
+                    table.AddCell("FechaAgregado");
+                    table.AddCell("FechaExpiracion");
+
+                    foreach (var item in inventarios)
+                    {
+                        table.AddCell(item.ProductoId.ToString());
+                        table.AddCell(item.NombreProducto);
+                        table.AddCell(item.Categoria);
+                        table.AddCell(item.DescripcionProducto);
+                        table.AddCell(item.Marca);
+                        table.AddCell(item.PrecioXVenta.ToString());
+                        table.AddCell(item.PrecioXCosto.ToString());
+                        table.AddCell(item.Stock.ToString());
+                        table.AddCell(item.FechaAgregado.ToString("dd/MM/yyyy"));
+                        table.AddCell(item.FechaExpiracion.ToString("dd/MM/yyyy"));
+                    }
+
+                    document.Add(table);
+                    document.Close();
+
+                    return File(ms.ToArray(), "application/pdf", "Informe_Inventario.pdf");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error al generar el informe: {ex.Message}");
+            }
+        }
+
 
         // GET: Inventarios
         public async Task<IActionResult> Index()
@@ -43,8 +110,6 @@ namespace LeahMakeUp.Controllers
 
             return View(inventario);
         }
-
-        
 
 
         // GET: Inventarios/Create
@@ -159,5 +224,7 @@ namespace LeahMakeUp.Controllers
         {
             return _context.Inventarios.Any(e => e.ProductoId == id);
         }
+
+
     }
 }

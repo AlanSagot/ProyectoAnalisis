@@ -5,11 +5,33 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Inventario</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Crear Nuevo</a>
 </p>
+
+<form id="GenerarInformeForm" asp-action="GenerarInformePDF" method="get" class="form-inline">
+    <div class="form-group mb-2">
+        <label for="fechaInicio" class="mr-2">Fecha Inicio</label>
+        <input type="date" id="fechaInicio" name="fechaInicio" class="form-control" required />
+    </div>
+    <div class="form-group mb-2">
+        <label for="fechaFin" class="mr-2">Fecha Fin</label>
+        <input type="date" id="fechaFin" name="fechaFin" class="form-control" required />
+    </div>
+    <div class="form-group mb-2">
+        <label for="categoria" class="mr-2">Categoría</label>
+        <select id="categoria" name="categoria" class="form-control">
+            <option value="">Todas</option>
+            @foreach (var categoria in Model.Select(i => i.Categoria).Distinct())
+            {
+                <option value="@categoria">@categoria</option>
+            }
+        </select>
+    </div>
+</form>
+
 <table class="table">
     <thead>
         <tr>
@@ -92,3 +114,7 @@
         }
     </tbody>
 </table>
+
+<div class="text-right mb-3">
+    <button type="submit" form="GenerarInformeForm" class="btn btn-primary">Generar Informe PDF</button>
+</div>
