@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace DAL
         public int SucursalId { get; set; }
         [Required]
         [MaxLength(300)]
+        [DisplayName("Dirección")]
         public string Direccion { get; set; }
         [Required]
         [MaxLength(50)]

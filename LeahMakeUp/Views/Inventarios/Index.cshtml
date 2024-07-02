@@ -59,7 +59,8 @@
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
-                <form asp-action="Index" asp-controller="Productos" method="get">
+
+                <form asp-action="Index" asp-controller="Home">
                     <div class="input-group">
                         <input type="text" name="searchString" class="form-control" placeholder="Buscar productos">
                         <div class="input-group-append">
@@ -93,7 +94,7 @@
                         <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Leah Make Up</h1>
                     </a>
                     <div class="navbar-nav mr-auto py-0 d-flex justify-content-center">
-                        <a href="index.html" class="nav-item nav-link active">Inicio</a>
+                        <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Inicio</a>
                         <a href="shop.html" class="nav-item nav-link">Productos</a>
                         <!-- METODO DE PAGO -->
                         <a href="~/MetodoPago" class="nav-item nav-link">Métodos de Pago</a>
@@ -212,9 +213,9 @@
                         @Html.DisplayFor(modelItem => item.Sucursal.Direccion)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.ProductoId">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.ProductoId">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.ProductoId">Delete</a>
+                        <a asp-action="Edit" asp-route-id="@item.ProductoId"><i class="fa fa-pen"></i></a>
+                        @*<a asp-action="Details" asp-route-id="@item.ProductoId">Details</a> |*@
+                        <a asp-action="Delete" asp-route-id="@item.ProductoId"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
             }

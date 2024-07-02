@@ -87,22 +87,27 @@
         <div class="row border-top px-xl-5">
             <div class="col-lg-3 d-none d-lg-block">
                 <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
-                    <h6 class="m-0">Categorías y Catálogos</h6>
+                    <h6 class="m-0">Catálogos</h6>
                     <i class="fa fa-angle-down text-dark"></i>
                 </a>
                 <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
                     <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
                         <!-- Categorías -->
-                        <h6 class="text-uppercase px-3 py-2">Categorías</h6>
-                        <a asp-controller="Inventarios" asp-action="Index" class="nav-item nav-link">Inventario</a>
-                        <a asp-controller="Catalogos" asp-action="Index" class="nav-item nav-link">Catálogo</a>
-                        <a asp-controller="Sucursales" asp-action="Index" class="nav-item nav-link">Sucursales</a>
-                        <div class="dropdown-divider"></div>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            //<h6 class="text-uppercase px-3 py-2">Categorías</h6>
+                            <a asp-controller="Inventarios" asp-action="Index" class="nav-item nav-link">Inventario</a>
+                            <a asp-controller="Admin" asp-action="Index" class="nav-item nav-link">Usuarios</a>
+                            <a asp-controller="Catalogos" asp-action="Index" class="nav-item nav-link">Catálogo</a>
+                            <a asp-controller="Sucursales" asp-action="Index" class="nav-item nav-link">Sucursales</a>
+                            <div class="dropdown-divider"></div>
+                        }
+                 
                         <!-- Catálogos -->
-                        <h6 class="text-uppercase px-3 py-2">Catálogos</h6>
-                        <a asp-controller="Catalogos" asp-action="Labiales" class="nav-item nav-link">Labiales</a>
-                        <a asp-controller="Catalogos" asp-action="Sombras" class="nav-item nav-link">Sombras</a>
-                        <a asp-controller="Catalogos" asp-action="Paletas" class="nav-item nav-link">Paletas</a>
+                        @*<h6 class="text-uppercase px-3 py-2">Catálogos</h6>*@
+                        <a asp-controller="Catalogos" asp-action="Maquillaje" class="nav-item nav-link">Maquillaje</a>
+                        <a asp-controller="Catalogos" asp-action="SkinCare" class="nav-item nav-link">SkinCare</a>
+                        <a asp-controller="Catalogos" asp-action="Articulos" class="nav-item nav-link">Artículos</a>
                     </div>
                 </nav>
             </div>
@@ -116,7 +121,7 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="index.html" class="nav-item nav-link active">Inicio</a>
+                            <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Inicio</a>
                             <a href="shop.html" class="nav-item nav-link">Productos</a>
                             <!-- METODO DE PAGO -->
                             <a href="~/MetodoPago" class="nav-item nav-link">Métodos de Pago</a>

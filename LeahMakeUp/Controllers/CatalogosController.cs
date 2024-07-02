@@ -27,91 +27,38 @@ namespace LeahMakeUp.Controllers
      
 /*****************************************/
         // GET: Catalogos/Labial
-        public IActionResult Labiales()
+        public IActionResult Maquillaje()
         {
-            var productosLabial = _context.Inventarios
-                                        .Where(i => i.Categoria.Equals("Labiales"))
+            var productosMaquillaje = _context.Inventarios
+                                        .Where(i => i.Categoria.Equals("Maquillaje"))
                                         .ToList();
 
-            ViewBag.Categoria = "Labiales";
-            return View("Labiales", productosLabial);
+            ViewBag.Categoria = "Maquillaje";
+            return View("Maquillaje", productosMaquillaje);
         }
 
-        // GET: Catalogos/LabialesAgregar
-        public async Task<IActionResult> LabialesAgregar()
-        {
-            var productosLabial = await _context.Inventarios
-                .Where(i => i.Categoria.Equals("Labiales"))
-                .ToListAsync();
-
-        var productosEnCatalogo = await _context.Catalogos
-            .Where(c => c.NombreCatalogo.Equals("Labiales"))
-            .Select(c => c.ProductoId)
-            .ToListAsync();
-
-        ViewBag.ProductosEnCatalogo = productosEnCatalogo;
-
-            return View(productosLabial);
-    }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LabialesAgregar(List<int> productosIds)
-        {
-            var productosEnCatalogo = await _context.Catalogos
-                .Where(c => c.NombreCatalogo.Equals("Labiales"))
-                .Select(c => c.ProductoId)
-                .ToListAsync();
-
-            // Agregar productos nuevos
-            foreach (var productoId in productosIds.Except(productosEnCatalogo))
-            {
-                var catalogo = new Catalogos
-                {
-                    NombreCatalogo = "Labiales",
-                    DetalleCatalogo = "Producto añadido a Labiales",
-                    ProductoId = productoId
-                };
-                _context.Catalogos.Add(catalogo);
-            }
-
-            // Quitar productos que ya no están seleccionados
-            foreach (var productoId in productosEnCatalogo.Except(productosIds))
-            {
-                var catalogo = await _context.Catalogos
-                    .FirstOrDefaultAsync(c => c.NombreCatalogo.Equals("Labiales") && c.ProductoId == productoId);
-                if (catalogo != null)
-                {
-                    _context.Catalogos.Remove(catalogo);
-                }
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Labiales));
-        }
-
-        /**********************************************/
-
+ 
         // GET: Catalogos/Paletas
-        public IActionResult Paletas()
+        public IActionResult SkinCare()
         {
-            var productosPaleta = _context.Inventarios
-                                        .Where(i => i.Categoria.Equals("Paletas"))
+            var productosSkinCare = _context.Inventarios
+                                        .Where(i => i.Categoria.Equals("SkinCare"))
                                         .ToList();
 
-            ViewBag.Categoria = "Paletas"; 
-            return View("Paletas", productosPaleta);
+            ViewBag.Categoria = "SkinCare"; 
+            return View("SkinCare", productosSkinCare);
         }
 
 
         // GET: Catalogos/Sombras
-        public IActionResult Sombras()
+        public IActionResult Articulos()
         {
-            var productosSombra = _context.Inventarios
-                                       .Where(i => i.Categoria.Equals("Sombras"))
+            var productosArticulos = _context.Inventarios
+                                       .Where(i => i.Categoria.Equals("Articulos"))
                                        .ToList();
 
-            ViewBag.Categoria = "Sombras"; 
-            return View("Sombras", productosSombra);
+            ViewBag.Categoria = "Articulos"; 
+            return View("Articulos", productosArticulos);
         }
 
 
