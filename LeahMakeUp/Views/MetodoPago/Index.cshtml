@@ -3,7 +3,7 @@
     <title>Métodos de Pago</title>
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
-    meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Favicon -->
     <link href="~/img/favicon.ico" rel="icon">
@@ -23,20 +23,17 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             background-color: #FFF1FE;
         }
 
         .container {
             text-align: center;
-            max-width: 800px;
+            max-width: 1200px;
             padding: 20px;
+            margin: 20px auto;
             background-color: #fff;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .main-message {
@@ -51,11 +48,16 @@
 
         .image-container {
             margin-top: 20px;
-            max-width: 100%;
-            height: auto;
         }
-    </style>
 
+            .image-container img {
+                width: 50%;
+                max-width: 300px;
+                height: auto;
+                display: block;
+                margin: 0 auto;
+            }
+    </style>
 </head>
 
 <body>
@@ -71,14 +73,12 @@
             </div>
             <div class="col-lg-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
-
                     <a class="text-dark px-2" href="">
                         <i class="fab fa-whatsapp"></i>
                     </a>
                     <a class="text-dark px-2" href="">
                         <i class="fab fa-instagram"></i>
                     </a>
-
                 </div>
             </div>
         </div>
@@ -89,7 +89,6 @@
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
-
                 <form asp-action="Index" asp-controller="Home">
                     <div class="input-group">
                         <input type="text" name="searchString" class="form-control" placeholder="Buscar productos">
@@ -115,7 +114,6 @@
         </div>
     </div>
     <!-- Topbar End -->
-
     <!-- Navbar Start -->
     <div class="container-fluid mb-5">
         <div class="row border-top px-xl-5">
@@ -141,6 +139,7 @@
             </div>
         </div>
     </div>
+    <!-- Navbar End -->
 
     <div class="container">
         <h1 class="main-message">En Leah Make Up contamos con 2 métodos de pago:</h1>
@@ -150,7 +149,5 @@
             <img src="~/img/metpago.jpg" class="img-fluid" alt="Imagen de Métodos de Pago">
         </div>
     </div>
-
-    <!-- Navbar End -->
 </body>
 </html>
