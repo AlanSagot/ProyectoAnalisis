@@ -144,6 +144,9 @@
         <thead>
             <tr>
                 <th>
+                    @Html.DisplayNameFor(model => model.First().FotoProducto)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.First().NombreProducto)
                 </th>
                 <th>
@@ -180,6 +183,16 @@
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>
+                        @if (item.FotoProducto != null && item.FotoProducto.Length > 0)
+                        {
+                            <img src="data:image/jpeg;base64,@(Convert.ToBase64String(item.FotoProducto))" width="100" />
+                        }
+                        else
+                        {
+                            <span>No se cargó una imagen</span>
+                        }
+                    </td>
                     <td>@Html.DisplayFor(modelItem => item.NombreProducto)</td>
                     <td>@Html.DisplayFor(modelItem => item.Categoria)</td>
                     <td>@Html.DisplayFor(modelItem => item.DescripcionProducto)</td>

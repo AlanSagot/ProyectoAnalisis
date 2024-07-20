@@ -14,6 +14,10 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ProductoId" />
             <div class="form-group">
+                <label for="FotoProducto" class="control-label">Foto Producto</label>
+                <input type="file" accept="image/png" class="form-control" name="FotoProducto" />
+            </div>            
+            <div class="form-group">
                 <label asp-for="NombreProducto" class="control-label"></label>
                 <input asp-for="NombreProducto" class="form-control" />
                 <span asp-validation-for="NombreProducto" class="text-danger"></span>

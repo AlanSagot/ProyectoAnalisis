@@ -12,6 +12,7 @@ using DAL;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using LeahMakeUp.Models;
 
 namespace LeahMakeUp.Controllers
 {
@@ -122,17 +123,46 @@ namespace LeahMakeUp.Controllers
         // POST: Inventarios/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductoId,Codigo,NombreProducto,Categoria,DescripcionProducto,Marca,PrecioXVenta,PrecioXCosto,Stock,FechaAgregado,FechaExpiracion,SucursalId")] Inventario inventario)
+        public async Task<IActionResult> Create(InventarioCreateViewModel inventario, IFormFile FotoProducto)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(inventario);
+                byte[]? imagen = null;
+
+                if (FotoProducto != null && FotoProducto.Length > 0)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await FotoProducto.CopyToAsync(memoryStream);
+                        imagen = memoryStream.ToArray();
+                    }
+                }
+
+                Inventario inv = new Inventario
+                {
+                    ProductoId = inventario.ProductoId,
+                    Codigo = inventario.Codigo,
+                    FotoProducto = imagen,
+                    NombreProducto = inventario.NombreProducto,
+                    Categoria = inventario.Categoria,
+                    DescripcionProducto = inventario.DescripcionProducto,
+                    Marca = inventario.Marca,
+                    PrecioXVenta = inventario.PrecioXVenta,
+                    PrecioXCosto = inventario.PrecioXCosto,
+                    FechaAgregado = DateTime.Now,
+                    FechaExpiracion = inventario.FechaExpiracion,
+                    SucursalId = inventario.SucursalId
+                };
+
+                _context.Add(inv);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion", inventario.SucursalId);
             return View(inventario);
         }
+
 
 
         // GET: Inventarios/Edit/5
@@ -155,7 +185,7 @@ namespace LeahMakeUp.Controllers
         // POST: Inventarios/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductoId,NombreProducto,Categoria,DescripcionProducto,Marca,PrecioXVenta,PrecioXCosto,Stock,FechaAgregado,FechaExpiracion,SucursalId")] Inventario inventario)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductoId,NombreProducto,Categoria,DescripcionProducto,Marca,PrecioXVenta,PrecioXCosto,Stock,FechaAgregado,FechaExpiracion,SucursalId")] Inventario inventario, IFormFile FotoProducto)
         {
             if (id != inventario.ProductoId)
             {
@@ -164,8 +194,24 @@ namespace LeahMakeUp.Controllers
 
             if (ModelState.IsValid)
             {
+                byte[]? imagen = null;
+
+                if (FotoProducto != null && FotoProducto.Length > 0)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await FotoProducto.CopyToAsync(memoryStream);
+                        imagen = memoryStream.ToArray();
+                    }
+                }
+                else
+                {
+                    imagen = inventario.FotoProducto;
+                }
+
                 try
                 {
+                    inventario.FotoProducto = imagen;
                     _context.Update(inventario);
                     await _context.SaveChangesAsync();
                 }
@@ -225,6 +271,7 @@ namespace LeahMakeUp.Controllers
             return _context.Inventarios.Any(e => e.ProductoId == id);
         }
 
+        //Barra de Búsqueda
         [Route("Inventarios/Index")]
         public async Task<IActionResult> Index(string searchString)
         {
