@@ -17,7 +17,7 @@ namespace LeahMakeUp.Models
         [MaxLength(150)]
         public string Codigo { get; set; }
 
-        public byte[]? FotoProducto { get; set; }
+        //public byte[]? FotoProducto { get; set; }
 
         [DisplayName("Producto")]
         public string NombreProducto { get; set; }

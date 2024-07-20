@@ -149,6 +149,7 @@ namespace LeahMakeUp.Controllers
                     Marca = inventario.Marca,
                     PrecioXVenta = inventario.PrecioXVenta,
                     PrecioXCosto = inventario.PrecioXCosto,
+                    Stock = inventario.Stock,
                     FechaAgregado = DateTime.Now,
                     FechaExpiracion = inventario.FechaExpiracion,
                     SucursalId = inventario.SucursalId
@@ -185,7 +186,7 @@ namespace LeahMakeUp.Controllers
         // POST: Inventarios/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductoId,NombreProducto,Categoria,DescripcionProducto,Marca,PrecioXVenta,PrecioXCosto,Stock,FechaAgregado,FechaExpiracion,SucursalId")] Inventario inventario, IFormFile FotoProducto)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductoId,Codigo,FotoProducto,NombreProducto,Categoria,DescripcionProducto,Marca,PrecioXVenta,PrecioXCosto,Stock,FechaAgregado,FechaExpiracion,SucursalId")] Inventario inventario, IFormFile FotoProducto)
         {
             if (id != inventario.ProductoId)
             {
@@ -196,6 +197,8 @@ namespace LeahMakeUp.Controllers
             {
                 byte[]? imagen = null;
 
+
+                //Validar la imagen
                 if (FotoProducto != null && FotoProducto.Length > 0)
                 {
                     using (var memoryStream = new MemoryStream())
