@@ -32,7 +32,7 @@ namespace LeahMakeUp.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "El largo maximo es de 100")]
+        [StringLength(100, ErrorMessage = "El largo máximo es de 100")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
