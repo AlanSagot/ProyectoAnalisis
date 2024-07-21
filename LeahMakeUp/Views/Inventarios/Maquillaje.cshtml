@@ -1,0 +1,468 @@
+﻿@model IEnumerable<DAL.Inventario>
+
+@{
+    ViewData["Title"] = "Productos";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Leah Make Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Free HTML Templates">
+    <meta name="description" content="Free HTML Templates">
+
+    <!-- Favicon -->
+    <link rel="icon" href="~/img/favicon.ico">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/css/style.css" rel="stylesheet">
+    <script src="~/js/index.js"></script>
+
+    <link href="~/css/chat.css" rel="stylesheet">
+    <link href="~/img" rel="stylesheet">
+
+
+</head>
+
+<body>
+    <!-- Topbar Start -->
+    <div class="container-fluid">
+        <div class="row bg-secondary py-2">
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-dark" href="">Preguntas Frecuentes</a>
+                    <span class="text-muted px-2">|</span>
+                    <a class="text-dark" href="">Soporte</a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a class="text-dark px-2" href="https://www.instagram.com/leah_makeup_and_accesories/">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center py-3">
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <a href="" class="text-decoration-none">
+                    <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">L</span>Leah Make Up</h1>
+                </a>
+            </div>
+            <!-- BUSCAR -->
+            <div class="col-lg-6 col-md-6 col-sm-12 text-left">
+                <form id="searchForm">
+                    <div class="input-group">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Buscar productos">
+                        <div class="input-group-append">
+                            <span class="input-group-text bg-transparent text-primary">
+                                <i class="fa fa-search"></i>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 text-right">
+                <a href="" class="btn border">
+                    <i class="fas fa-heart text-primary"></i>
+                    <span class="badge">0</span>
+                </a>
+                <a href="" class="btn border">
+                    <i class="fas fa-shopping-cart text-primary"></i>
+                    <span class="badge">0</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const suggestionsBox = document.createElement('div');
+        suggestionsBox.classList.add('suggestions-box');
+        document.body.appendChild(suggestionsBox);
+        const historyList = document.getElementById('historyList');
+        const clearHistoryBtn = document.getElementById('clearHistory');
+        const searchHistoryContainer = document.getElementById('searchHistory');
+
+        // Simulación de productos
+        const products = [
+            'Maquillaje Base', 'Sombra de Ojos', 'Labial Rojo', 'Brochas de Maquillaje', 'Crema Hidratante', 'Tónico Facial', 'Esmalte de Uñas'
+        ];
+
+        // Manejar la búsqueda
+        function handleSearch(query) {
+            if (query) {
+                // Guardar en el historial local
+                const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+                if (!history.includes(query)) {
+                    history.push(query);
+                    localStorage.setItem('searchHistory', JSON.stringify(history));
+                    updateHistory();
+                }
+                // Realizar búsqueda y mostrar resultados
+                const results = products.filter(product => product.toLowerCase().includes(query.toLowerCase()));
+                suggestionsBox.innerHTML = results.map(product => `<a href="#" class="list-group-item list-group-item-action">${product}</a>`).join('');
+                suggestionsBox.style.display = 'block';
+                positionSuggestionsBox();
+            } else {
+                suggestionsBox.innerHTML = '';
+                suggestionsBox.style.display = 'none';
+            }
+        }
+
+        // Mostrar sugerencias en tiempo real
+        function showSuggestions() {
+            const query = searchInput.value.trim();
+            handleSearch(query);
+            updateHistory();
+        }
+
+        // Actualizar historial de búsqueda
+        function updateHistory() {
+            const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            historyList.innerHTML = history.map((item, index) => `<li class="list-group-item d-flex justify-content-between align-items-center">${item}<button class="btn btn-sm btn-danger" onclick="removeHistoryItem(${index})">X</button></li>`).join('');
+        }
+
+        // Eliminar un ítem del historial
+        function removeHistoryItem(index) {
+            const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            history.splice(index, 1);
+            localStorage.setItem('searchHistory', JSON.stringify(history));
+            updateHistory();
+        }
+
+        // Eliminar todo el historial
+        clearHistoryBtn.addEventListener('click', () => {
+            localStorage.removeItem('searchHistory');
+            updateHistory();
+            searchHistoryContainer.style.display = 'none';
+        });
+
+        // Inicializar historial al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            updateHistory();
+        });
+
+        // Manejar clic en sugerencias
+        suggestionsBox.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A' || e.target.tagName === 'LI') {
+                searchInput.value = e.target.textContent;
+                handleSearch(e.target.textContent);
+                suggestionsBox.style.display = 'none';
+            }
+        });
+
+        // Manejar envío del formulario
+        document.getElementById('searchForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const query = searchInput.value.trim();
+            if (query) {
+                handleSearch(query);
+            }
+        });
+
+        // Ocultar lista desplegable cuando se hace clic fuera
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#searchForm') && !e.target.closest('.suggestions-box')) {
+                suggestionsBox.style.display = 'none';
+                searchHistoryContainer.style.display = 'none';
+            }
+        });
+
+        // Mostrar lista desplegable cuando se hace clic en el input
+        searchInput.addEventListener('focus', () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                handleSearch(query);
+            } else {
+                searchHistoryContainer.style.display = 'block';
+            }
+        });
+
+        // Posicionar el cuadro de sugerencias
+        function positionSuggestionsBox() {
+            const rect = searchInput.getBoundingClientRect();
+            suggestionsBox.style.top = `${rect.bottom + window.scrollY}px`;
+            suggestionsBox.style.left = `${rect.left + window.scrollX}px`;
+            suggestionsBox.style.width = `${rect.width}px`;
+        }
+    </script>
+
+
+
+    <!-- Navbar Start -->
+    <div class="container-fluid mb-5">
+        <div class="row border-top px-xl-5">
+            <div class="col-lg-12">
+                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                    <a href="" class="text-decoration-none d-block d-lg-none">
+                        <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">L</span>Leah Make Up</h1>
+                    </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto py-0">
+                            <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Inicio</a>
+                            <!-- Catálogos -->
+                            <div class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="catalogosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Catálogos
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="catalogosDropdown">
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <a asp-controller="Inventarios" asp-action="Index" class="dropdown-item">Inventario</a>
+                                        <a asp-controller="Admin" asp-action="Index" class="dropdown-item">Usuarios</a>
+                                        <a asp-controller="Catalogos" asp-action="Index" class="dropdown-item">Catálogo</a>
+                                        <a asp-controller="Sucursales" asp-action="Index" class="dropdown-item">Sucursales</a>
+                                        <div class="dropdown-divider"></div>
+                                    }
+                                    <a asp-controller="Catalogos" asp-action="Maquillaje" class="dropdown-item">Maquillaje</a>
+                                    <a asp-controller="Catalogos" asp-action="SkinCare" class="dropdown-item">SkinCare</a>
+                                    <a asp-controller="Catalogos" asp-action="Articulos" class="dropdown-item">Artículos</a>
+                                </div>
+                            </div>
+                            <a asp-controller="Inventarios" asp-action="Productos" class="nav-item nav-link">Productos</a>
+
+                            <!-- METODO DE PAGO -->
+                            <a href="~/MetodoPago" class="nav-item nav-link">Métodos de Pago</a>
+                            <a href="detail.html" class="nav-item nav-link">Ofertas</a>
+                            <a href="contact.html" class="nav-item nav-link">Contacto</a>
+
+                        </div>
+                        <div class="navbar-nav ml-auto py-0">
+                            <div id="LoginPartial">
+                                <partial name="_LoginPartial" />
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+
+
+                <!--CHAT BOT-->
+
+                <div class="fabs" id="fabs-chat">
+                    <div class="chat">
+                        <div class="chat_header">
+                            <div class="chat_option">
+
+                                <span id="chat_head">LeahBot</span> <br>
+                                <span id="chat_fullscreen_loader" class="chat_fullscreen_loader">
+                                    <i class="fullscreen zmdi zmdi-window-maximize"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="chat_body chat_login">
+                            <a id="chat_fourth_screen" class="fab-chat">
+                                <i class="zmdi zmdi-arrow-right"></i>
+                            </a>
+                            <p>¿Tienes dudas? Da click en la flecha de arriba para poder solucionarlas...</p>
+                        </div>
+
+                        <div id="chat_fullscreen" class="chat_conversion chat_converse">
+                            <span class="chat_msg_item chat_msg_item_admin">
+                                <div class="chat_avatar">
+                                    <img src="@Url.Content("~/img/Bot.gif")" />
+                                </div>¡Hola! Bienvenida al chat de preguntas, soy LeahBot....Selecciona alguna de las siguientes opciones:
+                            </span>
+                            <span class="chat_msg_item">
+                                <ul class="tags">
+                                    <li class="option" data-response="Tarjeta">¿Qué métodos de pago?</li>
+                                    <li class="option" data-response="En carro">¿Cómo llego?</li>
+                                    <li class="option" data-response="Este es el número...">Me gustaría que me atienda un asesor</li>
+                                </ul>
+                            </span>
+                        </div>
+                    </div>
+                    <a id="prime" class="fab-chat"><i class="prime zmdi zmdi-comment-outline"></i></a>
+                </div>
+                <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+                <script>
+                    hideChat(0);
+
+                    $('#prime').click(function () {
+                        toggleFab();
+                    });
+
+                    //Toggle chat
+                    function toggleFab() {
+                        $('.prime').toggleClass('zmdi-comment-outline');
+                        $('.prime').toggleClass('zmdi-close');
+                        $('.prime').toggleClass('is-active');
+                        $('.prime').toggleClass('is-visible');
+                        $('#prime').toggleClass('is-float');
+                        $('.chat').toggleClass('is-visible');
+                        $('.fab-chat').toggleClass('is-visible');
+
+                    }
+                    $('.option').click(function () {
+                        var userText = $(this).text();
+                        var responseText = $(this).data('response');
+
+                        $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_user">' + userText + '</span>');
+                        $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar"><img src="@Url.Content("~/img/Bot.gif")" /></div>' + responseText + '</span>');
+
+                        scrollToBottom();
+                        showOptions();
+                    });
+
+                    function showOptions() {
+                        $('#chat_fullscreen').append('<span class="chat_msg_item"><ul class="tags"><li class="option" data-response="Tarjeta">¿Qué métodos de pago?</li><li class="option" data-response="En carro">¿Cómo llego?</li><li class="option" data-response="Este es el número...">Me gustaría que me atienda un asesor</li></ul></span>');
+
+                        $('.option').off('click').on('click', function () {
+                            var userText = $(this).text();
+                            var responseText = $(this).data('response');
+
+                            $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_user">' + userText + '</span>');
+                            $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar"><img src="@Url.Content("~/img/Bot.gif")"/></div>' + responseText + '</span>');
+
+                            scrollToBottom();
+                            showOptions();
+                        });
+                    }
+                    function scrollToBottom() {
+                        $('#chat_fullscreen').scrollTop($('#chat_fullscreen')[0].scrollHeight);
+                    }
+                    $('#chat_first_screen').click(function (e) {
+                        hideChat(1);
+                    });
+
+                    $('#chat_fourth_screen').click(function (e) {
+                        hideChat(4);
+                    });
+
+                    $('#chat_fullscreen_loader').click(function (e) {
+                        $('.fullscreen').toggleClass('zmdi-window-maximize');
+                        $('.fullscreen').toggleClass('zmdi-window-restore');
+                        $('.chat').toggleClass('chat_fullscreen');
+                        $('.fab').toggleClass('is-hide');
+                        $('.header_img').toggleClass('change_img');
+                        $('.img_container').toggleClass('change_img');
+                        $('.chat_header').toggleClass('chat_header2');
+                        $('.fab_field').toggleClass('fab_field2');
+                        $('.chat_converse').toggleClass('chat_converse2');
+                    });
+
+                    function hideChat(hide) {
+                        switch (hide) {
+                            case 0:
+                                $('#chat_converse').css('display', 'none');
+                                $('#chat_body').css('display', 'none');
+                                $('#chat_form').css('display', 'none');
+                                $('.chat_login').css('display', 'block');
+                                $('.chat_fullscreen_loader').css('display', 'none');
+                                $('#chat_fullscreen').css('display', 'none');
+                                break;
+                            case 1:
+                                $('#chat_converse').css('display', 'block');
+                                $('#chat_body').css('display', 'none');
+                                $('#chat_form').css('display', 'none');
+                                $('.chat_login').css('display', 'none');
+                                $('.chat_fullscreen_loader').css('display', 'block');
+                                break;
+                            case 2:
+                                $('#chat_converse').css('display', 'none');
+                                $('#chat_body').css('display', 'block');
+                                $('#chat_form').css('display', 'none');
+                                $('.chat_login').css('display', 'none');
+                                $('.chat_fullscreen_loader').css('display', 'block');
+                                break;
+                            case 3:
+                                $('#chat_converse').css('display', 'none');
+                                $('#chat_body').css('display', 'none');
+                                $('#chat_form').css('display', 'block');
+                                $('.chat_login').css('display', 'none');
+                                $('.chat_fullscreen_loader').css('display', 'block');
+                                break;
+                            case 4:
+                                $('#chat_converse').css('display', 'none');
+                                $('#chat_body').css('display', 'none');
+                                $('#chat_form').css('display', 'none');
+                                $('.chat_login').css('display', 'none');
+                                $('.chat_fullscreen_loader').css('display', 'block');
+                                $('#chat_fullscreen').css('display', 'block');
+                                break;
+                        }
+                    }
+
+                </script>
+                <!--Final CHAT BOT-->
+                <!-- Back to Top -->
+                <a href="#" style="bottom: 80px" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+                <!-- JavaScript Libraries -->
+                <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+                <script src="~/lib/easing/easing.min.js"></script>
+                <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
+
+                <!-- Contact Javascript File -->
+                <script src="~/mail/jqBootstrapValidation.min.js"></script>
+                <script src="~/mail/contact.js"></script>
+
+                <!-- Template Javascript -->
+                <script src="~/js/main.js"></script>
+
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+                <br />
+                <div class="text-center mb-4">
+                    <h2 class="section-title px-5"><span class="px-2">Productos de Maquillaje</span></h2>
+                </div>
+                <div class="row px-xl-3 pb-3">
+                    @foreach (var producto in Model)
+                    {
+                        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                            <div class="card product-item border-0 mb-4">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    <img class="img-fluid w-100" src="@(producto.FotoProducto != null ? $"data:image/jpeg;base64,{Convert.ToBase64String(producto.FotoProducto)}" : "~/img/default.jpg")" alt="">
+                                </div>
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                    <h6 class="text-truncate mb-3">@producto.NombreProducto</h6>
+                                    <div class="d-flex flex-column align-items-center">
+                                        <h6>CRC @producto.PrecioXVenta</h6>
+                                        <h6>
+                                            @(producto.Stock > 0 ? "" : "")@if (producto.Stock >= 1)
+                                            {
+                                                <span class="text-success">Disponible</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-danger">No Disponible</span>
+                                            }
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="card-footer d-flex justify-content-between bg-light border">
+                                    <a href="@Url.Action("Details", new { id = producto.ProductoId })" class="btn btn-sm text-dark p-0">
+                                        <i class="fas fa-eye text-primary mr-1"></i>Ver Producto
+                                    </a>
+                                    <a href="@Url.Action("AddToCart", new { id = producto.ProductoId })" class="btn btn-sm text-dark p-0">
+                                        <i class="fas fa-shopping-cart text-primary mr-1"></i>Agregar al Carrito
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+</body>
+
+</html>

@@ -24,45 +24,6 @@ namespace LeahMakeUp.Controllers
             var leahDBContext = _context.Catalogos.Include(c => c.Inventario);
             return View(await leahDBContext.ToListAsync());
         }
-     
-/*****************************************/
-        // GET: Catalogos/Labial
-        public IActionResult Maquillaje()
-        {
-            var productosMaquillaje = _context.Inventarios
-                                        .Where(i => i.Categoria.Equals("Maquillaje"))
-                                        .ToList();
-
-            ViewBag.Categoria = "Maquillaje";
-            return View("Maquillaje", productosMaquillaje);
-        }
-
- 
-        // GET: Catalogos/Paletas
-        public IActionResult SkinCare()
-        {
-            var productosSkinCare = _context.Inventarios
-                                        .Where(i => i.Categoria.Equals("SkinCare"))
-                                        .ToList();
-
-            ViewBag.Categoria = "SkinCare"; 
-            return View("SkinCare", productosSkinCare);
-        }
-
-
-        // GET: Catalogos/Sombras
-        public IActionResult Articulos()
-        {
-            var productosArticulos = _context.Inventarios
-                                       .Where(i => i.Categoria.Equals("Articulos"))
-                                       .ToList();
-
-            ViewBag.Categoria = "Articulos"; 
-            return View("Articulos", productosArticulos);
-        }
-
-
-
 
         // GET: Catalogos/Details/5
         public async Task<IActionResult> Details(int? id)

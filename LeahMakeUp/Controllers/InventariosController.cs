@@ -24,6 +24,38 @@ namespace LeahMakeUp.Controllers
         {
             _context = context;
         }
+        public async Task<IActionResult> Productos()
+        {
+            var productos = await _context.Inventarios.ToListAsync();
+            return View(productos);
+        }
+        public async Task<IActionResult> SkinCare()
+        {
+            var productos = _context.Inventarios
+                                        .Where(i => i.Categoria.Equals("SkinCare"))
+                                        .ToList();
+
+            ViewBag.Categoria = "SkinCare";
+            return View("SkinCare", productos);
+        }
+        public async Task<IActionResult> Articulos()
+        {
+            var productos = _context.Inventarios
+                                        .Where(i => i.Categoria.Equals("Articulos"))
+                                        .ToList();
+
+            ViewBag.Categoria = "Articulos";
+            return View("Articulos", productos);
+        }
+        public async Task<IActionResult> Maquillaje()
+        {
+            var productos = _context.Inventarios
+                                        .Where(i => i.Categoria.Equals("Maquillaje"))
+                                        .ToList();
+
+            ViewBag.Categoria = "Maquillaje";
+            return View("Maquillaje", productos);
+        }
 
         // Método para generar informe PDF
         public async Task<IActionResult> GenerarInformePDF(DateTime fechaInicio, DateTime fechaFin, string categoria)

@@ -14,10 +14,10 @@ namespace LeahMakeUp.Controllers
             _logger = logger;
         }
 
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
+        public ActionResult Chat()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             return View();
