@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using LeahMakeUp.Models;
+using iText.Kernel.Exceptions;
+using iText.Kernel.Geom;
 
 namespace LeahMakeUp.Controllers
 {
@@ -72,58 +74,72 @@ namespace LeahMakeUp.Controllers
                     .Where(i => i.FechaAgregado >= fechaInicio && i.FechaAgregado <= fechaFin && (string.IsNullOrEmpty(categoria) || i.Categoria == categoria))
                     .ToListAsync();
 
-                using (var ms = new MemoryStream())
-                {
-                    var writer = new PdfWriter(ms);
-                    var pdf = new PdfDocument(writer);
-                    var document = new Document(pdf);
+                string tempFilePath = System.IO.Path.GetTempFileName();
 
-                    // Título del documento
-                    document.Add(new Paragraph("Informe de Inventario"));
-                    document.Add(new Paragraph($"Fecha: {DateTime.Now}"));
-                    document.Add(new Paragraph(" "));
+                using (var writer = new PdfWriter(tempFilePath))
+                {                    
+                    using (var pdf = new PdfDocument(writer))
+                    {              
+                        var pageSize = PageSize.A4.Rotate(); 
+                        using (var document = new Document(pdf, pageSize))
+                        {
+                            document.Add(new Paragraph("Informe de Inventario"));
+                            document.Add(new Paragraph($"Fecha: {DateTime.Now}"));
+                            document.Add(new Paragraph(" "));
 
-                    // Tabla de inventario
-                    var table = new Table(10);
-                    table.AddCell("ProductoId");
-                    table.AddCell("NombreProducto");
-                    table.AddCell("Categoria");
-                    table.AddCell("DescripcionProducto");
-                    table.AddCell("Marca");
-                    table.AddCell("PrecioXVenta");
-                    table.AddCell("PrecioXCosto");
-                    table.AddCell("Stock");
-                    table.AddCell("FechaAgregado");
-                    table.AddCell("FechaExpiracion");
+                            var table = new Table(10);
+                            table.AddCell("ProductoId");
+                            table.AddCell("NombreProducto");
+                            table.AddCell("Categoria");
+                            table.AddCell("DescripcionProducto");
+                            table.AddCell("Marca");
+                            table.AddCell("PrecioXVenta");
+                            table.AddCell("PrecioXCosto");
+                            table.AddCell("Stock");
+                            table.AddCell("FechaAgregado");
+                            table.AddCell("FechaExpiracion");
+                           
+                            foreach (var item in inventarios)
+                            {
+                                table.AddCell(item.ProductoId.ToString());
+                                table.AddCell(item.NombreProducto);
+                                table.AddCell(item.Categoria);
+                                table.AddCell(item.DescripcionProducto);
+                                table.AddCell(item.Marca);
+                                table.AddCell(item.PrecioXVenta.ToString());
+                                table.AddCell(item.PrecioXCosto.ToString());
+                                table.AddCell(item.Stock.ToString());
+                                table.AddCell(item.FechaAgregado.ToString("dd/MM/yyyy"));
+                                table.AddCell(item.FechaExpiracion.ToString("dd/MM/yyyy"));
+                            }
 
-                    foreach (var item in inventarios)
-                    {
-                        table.AddCell(item.ProductoId.ToString());
-                        table.AddCell(item.NombreProducto);
-                        table.AddCell(item.Categoria);
-                        table.AddCell(item.DescripcionProducto);
-                        table.AddCell(item.Marca);
-                        table.AddCell(item.PrecioXVenta.ToString());
-                        table.AddCell(item.PrecioXCosto.ToString());
-                        table.AddCell(item.Stock.ToString());
-                        table.AddCell(item.FechaAgregado.ToString("dd/MM/yyyy"));
-                        table.AddCell(item.FechaExpiracion.ToString("dd/MM/yyyy"));
+                            document.Add(table);
+                        }
+
                     }
 
-                    document.Add(table);
-                    document.Close();
+                } 
 
-                    return File(ms.ToArray(), "application/pdf", "Informe_Inventario.pdf");
+                var pdfBytes = await System.IO.File.ReadAllBytesAsync(tempFilePath);
+                                
+                System.IO.File.Delete(tempFilePath);
+
+                if (pdfBytes.Length > 0)
+                {
+                    return File(pdfBytes, "application/pdf", "Informe_Inventario.pdf");
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Error al generar el PDF. El archivo está vacío.");
                 }
             }
             catch (Exception ex)
-            {
+            {               
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Error al generar el informe: {ex.Message}");
             }
         }
 
-
-        // GET: Inventarios
+        //GET: Inventarios
         public async Task<IActionResult> Index()
         {
             var leahDBContext = _context.Inventarios.Include(i => i.Sucursal);
@@ -315,16 +331,19 @@ namespace LeahMakeUp.Controllers
         [Route("Inventarios/Index")]
         public async Task<IActionResult> Index(string searchString)
         {
-            var productos = from p in _context.Inventarios
+            var productos = from p in _context.Inventarios.Include(i => i.Sucursal)
                             select p;
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(searchString))
             {
                 productos = productos.Where(p => p.NombreProducto.Contains(searchString));
             }
 
+            ViewData["SearchString"] = searchString;
+
             return View(await productos.ToListAsync());
         }
+
 
     }
 }

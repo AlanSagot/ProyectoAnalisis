@@ -4,6 +4,7 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(LeahDBContext))]
-    partial class LeahDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240722062902_CambiosPlanillas")]
+    partial class CambiosPlanillas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -412,8 +415,14 @@ namespace DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PlanillaId"));
 
+                    b.Property<int>("Empleado")
+                        .HasColumnType("int");
+
                     b.Property<int>("EmpleadoId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("FechaIngreso")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("PuestoId")
                         .HasColumnType("int");
@@ -583,7 +592,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Planillas", b =>
                 {
-                    b.HasOne("DAL.Empleado", "Empleado")
+                    b.HasOne("DAL.Empleado", null)
                         .WithOne("Planillas")
                         .HasForeignKey("DAL.Planillas", "EmpleadoId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -600,8 +609,6 @@ namespace DAL.Migrations
                         .HasForeignKey("SucursalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Empleado");
 
                     b.Navigation("Puesto");
 

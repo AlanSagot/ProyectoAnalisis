@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL;
+using LeahMakeUp.Models;
 
 namespace LeahMakeUp.Controllers
 {
@@ -21,7 +22,7 @@ namespace LeahMakeUp.Controllers
         // GET: Planillas
         public async Task<IActionResult> Index()
         {
-            var leahDBContext = _context.Planillas.Include(p => p.Puesto).Include(p => p.Sucursal);
+            var leahDBContext = _context.Planillas.Include(p => p.Puesto).Include(p => p.Sucursal).Include(p => p.Empleado);
             return View(await leahDBContext.ToListAsync());
         }
 
@@ -36,6 +37,7 @@ namespace LeahMakeUp.Controllers
             var planillas = await _context.Planillas
                 .Include(p => p.Puesto)
                 .Include(p => p.Sucursal)
+                .Include(p => p.Empleado)
                 .FirstOrDefaultAsync(m => m.PlanillaId == id);
             if (planillas == null)
             {
@@ -48,8 +50,9 @@ namespace LeahMakeUp.Controllers
         // GET: Planillas/Create
         public IActionResult Create()
         {
-            ViewData["PuestoId"] = new SelectList(_context.Puestos, "PuestoId", "Departamento");
-            ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion");
+            ViewData["PuestoId"] = new SelectList(_context.Puestos, "PuestoId", "NombrePuesto");
+            ViewData["Departamento"] = new SelectList(_context.Puestos.Select(p => p.Departamento).Distinct());
+            ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion"); 
             return View();
         }
 
@@ -58,18 +61,56 @@ namespace LeahMakeUp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PlanillaId,Salario,FechaIngreso,PuestoId,SucursalId")] Planillas planillas)
+        public async Task<IActionResult> Create(PlanillasCreateViewModel planillas)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(planillas);
+                var puesto = await _context.Puestos.FindAsync(planillas.PuestoId);
+                if (puesto == null)
+                {
+                    return NotFound();
+                }
+
+                planillas.Departamento = puesto.Departamento;
+                planillas.NombrePuesto = puesto.NombrePuesto;
+
+                
+
+                Empleado newEmpleado = new Empleado
+                {
+                    Cedula = planillas.Cedula,
+                    Nombre = planillas.Nombre,
+                    PrimerApellido = planillas.PrimerApellido,
+                    SegundoApellido = planillas.SegundoApellido,
+                    Telefono = planillas.Telefono,
+                    Direccion = planillas.Direccion,
+                    Email = planillas.Email,
+                    Estado = planillas.Estado,
+                    FechaContratacion = planillas.FechaContratacion,
+                    PuestoId = planillas.PuestoId,
+                    SucursalId = planillas.SucursalId,
+                };
+
+                Planillas newPlanilla = new Planillas
+                {
+                    EmpleadoId = newEmpleado.EmpleadoId,
+                    PuestoId = planillas.PuestoId,
+                    SucursalId = planillas.SucursalId,
+                    Salario = planillas.Salario,
+                };
+
+                _context.Planillas.Add(newPlanilla);
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PuestoId"] = new SelectList(_context.Puestos, "PuestoId", "Departamento", planillas.PuestoId);
-            ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion", planillas.SucursalId);
+
+            ViewData["PuestoId"] = new SelectList(_context.Puestos, "PuestoId", "NombrePuesto");
+            ViewData["Departamento"] = new SelectList(_context.Puestos.Select(p => p.Departamento).Distinct());
+            ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion"); 
             return View(planillas);
         }
+
 
         // GET: Planillas/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -84,8 +125,9 @@ namespace LeahMakeUp.Controllers
             {
                 return NotFound();
             }
-            ViewData["PuestoId"] = new SelectList(_context.Puestos, "PuestoId", "Departamento", planillas.PuestoId);
-            ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion", planillas.SucursalId);
+            ViewData["PuestoId"] = new SelectList(_context.Puestos, "PuestoId", "NombrePuesto");
+            ViewData["Departamento"] = new SelectList(_context.Puestos.Select(p => p.Departamento).Distinct());
+            ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion"); 
             return View(planillas);
         }
 
@@ -94,7 +136,7 @@ namespace LeahMakeUp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PlanillaId,Salario,FechaIngreso,PuestoId,SucursalId")] Planillas planillas)
+        public async Task<IActionResult> Edit(int id, [Bind("PlanillaId,EmpleadoId,PuestoId,SucursalId,Salario,FechaIngreso")] Planillas planillas)
         {
             if (id != planillas.PlanillaId)
             {
@@ -121,8 +163,9 @@ namespace LeahMakeUp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PuestoId"] = new SelectList(_context.Puestos, "PuestoId", "Departamento", planillas.PuestoId);
-            ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion", planillas.SucursalId);
+            ViewData["PuestoId"] = new SelectList(_context.Puestos, "PuestoId", "NombrePuesto");
+            ViewData["Departamento"] = new SelectList(_context.Puestos.Select(p => p.Departamento).Distinct());
+            ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion"); 
             return View(planillas);
         }
 
@@ -137,6 +180,7 @@ namespace LeahMakeUp.Controllers
             var planillas = await _context.Planillas
                 .Include(p => p.Puesto)
                 .Include(p => p.Sucursal)
+                .Include(p => p.Empleado)
                 .FirstOrDefaultAsync(m => m.PlanillaId == id);
             if (planillas == null)
             {

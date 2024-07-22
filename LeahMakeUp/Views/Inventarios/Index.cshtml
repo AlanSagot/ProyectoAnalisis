@@ -59,10 +59,9 @@
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
-
-                <form asp-action="Index" asp-controller="Home">
+                <form asp-action="Index" asp-controller="Inventarios" method="get">
                     <div class="input-group">
-                        <input type="text" name="searchString" class="form-control" placeholder="Buscar productos">
+                        <input type="text" name="searchString" class="form-control" placeholder="Buscar productos" value="@ViewData["SearchString"]" />
                         <div class="input-group-append">
                             <button type="submit" class="input-group-text bg-transparent text-primary border-0">
                                 <i class="fa fa-search"></i>
@@ -71,6 +70,8 @@
                     </div>
                 </form>
             </div>
+
+
 
             <div class="col-lg-3 col-6 text-right">
                 <a href="" class="btn border">
@@ -122,15 +123,15 @@
     <form id="GenerarInformeForm" asp-action="GenerarInformePDF" method="get" class="form-inline">
         <div class="form-group mb-2">
             <label for="fechaInicio" class="mr-2">Fecha Inicio</label>
-            <input type="date" id="fechaInicio" name="fechaInicio" class="form-control" required />
+            <input type="date" id="fechaInicio" name="fechaInicio" class="form-control ml-2" required />
         </div>
-        <div class="form-group mb-2">
+        <div class="form-group mb-2 ml-3">
             <label for="fechaFin" class="mr-2">Fecha Fin</label>
-            <input type="date" id="fechaFin" name="fechaFin" class="form-control" required />
+            <input type="date" id="fechaFin" name="fechaFin" class="form-control ml-2" required />
         </div>
-        <div class="form-group mb-2">
+        <div class="form-group mb-2 ml-3">
             <label for="categoria" class="mr-2">Categoría</label>
-            <select id="categoria" name="categoria" class="form-control">
+            <select id="categoria" name="categoria" class="form-control ml-2">
                 <option value="">Todas</option>
                 @foreach (var categoria in Model.Select(i => i.Categoria).Distinct())
                 {
@@ -139,6 +140,7 @@
             </select>
         </div>
     </form>
+
 
     <table class="table">
         <thead>

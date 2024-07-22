@@ -64,6 +64,11 @@ namespace LeahMakeUp.Models
         public int SucursalId { get; set; }
         public Sucursal Sucursal { get; set; }
 
+        [DisplayName("Empleado")]
+        [ForeignKey("Empleado")]
+        public int EpleadoId { get; set; }
+        public Empleado Empleado { get; set; }
+
         public ICollection<Catalogos> Catalogos { get; set; } = new List<Catalogos>();
         public ICollection<Envio> Envios { get; set; } = new List<Envio>();
         public ICollection<Factura> Facturas { get; set; } = new List<Factura>();

@@ -234,6 +234,11 @@
                                     <a asp-controller="Inventarios" asp-action="Articulos" class="dropdown-item">Artículos</a>
                                 </div>
                             </div>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a asp-controller="Planillas" asp-action="Index" class="nav-item nav-link">Planillas</a>
+                            }
+                            
                             <a asp-controller="Inventarios" asp-action="Productos" class="nav-item nav-link">Productos</a>
                             <!-- METODO DE PAGO -->
                             <a href="~/MetodoPago" class="nav-item nav-link">Métodos de Pago</a>
