@@ -1,91 +1,172 @@
 ﻿@model PlanillasCreateViewModel
 
 @{
-    ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Crear Planilla";
 }
 
-<h4>Planillas</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Cedula" class="control-label"></label>
-                <input asp-for="Cedula" class="form-control" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>@ViewData["Title"]</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Crear Planilla" name="description">
+
+    <!-- Favicon -->
+    <link href="~/img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/css/style.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .form-floating {
+            margin-bottom: 15px;
+        }
+
+        .btn-primary {
+            background-color: #ffb6c1;
+            border: none;
+            color: #fff;
+            font-weight: 500;
+        }
+
+            .btn-primary:hover {
+                background-color: #ff9aad;
+            }
+
+        .alert {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+        <form id="planillaForm" asp-action="Create" method="post">
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="form-floating mb-3">
+                <input asp-for="Cedula" class="form-control" placeholder="Cédula" />
+                <label asp-for="Cedula">Cédula</label>
                 <span asp-validation-for="Cedula" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
+            <div class="form-floating mb-3">
+                <input asp-for="Nombre" class="form-control" placeholder="Nombre" />
+                <label asp-for="Nombre">Nombre</label>
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PrimerApellido" class="control-label"></label>
-                <input asp-for="PrimerApellido" class="form-control" />
+            <div class="form-floating mb-3">
+                <input asp-for="PrimerApellido" class="form-control" placeholder="Primer Apellido" />
+                <label asp-for="PrimerApellido">Primer Apellido</label>
                 <span asp-validation-for="PrimerApellido" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="SegundoApellido" class="control-label"></label>
-                <input asp-for="SegundoApellido" class="form-control" />
+            <div class="form-floating mb-3">
+                <input asp-for="SegundoApellido" class="form-control" placeholder="Segundo Apellido" />
+                <label asp-for="SegundoApellido">Segundo Apellido</label>
                 <span asp-validation-for="SegundoApellido" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Telefono" class="control-label"></label>
-                <input asp-for="Telefono" class="form-control" />
+            <div class="form-floating mb-3">
+                <input asp-for="Telefono" class="form-control" placeholder="Teléfono" />
+                <label asp-for="Telefono">Teléfono</label>
                 <span asp-validation-for="Telefono" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Direccion" class="control-label"></label>
-                <input asp-for="Direccion" class="form-control" />
+            <div class="form-floating mb-3">
+                <input asp-for="Direccion" class="form-control" placeholder="Dirección" />
+                <label asp-for="Direccion">Dirección</label>
                 <span asp-validation-for="Direccion" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
+            <div class="form-floating mb-3">
+                <input asp-for="Email" class="form-control" placeholder="Email" />
+                <label asp-for="Email">Email</label>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Estado" class="control-label"></label>
-                <input asp-for="Estado" class="form-control" />
+            <div class="form-floating mb-3">
+                <input asp-for="Estado" class="form-control" placeholder="Estado" />
+                <label asp-for="Estado">Estado</label>
                 <span asp-validation-for="Estado" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="FechaContratacion" class="control-label"></label>
-                <input asp-for="FechaContratacion" class="form-control" />
+            <div class="form-floating mb-3">
+                <input asp-for="FechaContratacion" class="form-control" placeholder="Fecha de Contratación" />
+                <label asp-for="FechaContratacion">Fecha de Contratación</label>
                 <span asp-validation-for="FechaContratacion" class="text-danger"></span>
             </div>
-             <div class="form-group">
-                <label asp-for="PuestoId" class="control-label"></label>
+            <div class="form-floating mb-3">
                 <select asp-for="PuestoId" class="form-control" asp-items="ViewBag.PuestoId"></select>
+                <label asp-for="PuestoId">Puesto</label>
                 <span asp-validation-for="PuestoId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Departamento" class="control-label"></label>
+            <div class="form-floating mb-3">
                 <select asp-for="Departamento" class="form-control" asp-items="ViewBag.Departamento"></select>
+                <label asp-for="Departamento">Departamento</label>
                 <span asp-validation-for="Departamento" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="SucursalId" class="control-label"></label>
-                <select asp-for="SucursalId" class ="form-control" asp-items="ViewBag.SucursalId"></select>
+            <div class="form-floating mb-3">
+                <select asp-for="SucursalId" class="form-control" asp-items="ViewBag.SucursalId"></select>
+                <label asp-for="SucursalId">Sucursal</label>
             </div>
-            <div class="form-group">
-                <label asp-for="Salario" class="control-label"></label>
-                <input asp-for="Salario" class="form-control" />
+            <div class="form-floating mb-3">
+                <input asp-for="Salario" class="form-control" placeholder="Salario" />
+                <label asp-for="Salario">Salario</label>
                 <span asp-validation-for="Salario" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Crear" class="btn btn-primary" />
-            </div>
+            <button id="planillaSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Crear</button>
         </form>
+        <div id="successMessage" class="alert alert-success" role="alert">
+            ¡Planilla creada correctamente!
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Regresar</a>
-</div>
+    <script>
+        document.getElementById('planillaForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevenir el envío normal del formulario
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+            var form = event.target;
+            var formData = new FormData(form);
+
+            fetch(form.action, {
+                method: form.method,
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    // Redirigir a la página de índice
+                    window.location.href = '@Url.Action("Index", "Planillas")';
+                } else {
+                    // Manejar errores si es necesario
+                    alert('Hubo un problema al crear la planilla.');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('Hubo un problema al crear la planilla.');
+            });
+        });
+    </script>
+</body>
+</html>

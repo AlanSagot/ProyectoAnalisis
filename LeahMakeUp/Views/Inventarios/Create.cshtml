@@ -5,81 +5,175 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h4>Agregar producto al inventario</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>@ViewData["Title"]</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Crear Inventario" name="description">
+
+    <!-- Favicon -->
+    <link href="~/img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/css/style.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1, h4 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .form-floating {
+            margin-bottom: 15px;
+        }
+
+        .btn-primary {
+            background-color: #ffb6c1;
+            border: none;
+            color: #fff;
+            font-weight: 500;
+        }
+
+            .btn-primary:hover {
+                background-color: #ff9aad;
+            }
+
+        .alert {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h4>Agregar producto al inventario</h4>
+        <hr />
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Codigo" class="control-label"></label>
-                <input asp-for="Codigo" class="form-control" />
+
+            <div class="form-floating mb-3">
+                <input asp-for="Codigo" class="form-control" placeholder="Código" />
+                <label asp-for="Codigo">Código</label>
                 <span asp-validation-for="Codigo" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-floating mb-3">
+                <input type="file" accept="image/png" class="form-control" name="FotoProducto" placeholder="Foto Producto">
                 <label for="FotoProducto">Foto Producto</label>
-                <input type="file" accept="image/png" class="form-control" name="FotoProducto">
             </div>
-            <div class="form-group">
-                <label asp-for="NombreProducto" class="control-label"></label>
-                <input asp-for="NombreProducto" class="form-control" />
+            <div class="form-floating mb-3">
+                <input asp-for="NombreProducto" class="form-control" placeholder="Nombre Producto" />
+                <label asp-for="NombreProducto">Nombre Producto</label>
                 <span asp-validation-for="NombreProducto" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Categoria" class="control-label"></label>
-                <input asp-for="Categoria" class="form-control" />
+            <div class="form-floating mb-3">
+                <input asp-for="Categoria" class="form-control" placeholder="Categoría" />
+                <label asp-for="Categoria">Categoría</label>
                 <span asp-validation-for="Categoria" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="DescripcionProducto" class="control-label"></label>
-                <input asp-for="DescripcionProducto" class="form-control" />
+            <div class="form-floating mb-3">
+                <input asp-for="DescripcionProducto" class="form-control" placeholder="Descripción Producto" />
+                <label asp-for="DescripcionProducto">Descripción Producto</label>
                 <span asp-validation-for="DescripcionProducto" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Marca" class="control-label"></label>
-                <input asp-for="Marca" class="form-control" />
+            <div class="form-floating mb-3">
+                <input asp-for="Marca" class="form-control" placeholder="Marca" />
+                <label asp-for="Marca">Marca</label>
                 <span asp-validation-for="Marca" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PrecioXVenta" class="control-label"></label>
-                <input asp-for="PrecioXVenta" class="form-control" />
+            <div class="form-floating mb-3">
+                <input asp-for="PrecioXVenta" class="form-control" placeholder="Precio por Venta" />
+                <label asp-for="PrecioXVenta">Precio por Venta</label>
                 <span asp-validation-for="PrecioXVenta" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PrecioXCosto" class="control-label"></label>
-                <input asp-for="PrecioXCosto" class="form-control" />
+            <div class="form-floating mb-3">
+                <input asp-for="PrecioXCosto" class="form-control" placeholder="Precio por Costo" />
+                <label asp-for="PrecioXCosto">Precio por Costo</label>
                 <span asp-validation-for="PrecioXCosto" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Stock" class="control-label"></label>
-                <input asp-for="Stock" class="form-control" />
+            <div class="form-floating mb-3">
+                <input asp-for="Stock" class="form-control" placeholder="Stock" />
+                <label asp-for="Stock">Stock</label>
                 <span asp-validation-for="Stock" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="FechaAgregado" class="control-label"></label>
-                <input asp-for="FechaAgregado" class="form-control" />
+            <div class="form-floating mb-3">
+                <input asp-for="FechaAgregado" class="form-control" placeholder="Fecha Agregado" />
+                <label asp-for="FechaAgregado">Fecha Agregado</label>
                 <span asp-validation-for="FechaAgregado" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="FechaExpiracion" class="control-label"></label>
-                <input asp-for="FechaExpiracion" class="form-control" />
+            <div class="form-floating mb-3">
+                <input asp-for="FechaExpiracion" class="form-control" placeholder="Fecha Expiración" />
+                <label asp-for="FechaExpiracion">Fecha Expiración</label>
                 <span asp-validation-for="FechaExpiracion" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="SucursalId" class="control-label"></label>
-                <select asp-for="SucursalId" class="form-control" asp-items="ViewBag.SucursalId"></select>
+            <div class="form-floating mb-3">
+                <select asp-for="SucursalId" class="form-control" asp-items="ViewBag.SucursalId" placeholder="Sucursal">
+                    <option value="">Seleccione una sucursal</option>
+                </select>
+                <label asp-for="SucursalId">Sucursal</label>
             </div>
-            <br />
-            <div class="form-group">
-                <input type="submit" value="Crear" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
 
-<div>
-    <a asp-action="Index">Regresar</a>
-</div>
+            <button type="submit" class="w-100 btn btn-lg btn-primary">Crear</button>
+        </form>
+        <div id="successMessage" class="alert alert-success" role="alert">
+            ¡Producto agregado correctamente!
+        </div>
+        <div class="mt-3">
+            <a asp-action="Index" class="btn btn-secondary">Regresar</a>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevenir el envío normal del formulario
+
+            var form = event.target;
+            var formData = new FormData(form);
+
+            fetch(form.action, {
+                method: form.method,
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    // Mostrar mensaje de éxito
+                    document.getElementById('successMessage').style.display = 'block';
+                    // Opcional: Redirigir a otra página
+                    // window.location.href = '/Inventario/Index';
+                } else {
+                    // Manejar errores si es necesario
+                    alert('Hubo un problema al agregar el producto.');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('Hubo un problema al agregar el producto.');
+            });
+        });
+    </script>
+</body>
+</html>
 
 @section Scripts {
     @{
