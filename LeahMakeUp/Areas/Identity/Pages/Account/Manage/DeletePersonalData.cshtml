@@ -5,28 +5,117 @@
     ViewData["ActivePage"] = ManageNavPages.PersonalData;
 }
 
-<h3>@ViewData["Title"]</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>@ViewData["Title"]</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Eliminar Cuenta" name="description">
 
-<div class="alert alert-warning" role="alert">
-    <p>
-        <strong>Ingresa tu contraseña para eliminar la cuenta de manera permanente</strong>
-    </p>
-</div>
+    <!-- Favicon -->
+    <link href="~/img/favicon.ico" rel="icon">
 
-<div>
-    <form id="delete-user" method="post">
-        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-        @if (Model.RequirePassword)
-        {
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Please enter your password." />
-                <label asp-for="Input.Password" class="form-label"></label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/css/style.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f7f7;
         }
-        <button class="w-100 btn btn-lg btn-danger" type="submit">Eliminar cuenta y cerrar sesión</button>
-    </form>
-</div>
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1, h4 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .form-floating {
+            margin-bottom: 15px;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
+            color: #fff;
+            font-weight: 500;
+        }
+
+            .btn-danger:hover {
+                background-color: #c82333;
+            }
+
+        .alert {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h4>@ViewData["Title"]</h4>
+        <hr />
+        <div class="alert alert-warning" role="alert">
+            <p><strong>Ingresa tu contraseña para eliminar la cuenta de manera permanente</strong></p>
+        </div>
+        <form id="delete-user" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            @if (Model.RequirePassword)
+            {
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Please enter your password." />
+                    <label asp-for="Input.Password" class="form-label"></label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+            }
+            <button type="submit" class="w-100 btn btn-lg btn-danger">Eliminar cuenta y cerrar sesión</button>
+        </form>
+    </div>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevenir el envío normal del formulario
+
+            var form = event.target;
+            var formData = new FormData(form);
+
+            fetch(form.action, {
+                method: form.method,
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    // Mostrar mensaje de éxito
+                    document.getElementById('successMessage').style.display = 'block';
+                    // Opcional: Redirigir a otra página
+                    // window.location.href = '/DeleteAccount/Success';
+                } else {
+                    // Manejar errores si es necesario
+                    alert('Hubo un problema al eliminar la cuenta.');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('Hubo un problema al eliminar la cuenta.');
+            });
+        });
+    </script>
+</body>
+</html>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

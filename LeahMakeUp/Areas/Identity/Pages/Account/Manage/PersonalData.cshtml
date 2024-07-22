@@ -5,17 +5,93 @@
     ViewData["ActivePage"] = ManageNavPages.PersonalData;
 }
 
-<h3>@ViewData["Title"]</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>@ViewData["Title"]</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Eliminar Cuenta" name="description">
 
-<div class="row">
-    <div class="col-md-6">
-        <p>Si borras la cuenta será de manera permanente y no se podrá recuperar</p>
+    <!-- Favicon -->
+    <link href="~/img/favicon.ico" rel="icon">
 
-        <p>
-            <a id="delete" asp-page="DeletePersonalData" class="btn btn-danger">Eliminar</a>
-        </p>
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/css/style.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1, h4 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .form-floating {
+            margin-bottom: 15px;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
+            color: #fff;
+            font-weight: 500;
+        }
+
+            .btn-danger:hover {
+                background-color: #c82333;
+            }
+
+        .alert {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h4>@ViewData["Title"]</h4>
+        <hr />
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <p>Si borras la cuenta será de manera permanente y no se podrá recuperar</p>
+                <p>
+                    <a id="delete" asp-page="DeletePersonalData" class="w-100 btn btn-lg btn-danger">Eliminar</a>
+                </p>
+            </div>
+        </div>
     </div>
-</div>
+
+    <script>
+        document.getElementById('delete').addEventListener('click', function (event) {
+            event.preventDefault();
+
+            if (confirm('¿Estás seguro de que deseas eliminar tu cuenta de manera permanente?')) {
+                window.location.href = this.href;
+            }
+        });
+    </script>
+</body>
+</html>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
