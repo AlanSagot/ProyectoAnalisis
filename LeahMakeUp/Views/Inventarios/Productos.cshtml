@@ -261,6 +261,7 @@
 
 
                    <!--CHAT BOT-->
+                <!--CHAT BOT-->
 
                 <div class="fabs" id="fabs-chat">
                     <div class="chat">
@@ -287,9 +288,9 @@
                             </span>
                             <span class="chat_msg_item">
                                 <ul class="tags">
-                                    <li class="option" data-response="Tarjeta">¿Qué métodos de pago?</li>
-                                    <li class="option" data-response="En carro">¿Cómo llego?</li>
-                                    <li class="option" data-response="Este es el número...">Me gustaría que me atienda un asesor</li>
+                                    <li class="option" data-response="En la tienda actualmente sólo funcionamos por pagos en Sinpe o efectivo">¿Qué métodos de pago tienen?</li>
+                                    <li class="option" data-response="Contamos con dos surcursales, la primera se encuentra en el Mall San Pedro, San José. La segunda en Expresso, San José.... Si gustas información más exacta, dirígete al apartado de Contacto.">¿Dónde se ubican?</li>
+                                    <li class="option" data-response="Si quieres que te atienda alguno de nuestros encargados dirígete a este link [link]">Me gustaría que me atienda un asesor</li>
                                 </ul>
                             </span>
                         </div>
@@ -299,116 +300,125 @@
                     </a>
 
                 </div>
-    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script>
-        hideChat(0);
+                <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+                <script>
+                    hideChat(0);
 
-        $('#prime').click(function () {
-            toggleFab();
-        });
+                    $('#prime').click(function () {
+                        toggleFab();
+                    });
 
-        //Toggle chat
-        function toggleFab() {
-            $('.prime').toggleClass('zmdi-comment-outline');
-            $('.prime').toggleClass('zmdi-close');
-            $('.prime').toggleClass('is-active');
-            $('.prime').toggleClass('is-visible');
-            $('#prime').toggleClass('is-float');
-            $('.chat').toggleClass('is-visible');
-            $('.fab-chat').toggleClass('is-visible');
+                    //Toggle chat
+                    function toggleFab() {
+                        $('.prime').toggleClass('zmdi-comment-outline');
+                        $('.prime').toggleClass('zmdi-close');
+                        $('.prime').toggleClass('is-active');
+                        $('.prime').toggleClass('is-visible');
+                        $('#prime').toggleClass('is-float');
+                        $('.chat').toggleClass('is-visible');
+                        $('.fab-chat').toggleClass('is-visible');
 
-        }
-        $('.option').click(function () {
-            var userText = $(this).text();
-            var responseText = $(this).data('response');
+                    }
+                    $('.option').click(function () {
+                        var userText = $(this).text();
+                        var responseText = $(this).data('response');
 
-            $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_user">' + userText + '</span>');
-            $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar"><img src="@Url.Content("~/img/Bot.gif")" /></div>' + responseText + '</span>');
+                        $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_user">' + userText + '</span>');
+                        $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar"><img src="@Url.Content("~/img/Bot.gif")" /></div>' + responseText + '</span>');
 
-            scrollToBottom();
-            showOptions();
-        });
+                        scrollToBottom();
+                        showOptions();
+                    });
 
-        function showOptions() {
-            $('#chat_fullscreen').append('<span class="chat_msg_item"><ul class="tags"><li class="option" data-response="Tarjeta">¿Qué métodos de pago?</li><li class="option" data-response="En carro">¿Cómo llego?</li><li class="option" data-response="Este es el número...">Me gustaría que me atienda un asesor</li></ul></span>');
+                    function showOptions() {
+                        $('#chat_fullscreen').append(
+                            '<span class="chat_msg_item">' +
+                            '<ul class="tags">' +
+                            '<li class="option" data-response="En la tienda actualmente sólo funcionamos por pagos en Sinpe o efectivo">¿Qué métodos de pago tienen?</li>' +
+                            '<li class="option" data-response="Contamos con dos surcursales, la primera se encuentra en el Mall San Pedro, San José. La segunda en Expresso, San José.... Si gustas información más exacta, dirígete al apartado de Contacto.">¿Dónde se ubican?</li>' +
+                            '<li class="option" data-response="Si quieres que te atienda alguno de nuestros encargados dirígete a este link [link]">Me gustaría que me atienda un asesor</li>' +
+                            '</ul>' +
+                            '</span>'
+                        );
 
-            $('.option').off('click').on('click', function () {
-                var userText = $(this).text();
-                var responseText = $(this).data('response');
+                        $('.option').off('click').on('click', function () {
+                            var userText = $(this).text();
+                            var responseText = $(this).data('response');
 
-                $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_user">' + userText + '</span>');
-                $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar"><img src="@Url.Content("~/img/Bot.gif")"/></div>' + responseText + '</span>');
+                            $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_user">' + userText + '</span>');
+                            $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar"><img src="@Url.Content("~/img/Bot.gif")"/></div>' + responseText + '</span>');
 
-                scrollToBottom();
-                showOptions();
-            });
-        }
-        function scrollToBottom() {
-            $('#chat_fullscreen').scrollTop($('#chat_fullscreen')[0].scrollHeight);
-        }
-        $('#chat_first_screen').click(function (e) {
-            hideChat(1);
-        });
+                            scrollToBottom();
+                            showOptions();
+                        });
+                    }
 
-        $('#chat_fourth_screen').click(function (e) {
-            hideChat(4);
-        });
+                    function scrollToBottom() {
+                        $('#chat_fullscreen').scrollTop($('#chat_fullscreen')[0].scrollHeight);
+                    }
+                    $('#chat_first_screen').click(function (e) {
+                        hideChat(1);
+                    });
 
-        $('#chat_fullscreen_loader').click(function (e) {
-            $('.fullscreen').toggleClass('zmdi-window-maximize');
-            $('.fullscreen').toggleClass('zmdi-window-restore');
-            $('.chat').toggleClass('chat_fullscreen');
-            $('.fab').toggleClass('is-hide');
-            $('.header_img').toggleClass('change_img');
-            $('.img_container').toggleClass('change_img');
-            $('.chat_header').toggleClass('chat_header2');
-            $('.fab_field').toggleClass('fab_field2');
-            $('.chat_converse').toggleClass('chat_converse2');
-        });
+                    $('#chat_fourth_screen').click(function (e) {
+                        hideChat(4);
+                    });
 
-        function hideChat(hide) {
-            switch (hide) {
-                case 0:
-                    $('#chat_converse').css('display', 'none');
-                    $('#chat_body').css('display', 'none');
-                    $('#chat_form').css('display', 'none');
-                    $('.chat_login').css('display', 'block');
-                    $('.chat_fullscreen_loader').css('display', 'none');
-                    $('#chat_fullscreen').css('display', 'none');
-                    break;
-                case 1:
-                    $('#chat_converse').css('display', 'block');
-                    $('#chat_body').css('display', 'none');
-                    $('#chat_form').css('display', 'none');
-                    $('.chat_login').css('display', 'none');
-                    $('.chat_fullscreen_loader').css('display', 'block');
-                    break;
-                case 2:
-                    $('#chat_converse').css('display', 'none');
-                    $('#chat_body').css('display', 'block');
-                    $('#chat_form').css('display', 'none');
-                    $('.chat_login').css('display', 'none');
-                    $('.chat_fullscreen_loader').css('display', 'block');
-                    break;
-                case 3:
-                    $('#chat_converse').css('display', 'none');
-                    $('#chat_body').css('display', 'none');
-                    $('#chat_form').css('display', 'block');
-                    $('.chat_login').css('display', 'none');
-                    $('.chat_fullscreen_loader').css('display', 'block');
-                    break;
-                case 4:
-                    $('#chat_converse').css('display', 'none');
-                    $('#chat_body').css('display', 'none');
-                    $('#chat_form').css('display', 'none');
-                    $('.chat_login').css('display', 'none');
-                    $('.chat_fullscreen_loader').css('display', 'block');
-                    $('#chat_fullscreen').css('display', 'block');
-                    break;
-            }
-        }
+                    $('#chat_fullscreen_loader').click(function (e) {
+                        $('.fullscreen').toggleClass('zmdi-window-maximize');
+                        $('.fullscreen').toggleClass('zmdi-window-restore');
+                        $('.chat').toggleClass('chat_fullscreen');
+                        $('.fab').toggleClass('is-hide');
+                        $('.header_img').toggleClass('change_img');
+                        $('.img_container').toggleClass('change_img');
+                        $('.chat_header').toggleClass('chat_header2');
+                        $('.fab_field').toggleClass('fab_field2');
+                        $('.chat_converse').toggleClass('chat_converse2');
+                    });
 
-    </script>
+                    function hideChat(hide) {
+                        switch (hide) {
+                            case 0:
+                                $('#chat_converse').css('display', 'none');
+                                $('#chat_body').css('display', 'none');
+                                $('#chat_form').css('display', 'none');
+                                $('.chat_login').css('display', 'block');
+                                $('.chat_fullscreen_loader').css('display', 'none');
+                                $('#chat_fullscreen').css('display', 'none');
+                                break;
+                            case 1:
+                                $('#chat_converse').css('display', 'block');
+                                $('#chat_body').css('display', 'none');
+                                $('#chat_form').css('display', 'none');
+                                $('.chat_login').css('display', 'none');
+                                $('.chat_fullscreen_loader').css('display', 'block');
+                                break;
+                            case 2:
+                                $('#chat_converse').css('display', 'none');
+                                $('#chat_body').css('display', 'block');
+                                $('#chat_form').css('display', 'none');
+                                $('.chat_login').css('display', 'none');
+                                $('.chat_fullscreen_loader').css('display', 'block');
+                                break;
+                            case 3:
+                                $('#chat_converse').css('display', 'none');
+                                $('#chat_body').css('display', 'none');
+                                $('#chat_form').css('display', 'block');
+                                $('.chat_login').css('display', 'none');
+                                $('.chat_fullscreen_loader').css('display', 'block');
+                                break;
+                            case 4:
+                                $('#chat_converse').css('display', 'none');
+                                $('#chat_body').css('display', 'none');
+                                $('#chat_form').css('display', 'none');
+                                $('.chat_login').css('display', 'none');
+                                $('.chat_fullscreen_loader').css('display', 'block');
+                                $('#chat_fullscreen').css('display', 'block');
+                                break;
+                        }
+                    }
+
+                </script>
     <!--Final CHAT BOT-->
                 <!-- Back to Top -->
                 <a href="#" style="bottom: 80px" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>

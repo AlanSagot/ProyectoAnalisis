@@ -725,7 +725,7 @@
                 </div>
             </div>
             <div class="chat_body chat_login">
-                <a  id="chat_fourth_screen" class="fab-chat">
+                <a id="chat_fourth_screen" class="fab-chat">
                     <i class="fas fa-arrow-right"></i>
                 </a>
                 <p>¿Tienes dudas? Da click en la flecha de arriba para poder solucionarlas...</p>
@@ -739,9 +739,9 @@
                 </span>
                 <span class="chat_msg_item">
                     <ul class="tags">
-                        <li class="option" data-response="Tarjeta">¿Qué métodos de pago?</li>
-                        <li class="option" data-response="En carro">¿Cómo llego?</li>
-                        <li class="option" data-response="Este es el número...">Me gustaría que me atienda un asesor</li>
+                        <li class="option" data-response="En la tienda actualmente sólo funcionamos por pagos en Sinpe o efectivo">¿Qué métodos de pago tienen?</li>
+                        <li class="option" data-response="Contamos con dos surcursales, la primera se encuentra en el Mall San Pedro, San José. La segunda en Expresso, San José.... Si gustas información más exacta, dirígete al apartado de Contacto.">¿Dónde se ubican?</li>
+                        <li class="option" data-response="Si quieres que te atienda alguno de nuestros encargados dirígete a este link [link]">Me gustaría que me atienda un asesor</li>
                     </ul>
                 </span>
             </div>
@@ -782,7 +782,15 @@
         });
 
         function showOptions() {
-            $('#chat_fullscreen').append('<span class="chat_msg_item"><ul class="tags"><li class="option" data-response="Tarjeta">¿Qué métodos de pago?</li><li class="option" data-response="En carro">¿Cómo llego?</li><li class="option" data-response="Este es el número...">Me gustaría que me atienda un asesor</li></ul></span>');
+            $('#chat_fullscreen').append(
+                '<span class="chat_msg_item">' +
+                '<ul class="tags">' +
+                '<li class="option" data-response="En la tienda actualmente sólo funcionamos por pagos en Sinpe o efectivo">¿Qué métodos de pago tienen?</li>' +
+                '<li class="option" data-response="Contamos con dos surcursales, la primera se encuentra en el Mall San Pedro, San José. La segunda en Expresso, San José.... Si gustas información más exacta, dirígete al apartado de Contacto.">¿Dónde se ubican?</li>' +
+                '<li class="option" data-response="Si quieres que te atienda alguno de nuestros encargados dirígete a este link [link]">Me gustaría que me atienda un asesor</li>' +
+                '</ul>' +
+                '</span>'
+            );
 
             $('.option').off('click').on('click', function () {
                 var userText = $(this).text();
@@ -795,6 +803,7 @@
                 showOptions();
             });
         }
+
         function scrollToBottom() {
             $('#chat_fullscreen').scrollTop($('#chat_fullscreen')[0].scrollHeight);
         }
