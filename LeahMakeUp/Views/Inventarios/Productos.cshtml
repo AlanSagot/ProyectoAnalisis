@@ -287,9 +287,9 @@
                             </span>
                             <span class="chat_msg_item">
                                 <ul class="tags">
-                                    <li class="option" data-response="Tarjeta">¿Qué métodos de pago?</li>
-                                    <li class="option" data-response="En carro">¿Cómo llego?</li>
-                                    <li class="option" data-response="Este es el número...">Me gustaría que me atienda un asesor</li>
+                                    <li class="option" data-response="En la tienda actualmente sólo funcionamos por pagos en Sinpe o efectivos">¿Qué métodos de pago tienen?</li>
+                                    <li class="option" data-response="Contamos con dos surcursales, la primera se encuentra en el Mall San Pedro, San José. La segunda en Expresso, San José.... Si gustas información más exacta, dirígete al apartado de Contacto.">¿Dónde se ubican?</li>
+                                    <li class="option" data-response="Si quieres que te atienda alguno de nuestros encargados dirígete a este link [link]">Me gustaría que me atienda un asesor</li>
                                 </ul>
                             </span>
                         </div>
@@ -329,20 +329,29 @@
             showOptions();
         });
 
-        function showOptions() {
-            $('#chat_fullscreen').append('<span class="chat_msg_item"><ul class="tags"><li class="option" data-response="Tarjeta">¿Qué métodos de pago?</li><li class="option" data-response="En carro">¿Cómo llego?</li><li class="option" data-response="Este es el número...">Me gustaría que me atienda un asesor</li></ul></span>');
+                    function showOptions() {
+                        $('#chat_fullscreen').append(
+                            '<span class="chat_msg_item">' +
+                            '<ul class="tags">' +
+                            '<li class="option" data-response="En la tienda actualmente sólo funcionamos por pagos en Sinpe o efectivos">¿Qué métodos de pago tienen?</li>' +
+                            '<li class="option" data-response="Contamos con dos surcursales, la primera se encuentra en el Mall San Pedro, San José. La segunda en Expresso, San José.... Si gustas información más exacta, dirígete al apartado de Contacto.">¿Dónde se ubican?</li>' +
+                            '<li class="option" data-response="Si quieres que te atienda alguno de nuestros encargados dirígete a este link [link]">Me gustaría que me atienda un asesor</li>' +
+                            '</ul>' +
+                            '</span>'
+                        );
 
-            $('.option').off('click').on('click', function () {
-                var userText = $(this).text();
-                var responseText = $(this).data('response');
+                        $('.option').off('click').on('click', function () {
+                            var userText = $(this).text();
+                            var responseText = $(this).data('response');
 
-                $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_user">' + userText + '</span>');
-                $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar"><img src="@Url.Content("~/img/Bot.gif")"/></div>' + responseText + '</span>');
+                            $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_user">' + userText + '</span>');
+                            $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar"><img src="@Url.Content("~/img/Bot.gif")"/></div>' + responseText + '</span>');
 
-                scrollToBottom();
-                showOptions();
-            });
-        }
+                            scrollToBottom();
+                            showOptions();
+                        });
+                    }
+
         function scrollToBottom() {
             $('#chat_fullscreen').scrollTop($('#chat_fullscreen')[0].scrollHeight);
         }
@@ -435,69 +444,48 @@
         </div>
     </div>
     </div>
-    <div class="text-center mb-4">
-        <h2 class="section-title px-5"><span class="px-2">Todos nuestros productos</span></h2>
-    </div>
-    <div>
-                        <div id="container-product">
-                    @foreach (var producto in Model)
-                    {
-                        <div class="product">
-                            <div class="product-card">
-                                <h2 class="name">@producto.NombreProducto</h2>
+    <div class="container-fluid mb-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">Todos nuestros productos</span></h2>
+        </div>
+        <div id="container-product">
+            @foreach (var producto in Model)
+            {
+                <div class="product">
+                    <div class="product-card">
+                        <img src="@(producto.FotoProducto != null ? $"data:image/jpeg;base64,{Convert.ToBase64String(producto.FotoProducto)}" : Url.Content("~/img/default.jpg"))" class="product-img" alt="">
+                        <h2 class="name">@producto.NombreProducto</h2>
                         <h3 class="name-desc">@producto.DescripcionProducto</h3>
-
-                                <span class="price">CRC @producto.PrecioXVenta</span>
-                                <a class="popup-btn">Ver</a>
-
-                                <img src="@(producto.FotoProducto != null ? $"data:image/jpeg;base64,{Convert.ToBase64String(producto.FotoProducto)}" : Url.Content("~/img/default.jpg"))" class="product-img" alt="">
-                            </div>
-                            <div class="popup-view">
-                                <div class="popup-card">
-                                    <a><i class="fas fa-times close-btn"></i></a>
-                                    <div class="product-img">
-                                        <img src="@(producto.FotoProducto != null ? $"data:image/jpeg;base64,{Convert.ToBase64String(producto.FotoProducto)}" : Url.Content("~/img/default.jpg"))" alt="">
-                                    </div>
-                                    <div class="info">
-                                        <h2>@producto.NombreProducto<br><span>@producto.Categoria</span></h2>
-                                        <p>@producto.DescripcionProducto</p>
-                                        <span class="price">CRC @producto.PrecioXVenta</span>
-                                        <a href="@Url.Action("AddToCart", new { id = producto.ProductoId })" class="add-cart-btn">Add to Cart</a>
-                                        <a href="#" class="add-wish">Add to Wishlist</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
+                        <span class="price">CRC @producto.PrecioXVenta</span>
+                        <a class="popup-btn">Ver</a>
+                    </div>
                 </div>
-
-
-                <script type="text/javascript">
-                    var popupViews = document.querySelectorAll('.popup-view');
-                    var popupBtns = document.querySelectorAll('.popup-btn');
-                    var closeBtns = document.querySelectorAll('.close-btn');
-
-                    //javascript for quick view button
-                    var popup = function (popupClick) {
-                        popupViews[popupClick].classList.add('active');
-                    }
-
-                    popupBtns.forEach((popupBtn, i) => {
-                        popupBtn.addEventListener("click", () => {
-                            popup(i);
-                        });
-                    });
-
-                    //javascript for close button
-                    closeBtns.forEach((closeBtn) => {
-                        closeBtn.addEventListener("click", () => {
-                            popupViews.forEach((popupView) => {
-                                popupView.classList.remove('active');
-                            });
-                        });
-                    });
-                </script>
+            }
+        </div>
     </div>
+    <script>
+        var popupViews = document.querySelectorAll('.popup-view');
+        var popupBtns = document.querySelectorAll('.popup-btn');
+        var closeBtns = document.querySelectorAll('.close-btn');
+
+        var popup = function (popupClick) {
+            popupViews[popupClick].classList.add('active');
+        }
+
+        popupBtns.forEach((popupBtn, i) => {
+            popupBtn.addEventListener("click", () => {
+                popup(i);
+            });
+        });
+
+        closeBtns.forEach((closeBtn) => {
+            closeBtn.addEventListener("click", () => {
+                popupViews.forEach((popupView) => {
+                    popupView.classList.remove('active');
+                });
+            });
+        });
+    </script>
             </body>
 
 </html>
