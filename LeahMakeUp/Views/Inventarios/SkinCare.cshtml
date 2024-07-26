@@ -29,11 +29,11 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
     <script src="~/js/index.js"></script>
-    <link rel="stylesheet" href="~/css/producto.css">
+    <link href="/css/producto.css" rel="stylesheet">
 
     <link href="~/css/chat.css" rel="stylesheet">
     <link href="~/img" rel="stylesheet">
-
+    
 
 </head>
 
@@ -215,9 +215,6 @@
                     <a href="" class="text-decoration-none d-block d-lg-none">
                         <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">L</span>Leah Make Up</h1>
                     </a>
-                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Inicio</a>
@@ -229,10 +226,8 @@
                                 <div class="dropdown-menu" aria-labelledby="catalogosDropdown">
                                     @if (User.IsInRole("Admin"))
                                     {
-                                        <a asp-controller="Inventarios" asp-action="Index" class="dropdown-item">Inventario</a>
-                                        <a asp-controller="Admin" asp-action="Index" class="dropdown-item">Usuarios</a>
                                         <a asp-controller="Catalogos" asp-action="Index" class="dropdown-item">Catálogo</a>
-                                        <a asp-controller="Sucursales" asp-action="Index" class="dropdown-item">Sucursales</a>
+
                                         <div class="dropdown-divider"></div>
                                     }
                                     <a asp-controller="Inventarios" asp-action="Maquillaje" class="dropdown-item">Maquillaje</a>
@@ -240,10 +235,32 @@
                                     <a asp-controller="Inventarios" asp-action="Articulos" class="dropdown-item">Artículos</a>
                                 </div>
                             </div>
-                            <a asp-controller="Inventarios" asp-action="Productos" class="nav-item nav-link">Productos</a>
 
+                            <!-- Dropdown Admin -->
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <div class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Admin
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="adminDropdown">
+
+                                        <a asp-controller="Admin" asp-action="Index" class="dropdown-item">Usuarios</a>
+                                        <a asp-controller="Planillas" asp-action="Index" class="dropdown-item">Planillas</a>
+                                        <a asp-controller="Empleados" asp-action="Index" class="dropdown-item">Empleados</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a asp-controller="Inventarios" asp-action="Index" class="dropdown-item">Inventario</a>
+                                        <a asp-controller="Sucursales" asp-action="Index" class="dropdown-item">Sucursales</a>
+                                        <a asp-controller="Puestos" asp-action="Index" class="dropdown-item">Puestos</a>
+
+                                    </div>
+                                </div>
+                            }
+
+
+                            <a asp-controller="Inventarios" asp-action="Productos" class="nav-item nav-link">Productos</a>
                             <!-- METODO DE PAGO -->
-                            <a href="~/MetodoPago" class="nav-item nav-link">Métodos de Pago</a>
+                            <a asp-controller="MetodoPago" asp-action="Index" class="nav-item nav-link">Métodos de Pago</a>
                             <a href="detail.html" class="nav-item nav-link">Ofertas</a>
                             <a href="contact.html" class="nav-item nav-link">Contacto</a>
 
@@ -254,197 +271,172 @@
                             </div>
                         </div>
                     </div>
+
                 </nav>
-
-
-
-
-
-                <!--CHAT BOT-->
-                <!--CHAT BOT-->
-
-                <div class="fabs" id="fabs-chat">
-                    <div class="chat">
-                        <div class="chat_header">
-                            <div class="chat_option">
-                                <span id="chat_head">LeahBot</span> <br>
-                                <span id="chat_fullscreen_loader" class="chat_fullscreen_loader">
-                                    <i style="font-size:14px" class="fas fa-window-maximize"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="chat_body chat_login">
-                            <a id="chat_fourth_screen" class="fab-chat">
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                            <p>¿Tienes dudas? Da click en la flecha de arriba para poder solucionarlas...</p>
-                        </div>
-
-                        <div id="chat_fullscreen" class="chat_conversion chat_converse">
-                            <span class="chat_msg_item chat_msg_item_admin">
-                                <div class="chat_avatar">
-                                    <img src="@Url.Content("~/img/Bot.gif")" />
-                                </div>¡Hola! Bienvenida al chat de preguntas, soy LeahBot....Selecciona alguna de las siguientes opciones:
-                            </span>
-                            <span class="chat_msg_item">
-                                <ul class="tags">
-                                    <li class="option" data-response="En la tienda actualmente sólo funcionamos por pagos en Sinpe o efectivo">¿Qué métodos de pago tienen?</li>
-                                    <li class="option" data-response="Contamos con dos surcursales, la primera se encuentra en el Mall San Pedro, San José. La segunda en Expresso, San José.... Si gustas información más exacta, dirígete al apartado de Contacto.">¿Dónde se ubican?</li>
-                                    <li class="option" data-response="Si quieres que te atienda alguno de nuestros encargados dirígete a este link [link]">Me gustaría que me atienda un asesor</li>
-                                </ul>
-                            </span>
-                        </div>
-                    </div>
-                    <a id="prime" class="fab-chat">
-                        <i class="far fa-comment"></i>
-                    </a>
-
-                </div>
-                <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-                <script>
-                    hideChat(0);
-
-                    $('#prime').click(function () {
-                        toggleFab();
-                    });
-
-                    //Toggle chat
-                    function toggleFab() {
-                        $('.prime').toggleClass('zmdi-comment-outline');
-                        $('.prime').toggleClass('zmdi-close');
-                        $('.prime').toggleClass('is-active');
-                        $('.prime').toggleClass('is-visible');
-                        $('#prime').toggleClass('is-float');
-                        $('.chat').toggleClass('is-visible');
-                        $('.fab-chat').toggleClass('is-visible');
-
-                    }
-                    $('.option').click(function () {
-                        var userText = $(this).text();
-                        var responseText = $(this).data('response');
-
-                        $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_user">' + userText + '</span>');
-                        $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar"><img src="@Url.Content("~/img/Bot.gif")" /></div>' + responseText + '</span>');
-
-                        scrollToBottom();
-                        showOptions();
-                    });
-
-                    function showOptions() {
-                        $('#chat_fullscreen').append(
-                            '<span class="chat_msg_item">' +
-                            '<ul class="tags">' +
-                            '<li class="option" data-response="En la tienda actualmente sólo funcionamos por pagos en Sinpe o efectivo">¿Qué métodos de pago tienen?</li>' +
-                            '<li class="option" data-response="Contamos con dos surcursales, la primera se encuentra en el Mall San Pedro, San José. La segunda en Expresso, San José.... Si gustas información más exacta, dirígete al apartado de Contacto.">¿Dónde se ubican?</li>' +
-                            '<li class="option" data-response="Si quieres que te atienda alguno de nuestros encargados dirígete a este link [link]">Me gustaría que me atienda un asesor</li>' +
-                            '</ul>' +
-                            '</span>'
-                        );
-
-                        $('.option').off('click').on('click', function () {
-                            var userText = $(this).text();
-                            var responseText = $(this).data('response');
-
-                            $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_user">' + userText + '</span>');
-                            $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar"><img src="@Url.Content("~/img/Bot.gif")"/></div>' + responseText + '</span>');
-
-                            scrollToBottom();
-                            showOptions();
-                        });
-                    }
-
-                    function scrollToBottom() {
-                        $('#chat_fullscreen').scrollTop($('#chat_fullscreen')[0].scrollHeight);
-                    }
-                    $('#chat_first_screen').click(function (e) {
-                        hideChat(1);
-                    });
-
-                    $('#chat_fourth_screen').click(function (e) {
-                        hideChat(4);
-                    });
-
-                    $('#chat_fullscreen_loader').click(function (e) {
-                        $('.fullscreen').toggleClass('zmdi-window-maximize');
-                        $('.fullscreen').toggleClass('zmdi-window-restore');
-                        $('.chat').toggleClass('chat_fullscreen');
-                        $('.fab').toggleClass('is-hide');
-                        $('.header_img').toggleClass('change_img');
-                        $('.img_container').toggleClass('change_img');
-                        $('.chat_header').toggleClass('chat_header2');
-                        $('.fab_field').toggleClass('fab_field2');
-                        $('.chat_converse').toggleClass('chat_converse2');
-                    });
-
-                    function hideChat(hide) {
-                        switch (hide) {
-                            case 0:
-                                $('#chat_converse').css('display', 'none');
-                                $('#chat_body').css('display', 'none');
-                                $('#chat_form').css('display', 'none');
-                                $('.chat_login').css('display', 'block');
-                                $('.chat_fullscreen_loader').css('display', 'none');
-                                $('#chat_fullscreen').css('display', 'none');
-                                break;
-                            case 1:
-                                $('#chat_converse').css('display', 'block');
-                                $('#chat_body').css('display', 'none');
-                                $('#chat_form').css('display', 'none');
-                                $('.chat_login').css('display', 'none');
-                                $('.chat_fullscreen_loader').css('display', 'block');
-                                break;
-                            case 2:
-                                $('#chat_converse').css('display', 'none');
-                                $('#chat_body').css('display', 'block');
-                                $('#chat_form').css('display', 'none');
-                                $('.chat_login').css('display', 'none');
-                                $('.chat_fullscreen_loader').css('display', 'block');
-                                break;
-                            case 3:
-                                $('#chat_converse').css('display', 'none');
-                                $('#chat_body').css('display', 'none');
-                                $('#chat_form').css('display', 'block');
-                                $('.chat_login').css('display', 'none');
-                                $('.chat_fullscreen_loader').css('display', 'block');
-                                break;
-                            case 4:
-                                $('#chat_converse').css('display', 'none');
-                                $('#chat_body').css('display', 'none');
-                                $('#chat_form').css('display', 'none');
-                                $('.chat_login').css('display', 'none');
-                                $('.chat_fullscreen_loader').css('display', 'block');
-                                $('#chat_fullscreen').css('display', 'block');
-                                break;
-                        }
-                    }
-
-                </script>
-                <!--Final CHAT BOT-->
-                <!-- Back to Top -->
-                <a href="#" style="bottom: 80px" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
-
-                <!-- JavaScript Libraries -->
-                <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-                <script src="~/lib/easing/easing.min.js"></script>
-                <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
-
-                <!-- Contact Javascript File -->
-                <script src="~/mail/jqBootstrapValidation.min.js"></script>
-                <script src="~/mail/contact.js"></script>
-
-                <!-- Template Javascript -->
-                <script src="~/js/main.js"></script>
-
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
-
-
             </div>
         </div>
     </div>
+    <!-- Navbar End -->
+
+    <!--CHAT BOT-->
+
+    <div class="fabs" id="fabs-chat">
+        <div class="chat">
+            <div class="chat_header">
+                <div class="chat_option">
+                    <span id="chat_head">LeahBot</span> <br>
+                    <span id="chat_fullscreen_loader" class="chat_fullscreen_loader">
+                        <i style="font-size:14px" class="fas fa-window-maximize"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="chat_body chat_login">
+                <a id="chat_fourth_screen" class="fab-chat">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <p>¿Tienes dudas? Da click en la flecha de arriba para poder solucionarlas...</p>
+            </div>
+
+            <div id="chat_fullscreen" class="chat_conversion chat_converse">
+                <span class="chat_msg_item chat_msg_item_admin">
+                    <div class="chat_avatar">
+                        <img src="@Url.Content("~/img/Bot.gif")" />
+                    </div>¡Hola! Bienvenida al chat de preguntas, soy LeahBot....Selecciona alguna de las siguientes opciones:
+                </span>
+                <span class="chat_msg_item">
+                    <ul class="tags">
+                        <li class="option" data-response="En la tienda actualmente sólo funcionamos por pagos en Sinpe o efectivo">¿Qué métodos de pago tienen?</li>
+                        <li class="option" data-response="Contamos con dos surcursales, la primera se encuentra en el Mall San Pedro, San José. La segunda en Expresso, San José.... Si gustas información más exacta, dirígete al apartado de Contacto.">¿Dónde se ubican?</li>
+                        <li class="option" data-response="Si quieres que te atienda alguno de nuestros encargados dirígete a este link [link]">Me gustaría que me atienda un asesor</li>
+                    </ul>
+                </span>
+            </div>
+        </div>
+        <a id="prime" class="fab-chat">
+            <i class="far fa-comment"></i>
+        </a>
     </div>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script>
+        hideChat(0);
+
+        $('#prime').click(function () {
+            toggleFab();
+        });
+
+        //Toggle chat
+        function toggleFab() {
+            $('.prime').toggleClass('zmdi-comment-outline');
+            $('.prime').toggleClass('zmdi-close');
+            $('.prime').toggleClass('is-active');
+            $('.prime').toggleClass('is-visible');
+            $('#prime').toggleClass('is-float');
+            $('.chat').toggleClass('is-visible');
+            $('.fab-chat').toggleClass('is-visible');
+
+        }
+        $('.option').click(function () {
+            var userText = $(this).text();
+            var responseText = $(this).data('response');
+
+            $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_user">' + userText + '</span>');
+            $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar"><img src="@Url.Content("~/img/Bot.gif")" /></div>' + responseText + '</span>');
+
+            scrollToBottom();
+            showOptions();
+        });
+
+        function showOptions() {
+            $('#chat_fullscreen').append(
+                '<span class="chat_msg_item">' +
+                '<ul class="tags">' +
+                '<li class="option" data-response="En la tienda actualmente sólo funcionamos por pagos en Sinpe o efectivo">¿Qué métodos de pago tienen?</li>' +
+                '<li class="option" data-response="Contamos con dos surcursales, la primera se encuentra en el Mall San Pedro, San José. La segunda en Expresso, San José.... Si gustas información más exacta, dirígete al apartado de Contacto.">¿Dónde se ubican?</li>' +
+                '<li class="option" data-response="Si quieres que te atienda alguno de nuestros encargados dirígete a este link [link]">Me gustaría que me atienda un asesor</li>' +
+                '</ul>' +
+                '</span>'
+            );
+
+            $('.option').off('click').on('click', function () {
+                var userText = $(this).text();
+                var responseText = $(this).data('response');
+
+                $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_user">' + userText + '</span>');
+                $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar"><img src="@Url.Content("~/img/Bot.gif")"/></div>' + responseText + '</span>');
+
+                scrollToBottom();
+                showOptions();
+            });
+        }
+
+        function scrollToBottom() {
+            $('#chat_fullscreen').scrollTop($('#chat_fullscreen')[0].scrollHeight);
+        }
+        $('#chat_first_screen').click(function (e) {
+            hideChat(1);
+        });
+
+        $('#chat_fourth_screen').click(function (e) {
+            hideChat(4);
+        });
+
+        $('#chat_fullscreen_loader').click(function (e) {
+            $('.fullscreen').toggleClass('zmdi-window-maximize');
+            $('.fullscreen').toggleClass('zmdi-window-restore');
+            $('.chat').toggleClass('chat_fullscreen');
+            $('.fab').toggleClass('is-hide');
+            $('.header_img').toggleClass('change_img');
+            $('.img_container').toggleClass('change_img');
+            $('.chat_header').toggleClass('chat_header2');
+            $('.fab_field').toggleClass('fab_field2');
+            $('.chat_converse').toggleClass('chat_converse2');
+        });
+
+        function hideChat(hide) {
+            switch (hide) {
+                case 0:
+                    $('#chat_converse').css('display', 'none');
+                    $('#chat_body').css('display', 'none');
+                    $('#chat_form').css('display', 'none');
+                    $('.chat_login').css('display', 'block');
+                    $('.chat_fullscreen_loader').css('display', 'none');
+                    $('#chat_fullscreen').css('display', 'none');
+                    break;
+                case 1:
+                    $('#chat_converse').css('display', 'block');
+                    $('#chat_body').css('display', 'none');
+                    $('#chat_form').css('display', 'none');
+                    $('.chat_login').css('display', 'none');
+                    $('.chat_fullscreen_loader').css('display', 'block');
+                    break;
+                case 2:
+                    $('#chat_converse').css('display', 'none');
+                    $('#chat_body').css('display', 'block');
+                    $('#chat_form').css('display', 'none');
+                    $('.chat_login').css('display', 'none');
+                    $('.chat_fullscreen_loader').css('display', 'block');
+                    break;
+                case 3:
+                    $('#chat_converse').css('display', 'none');
+                    $('#chat_body').css('display', 'none');
+                    $('#chat_form').css('display', 'block');
+                    $('.chat_login').css('display', 'none');
+                    $('.chat_fullscreen_loader').css('display', 'block');
+                    break;
+                case 4:
+                    $('#chat_converse').css('display', 'none');
+                    $('#chat_body').css('display', 'none');
+                    $('#chat_form').css('display', 'none');
+                    $('.chat_login').css('display', 'none');
+                    $('.chat_fullscreen_loader').css('display', 'block');
+                    $('#chat_fullscreen').css('display', 'block');
+                    break;
+            }
+        }
+
+    </script>
+    <!--Final CHAT BOT-->
+
     <div class="text-center mb-4">
         <h2 class="section-title px-5"><span class="px-2">SkinCare</span></h2>
     </div>
@@ -508,6 +500,26 @@
             });
         </script>
     </div>
+
+    <!-- Back to Top -->
+    <a href="#" style="bottom: 80px" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/easing/easing.min.js"></script>
+    <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="~/mail/jqBootstrapValidation.min.js"></script>
+    <script src="~/mail/contact.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="~/js/main.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

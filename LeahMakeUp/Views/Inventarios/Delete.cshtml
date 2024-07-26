@@ -5,103 +5,139 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<!DOCTYPE html>
+<html lang="en">
 
-<h3>Eliminar Producto</h3>
-<div>
-    <h4>Inventario</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Codigo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Codigo)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FotoProducto)
-        </dt>
-        <dd class="col-sm-10">
-            @if (Model.FotoProducto != null && Model.FotoProducto.Length > 0)
-            {
-                <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.FotoProducto))" width="150" />
-            }
-            else
-            {
-                <span>No se cargo una imagen</span>
-            }
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.NombreProducto)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.NombreProducto)
-        </dd>
+<head>
+    <meta charset="utf-8">
+    <title>EShopper - Bootstrap Shop Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DescripcionProducto)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DescripcionProducto)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Categoria)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Categoria)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Marca)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Marca)
-        </dd>
+    <!-- Favicon -->
+    <link href="~/img/favicon.ico" rel="icon">
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PrecioXVenta)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PrecioXVenta)
-        </dd>
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PrecioXCosto)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PrecioXCosto)
-        </dd>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Stock)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Stock)
-        </dd>
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h3>Eliminar Producto</h3>
+                <div>
+                    <h4>Inventario</h4>
+                    <hr />
+                    <dl class="row">
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Codigo)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Codigo)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.FotoProducto)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @if (Model.FotoProducto != null && Model.FotoProducto.Length > 0)
+                            {
+                                <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.FotoProducto))" width="150" />
+                            }
+                            else
+                            {
+                                <span>No se cargo una imagen</span>
+                            }
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.NombreProducto)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.NombreProducto)
+                        </dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaAgregado)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FechaAgregado)
-        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.DescripcionProducto)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.DescripcionProducto)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Categoria)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Categoria)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Marca)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Marca)
+                        </dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaExpiracion)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FechaExpiracion)
-        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.PrecioXVenta)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.PrecioXVenta)
+                        </dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Sucursal)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Sucursal.Direccion)
-        </dd>
-    </dl>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.PrecioXCosto)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.PrecioXCosto)
+                        </dd>
 
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="ProductoId" />
-        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
-        <a asp-action="Index">Regresar</a>
-    </form>
-</div>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Stock)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Stock)
+                        </dd>
+
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.FechaAgregado)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.FechaAgregado)
+                        </dd>
+
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.FechaExpiracion)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.FechaExpiracion)
+                        </dd>
+
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Sucursal)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Sucursal.Direccion)
+                        </dd>
+                    </dl>
+
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="ProductoId" />
+                        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+                        <a asp-action="Index">Regresar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+</body>
+</html>

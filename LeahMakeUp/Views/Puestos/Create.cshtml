@@ -1,44 +1,72 @@
 ﻿@model DAL.Puesto
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<!DOCTYPE html>
+<html lang="en">
 
-<h4>Puesto</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="NombrePuesto" class="control-label"></label>
-                <input asp-for="NombrePuesto" class="form-control" />
-                <span asp-validation-for="NombrePuesto" class="text-danger"></span>
+<head>
+    <meta charset="utf-8">
+    <title>EShopper - Bootstrap Shop Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="~/img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h4 class="text-center">Agregar una nueva Puesto</h4>
+                <hr />
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="NombrePuesto" class="control-label"></label>
+                        <input asp-for="NombrePuesto" class="form-control" />
+                        <span asp-validation-for="NombrePuesto" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Departamento" class="control-label"></label>
+                        <input asp-for="Departamento" class="form-control" />
+                        <span asp-validation-for="Departamento" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Horario" class="control-label"></label>
+                        <input asp-for="Horario" class="form-control" />
+                        <span asp-validation-for="Horario" class="text-danger"></span>
+                    </div>
+                    <div class="form-group text-center">
+                        <input type="submit" value="Crear" class="btn btn-primary" />
+                    </div>
+                </form>
+                <div class="text-center mt-3">
+                    <a asp-action="Index">Regresar</a>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Departamento" class="control-label"></label>
-                <input asp-for="Departamento" class="form-control" />
-                <span asp-validation-for="Departamento" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Horario" class="control-label"></label>
-                <input asp-for="Horario" class="form-control" />
-                <span asp-validation-for="Horario" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+</body>
+</html>

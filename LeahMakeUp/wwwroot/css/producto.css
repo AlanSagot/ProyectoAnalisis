@@ -16,28 +16,32 @@
 
 #container-product {
     display: flex;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
     padding-top: 10px;
     padding-left: 180px;
     padding-right: 80px;
 }
+
 .product {
-    flex: 0 10 10%; 
-    margin-bottom: 30px; 
+    flex: 0 1 20%; /* Ajustado para ser más flexible */
+    margin-bottom: 30px;
     margin-inline: 90px;
     margin-left: 60px;
 }
+
 .product-img {
     width: 180px;
     height: 150px;
-    object-fit: cover; 
+    object-fit: cover;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agregar sombra a la imagen */
-    transition: transform 0.3s ease; 
+    transition: transform 0.3s ease;
 }
+
     .product-img:hover {
-        transform: scale(1.1); 
+        transform: scale(1.1); /* Efecto de zoom al pasar el ratón */
     }
-/*Styles for product card*/
+
+/* Estilos para la tarjeta de producto */
 
 .product .product-card {
     z-index: 1;
@@ -46,7 +50,7 @@
     width: 200%;
     height: 380px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agregar sombra a la imagen */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra en la tarjeta */
 }
 
     .product .product-card:before {
@@ -68,7 +72,6 @@
         max-width: 350px;
         top: 30%;
         left: 50%;
-
         transform: translate(-50%, -50%);
     }
 
@@ -82,6 +85,7 @@
         font-size: 20px;
         letter-spacing: 1px;
     }
+
     .product .product-card .name-desc {
         z-index: 2;
         color: #ffffffe7;
@@ -96,11 +100,10 @@
     .product .product-card .price {
         z-index: 2;
         color: #fff;
-
         position: absolute;
         text-align: center;
         bottom: 60px;
-        left:25%;
+        left: 25%;
         font-size: 28px;
         font-weight: 300;
     }
@@ -118,13 +121,12 @@
         text-decoration: none;
         letter-spacing: 1px;
         padding: 10px 15px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agregar sombra a la imagen */
-
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra en el botón */
         border-radius: 20px;
         cursor: pointer;
     }
 
-/*Styles for popup view*/
+/* Estilos para la vista emergente */
 
 .product .popup-view {
     z-index: 2;
@@ -139,7 +141,7 @@
     align-items: center;
     opacity: 0;
     visibility: hidden;
-    transition: 0.5s;
+    transition: opacity 0.5s, visibility 0.5s;
 }
 
     .product .popup-view.active {
@@ -154,27 +156,27 @@
     height: 500px;
     margin: 20px;
 }
-.product .popup-card .product-img {
-    z-index: 2;
-    background: #d19c97;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 45%;
-    height: 90%;
-    transform: translateY(25px);
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-}
+
+    .product .popup-card .product-img {
+        z-index: 2;
+        background: #d19c97;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 45%;
+        height: 90%;
+        transform: translateY(25px);
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
 
         .product .popup-card .product-img img {
             z-index: 2;
             position: relative;
-            width: 360px; /* Cambiar el ancho a 360px */
-            height: 270px; /* Cambiar la altura a 270px */
+            width: 360px; /* Ancho ajustado */
+            height: 270px; /* Altura ajustada */
             left: -50px;
-
         }
 
     .product .popup-card .info {
@@ -243,7 +245,7 @@
         text-transform: uppercase;
     }
 
-/*Responsive styles*/
+/* Estilos Responsivos */
 
 @media (max-width: 1800px) {
     .product .popup-card {

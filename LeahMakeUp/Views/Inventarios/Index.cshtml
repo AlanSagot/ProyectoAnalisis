@@ -58,10 +58,11 @@
                     <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">L</span>Leah Make Up</h1>
                 </a>
             </div>
+            
             <div class="col-lg-6 col-6 text-left">
                 <form asp-action="Index" asp-controller="Inventarios" method="get">
                     <div class="input-group">
-                        <input type="text" name="searchString" class="form-control" placeholder="Buscar productos" value="@ViewData["SearchString"]" />
+                        <input type="text" name="searchString" id="searchString" class="form-control" placeholder="Buscar productos" value="@ViewData["SearchString"]" />
                         <div class="input-group-append">
                             <button type="submit" class="input-group-text bg-transparent text-primary border-0">
                                 <i class="fa fa-search"></i>
@@ -71,6 +72,7 @@
                 </form>
             </div>
 
+           
 
 
             <div class="col-lg-3 col-6 text-right">
@@ -95,19 +97,63 @@
                     <a href="" class="text-decoration-none d-block d-lg-none">
                         <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Leah Make Up</h1>
                     </a>
-                    <div class="navbar-nav mr-auto py-0 d-flex justify-content-center">
-                        <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Inicio</a>
-                        <a href="shop.html" class="nav-item nav-link">Productos</a>
-                        <!-- METODO DE PAGO -->
-                        <a href="~/MetodoPago" class="nav-item nav-link">Métodos de Pago</a>
-                        <a href="detail.html" class="nav-item nav-link">Ofertas</a>
-                        <a href="contact.html" class="nav-item nav-link">Contacto</a>
-                    </div>
-                    <div class="navbar-nav ml-auto py-0">
-                        <div id="LoginPartial">
-                            <partial name="_LoginPartial" />
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto py-0">
+                            <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Inicio</a>
+                            <!-- Catálogos -->
+                            <div class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="catalogosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Catálogos
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="catalogosDropdown">
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <a asp-controller="Catalogos" asp-action="Index" class="dropdown-item">Catálogo</a>
+
+                                        <div class="dropdown-divider"></div>
+                                    }
+                                    <a asp-controller="Inventarios" asp-action="Maquillaje" class="dropdown-item">Maquillaje</a>
+                                    <a asp-controller="Inventarios" asp-action="SkinCare" class="dropdown-item">SkinCare</a>
+                                    <a asp-controller="Inventarios" asp-action="Articulos" class="dropdown-item">Artículos</a>
+                                </div>
+                            </div>
+
+                            <!-- Dropdown Admin -->
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <div class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Admin
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="adminDropdown">
+
+                                        <a asp-controller="Admin" asp-action="Index" class="dropdown-item">Usuarios</a>
+                                        <a asp-controller="Planillas" asp-action="Index" class="dropdown-item">Planillas</a>
+                                        <a asp-controller="Empleados" asp-action="Index" class="dropdown-item">Empleados</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a asp-controller="Inventarios" asp-action="Index" class="dropdown-item">Inventario</a>
+                                        <a asp-controller="Sucursales" asp-action="Index" class="dropdown-item">Sucursales</a>
+                                        <a asp-controller="Puestos" asp-action="Index" class="dropdown-item">Puestos</a>
+
+                                    </div>
+                                </div>
+                            }
+
+
+                            <a asp-controller="Inventarios" asp-action="Productos" class="nav-item nav-link">Productos</a>
+                            <!-- METODO DE PAGO -->
+                            <a asp-controller="MetodoPago" asp-action="Index" class="nav-item nav-link">Métodos de Pago</a>
+                            <a href="detail.html" class="nav-item nav-link">Ofertas</a>
+                            <a href="contact.html" class="nav-item nav-link">Contacto</a>
+
+                        </div>
+                        <div class="navbar-nav ml-auto py-0">
+                            <div id="LoginPartial">
+                                <partial name="_LoginPartial" />
+                            </div>
                         </div>
                     </div>
+                    
                 </nav>
             </div>
         </div>
@@ -264,4 +310,23 @@
         </div>
     </div>
     <!-- Footer End -->
+    <!-- Back to Top -->
+    <a href="#" style="bottom: 80px" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/easing/easing.min.js"></script>
+    <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="~/mail/jqBootstrapValidation.min.js"></script>
+    <script src="~/mail/contact.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="~/js/main.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
 </body>

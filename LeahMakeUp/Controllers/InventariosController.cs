@@ -339,7 +339,8 @@ namespace LeahMakeUp.Controllers
                 productos = productos.Where(p => p.NombreProducto.Contains(searchString));
             }
 
-            ViewData["SearchString"] = searchString;
+            // Limpiar el campo de búsqueda después de procesar la solicitud
+            ViewData["SearchString"] = string.Empty;
 
             return View(await productos.ToListAsync());
         }

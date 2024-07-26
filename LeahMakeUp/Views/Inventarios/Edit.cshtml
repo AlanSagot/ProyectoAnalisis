@@ -6,86 +6,115 @@
 }
 
 
-<h4>Editar producto</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ProductoId" />
-            <div class="form-group">
-                <label asp-for="Codigo" class="control-label"></label>
-                <input asp-for="Codigo" class="form-control" />
-                <span asp-validation-for="Codigo" class="text-danger"></span>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>EShopper - Bootstrap Shop Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="~/img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h4 class="text-center">Editar inventario</h4>
+                <form asp-action="Edit" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ProductoId" />
+                    <div class="form-group">
+                        <label asp-for="Codigo" class="control-label"></label>
+                        <input asp-for="Codigo" class="form-control" />
+                        <span asp-validation-for="Codigo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="FotoProducto" class="control-label">Foto Producto</label>
+                        <input type="file" accept="image/png" class="form-control" name="FotoProducto" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NombreProducto" class="control-label"></label>
+                        <input asp-for="NombreProducto" class="form-control" />
+                        <span asp-validation-for="NombreProducto" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DescripcionProducto" class="control-label"></label>
+                        <input asp-for="DescripcionProducto" class="form-control" />
+                        <span asp-validation-for="DescripcionProducto" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Categoria" class="control-label"></label>
+                        <input asp-for="Categoria" class="form-control" />
+                        <span asp-validation-for="Categoria" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Marca" class="control-label"></label>
+                        <input asp-for="Marca" class="form-control" />
+                        <span asp-validation-for="Marca" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PrecioXVenta" class="control-label"></label>
+                        <input asp-for="PrecioXVenta" class="form-control" />
+                        <span asp-validation-for="PrecioXVenta" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PrecioXCosto" class="control-label"></label>
+                        <input asp-for="PrecioXCosto" class="form-control" />
+                        <span asp-validation-for="PrecioXCosto" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Stock" class="control-label"></label>
+                        <input asp-for="Stock" class="form-control" />
+                        <span asp-validation-for="Stock" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FechaAgregado" class="control-label"></label>
+                        <input asp-for="FechaAgregado" class="form-control" />
+                        <span asp-validation-for="FechaAgregado" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FechaExpiracion" class="control-label"></label>
+                        <input asp-for="FechaExpiracion" class="form-control" />
+                        <span asp-validation-for="FechaExpiracion" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SucursalId" class="control-label"></label>
+                        <select asp-for="SucursalId" class="form-control" asp-items="ViewBag.SucursalId"></select>
+                        <span asp-validation-for="SucursalId" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Guardar" class="btn btn-primary" />
+                    </div>
+                </form>
+                <div class="text-center mt-3">
+                    <a asp-action="Index">Regresar</a>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="FotoProducto" class="control-label">Foto Producto</label>
-                <input type="file" accept="image/png" class="form-control" name="FotoProducto" />
-            </div>            
-            <div class="form-group">
-                <label asp-for="NombreProducto" class="control-label"></label>
-                <input asp-for="NombreProducto" class="form-control" />
-                <span asp-validation-for="NombreProducto" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DescripcionProducto" class="control-label"></label>
-                <input asp-for="DescripcionProducto" class="form-control" />
-                <span asp-validation-for="DescripcionProducto" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Categoria" class="control-label"></label>
-                <input asp-for="Categoria" class="form-control" />
-                <span asp-validation-for="Categoria" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Marca" class="control-label"></label>
-                <input asp-for="Marca" class="form-control" />
-                <span asp-validation-for="Marca" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PrecioXVenta" class="control-label"></label>
-                <input asp-for="PrecioXVenta" class="form-control" />
-                <span asp-validation-for="PrecioXVenta" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PrecioXCosto" class="control-label"></label>
-                <input asp-for="PrecioXCosto" class="form-control" />
-                <span asp-validation-for="PrecioXCosto" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Stock" class="control-label"></label>
-                <input asp-for="Stock" class="form-control" />
-                <span asp-validation-for="Stock" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaAgregado" class="control-label"></label>
-                <input asp-for="FechaAgregado" class="form-control" />
-                <span asp-validation-for="FechaAgregado" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaExpiracion" class="control-label"></label>
-                <input asp-for="FechaExpiracion" class="form-control" />
-                <span asp-validation-for="FechaExpiracion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SucursalId" class="control-label"></label>
-                <select asp-for="SucursalId" class="form-control" asp-items="ViewBag.SucursalId"></select>
-                <span asp-validation-for="SucursalId" class="text-danger"></span>
-            </div>
-            <br/>
-            <div class="form-group">
-                <input type="submit" value="Guardar" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+    
 
-<div>
-    <a asp-action="Index">Regresar</a>
-</div>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
     }
-}
+
+</body>
+</html>

@@ -4,6 +4,7 @@
     ViewData["Title"] = "Editar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,35 +28,42 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
 </head>
-<h4>Editar Sucursal</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="SucursalId" />
-            <div class="form-group">
-                <label asp-for="Direccion" class="control-label"></label>
-                <input asp-for="Direccion" class="form-control" />
-                <span asp-validation-for="Direccion" class="text-danger"></span>
+
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h4 class="text-center">Editar Sucursal</h4>
+                <hr />
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="SucursalId" />
+                    <div class="form-group">
+                        <label asp-for="Direccion" class="control-label"></label>
+                        <input asp-for="Direccion" class="form-control" />
+                        <span asp-validation-for="Direccion" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Horario" class="control-label"></label>
+                        <input asp-for="Horario" class="form-control" />
+                        <span asp-validation-for="Horario" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group text-center">
+                        <input type="submit" value="Guardar" class="btn btn-primary" />
+                    </div>
+                </form>
+                <div class="text-center mt-3">
+                    <a asp-action="Index">Regresar</a>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Horario" class="control-label"></label>
-                <input asp-for="Horario" class="form-control" />
-                <span asp-validation-for="Horario" class="text-danger"></span>
-            </div>
-            <br/>
-            <div class="form-group">
-                <input type="submit" value="Guardar" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Regresar</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+</body>
+</html>
