@@ -465,7 +465,11 @@
                                 <h2>@producto.NombreProducto<br><span>@producto.Categoria</span></h2>
                                 <p>@producto.DescripcionProducto</p>
                                 <span class="price">CRC @producto.PrecioXVenta</span>
-                                <a href="@Url.Action("AddToCart", new { id = producto.ProductoId })" class="add-cart-btn">Add to Cart</a>
+                                <form action="@Url.Action("AddToCart", "Carritos")" method="post">
+            <input type="hidden" name="id" value="@producto.ProductoId" />
+            <input type="number" name="cantidad" value="1" min="1" />
+            <button type="submit">Add to Cart</button>
+        </form>
                                 <a href="#" class="add-wish">Add to Wishlist</a>
                             </div>
                         </div>

@@ -159,5 +159,82 @@ namespace LeahMakeUp.Controllers
         {
             return _context.Carritos.Any(e => e.CarritoId == id);
         }
+
+        // POST: Carritos/AddToCart
+       [HttpPost]
+        public async Task<IActionResult> AddToCart(int id, int cantidad = 1)
+        {
+            var producto = await _context.Inventarios.FindAsync(id);
+            if (producto == null)
+            {
+                return NotFound();
+            }
+
+            // Obtener la cédula del usuario autenticado
+            var userCedula = User.Identity.Name; // O usar Claims si es necesario
+
+            if (string.IsNullOrEmpty(userCedula))
+            {
+                return Unauthorized(); // Maneja el caso donde el usuario no esté autenticado
+            }
+
+            var carritoItem = await _context.Carritos
+                .FirstOrDefaultAsync(c => c.ProductoId == id && c.Cedula == userCedula);
+
+            if (carritoItem != null)
+            {
+                // Si el producto ya está en el carrito, solo actualiza la cantidad
+                carritoItem.Cantidad += cantidad;
+                carritoItem.PrecioTotal = carritoItem.Cantidad * producto.PrecioXVenta;
+                _context.Update(carritoItem);
+            }
+            else
+            {
+                // Si no está, agrega un nuevo ítem al carrito
+                var nuevoCarritoItem = new Carrito
+                {
+                    ProductoId = id,
+                    Cantidad = cantidad,
+                    PrecioTotal = producto.PrecioXVenta * cantidad,
+                    Cedula = userCedula
+                };
+                _context.Add(nuevoCarritoItem);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        // POST: Carritos/UpdateQuantity
+        [HttpPost]
+        public async Task<IActionResult> UpdateQuantity(int id, int nuevaCantidad)
+        {
+            var carritoItem = await _context.Carritos.FindAsync(id);
+            if (carritoItem == null || nuevaCantidad < 1)
+            {
+                return BadRequest();
+            }
+
+            carritoItem.Cantidad = nuevaCantidad;
+            carritoItem.PrecioTotal = carritoItem.Cantidad * carritoItem.Inventario.PrecioXVenta;
+
+            _context.Update(carritoItem);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        // POST: Carritos/RemoveFromCart
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromCart(int id)
+        {
+            var carritoItem = await _context.Carritos.FindAsync(id);
+            if (carritoItem == null)
+            {
+                return NotFound();
+            }
+
+            _context.Carritos.Remove(carritoItem);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
