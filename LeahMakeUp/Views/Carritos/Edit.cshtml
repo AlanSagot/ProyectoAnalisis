@@ -5,6 +5,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .counter {
+        display: flex;
+        align-items: center;
+        background-color: #f0f0f0;
+        border-radius: 20px;
+        padding: 10px;
+        font-family: Arial, sans-serif;
+    }
+
+    .decrement, .increment {
+        background-color: transparent;
+        border: none;
+        padding: 8px;
+        cursor: pointer;
+    }
+
+    .count {
+        margin: 0 10px;
+        font-size: 1.2em;
+    }
+</style>
+
 <h1>Edit</h1>
 
 <h4>Carrito</h4>
@@ -21,7 +44,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Cantidad" class="control-label"></label>
-                <input asp-for="Cantidad" class="form-control" />
+                <div class="counter">
+                    <button type="button" class="decrement">-</button>
+                    <span class="count" id="count">@Model.Cantidad</span>
+                    <button type="button" class="increment">+</button>
+                </div>
+                <input type="hidden" asp-for="Cantidad" id="cantidadInput" />
                 <span asp-validation-for="Cantidad" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -45,5 +73,29 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        const decrementBtn = document.querySelector('.decrement');
+        const incrementBtn = document.querySelector('.increment');
+        const countDisplay = document.getElementById('count');
+        const cantidadInput = document.getElementById('cantidadInput');
+
+        let count = parseInt(countDisplay.textContent); // Obtener el valor inicial de la cantidad
+
+        decrementBtn.addEventListener('click', () => {
+            if (count > 1) { // Prevenir que la cantidad sea menor que 1
+                count--;
+                countDisplay.textContent = count;
+                cantidadInput.value = count; // Actualizar el campo oculto
+            }
+        });
+
+        incrementBtn.addEventListener('click', () => {
+            count++;
+            countDisplay.textContent = count;
+            cantidadInput.value = count; // Actualizar el campo oculto
+        });
+    </script>
 }
