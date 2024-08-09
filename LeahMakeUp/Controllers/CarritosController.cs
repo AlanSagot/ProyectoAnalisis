@@ -90,7 +90,7 @@ namespace LeahMakeUp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CarritoId,Cedula,Cantidad,ProductoId,PrecioTotal")] Carrito carrito)
+        public async Task<IActionResult> Edit(int id, [Bind("CarritoId,Cedula,Cantidad,ProductoId")] Carrito carrito)
         {
             if (id != carrito.CarritoId)
             {
@@ -101,6 +101,10 @@ namespace LeahMakeUp.Controllers
             {
                 try
                 {
+                    // Recalcula el PrecioTotal antes de actualizar el carrito
+                    var producto = await _context.Inventarios.FindAsync(carrito.ProductoId);
+                    carrito.PrecioTotal = carrito.Cantidad * producto.PrecioXVenta;
+
                     _context.Update(carrito);
                     await _context.SaveChangesAsync();
                 }
@@ -120,6 +124,7 @@ namespace LeahMakeUp.Controllers
             ViewData["ProductoId"] = new SelectList(_context.Inventarios, "ProductoId", "Codigo", carrito.ProductoId);
             return View(carrito);
         }
+
 
         // GET: Carritos/Delete/5
         public async Task<IActionResult> Delete(int? id)
