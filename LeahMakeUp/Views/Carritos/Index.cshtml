@@ -124,13 +124,18 @@
                             @Html.DisplayFor(modelItem => item.Cedula)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Cantidad)
+                            <div class="counter">
+                                <button type="button" class="decrement">-</button>
+                                <span class="count" id="count-@item.CarritoId">@item.Cantidad</span>
+                                <button type="button" class="increment">+</button>
+                            </div>
+                            <input type="hidden" class="cantidad-input" value="@item.Cantidad" data-id="@item.CarritoId" />
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Inventario.Codigo)
+                            <span class="precio-unitario" data-precio="@item.Inventario.PrecioXVenta">@item.Inventario.PrecioXVenta</span>
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.PrecioTotal)
+                            <span class="precio-total" id="precio-total-@item.CarritoId">@item.PrecioTotal</span>
                         </td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.CarritoId">Edit</a> |
@@ -143,6 +148,44 @@
         </table>
     </div>
     <!-- Main Content End -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const counters = document.querySelectorAll('.counter');
+
+            counters.forEach(counter => {
+                const decrementBtn = counter.querySelector('.decrement');
+                const incrementBtn = counter.querySelector('.increment');
+                const countDisplay = counter.querySelector('.count');
+                const cantidadInput = counter.nextElementSibling;
+                const precioUnitarioElem = counter.parentElement.nextElementSibling.querySelector('.precio-unitario');
+                const precioTotalElem = counter.parentElement.nextElementSibling.nextElementSibling.querySelector('.precio-total');
+
+                let count = parseInt(countDisplay.textContent); // Obtener el valor inicial de la cantidad
+                const precioUnitario = parseFloat(precioUnitarioElem.dataset.precio); // Obtener el precio unitario
+
+                const updateTotal = () => {
+                    const newTotal = count * precioUnitario;
+                    precioTotalElem.textContent = newTotal.toFixed(2); // Actualizar el total
+                };
+
+                decrementBtn.addEventListener('click', () => {
+                    if (count > 1) { // Prevenir que la cantidad sea menor que 1
+                        count--;
+                        countDisplay.textContent = count;
+                        cantidadInput.value = count; // Actualizar el campo oculto
+                        updateTotal();
+                    }
+                });
+
+                incrementBtn.addEventListener('click', () => {
+                    count++;
+                    countDisplay.textContent = count;
+                    cantidadInput.value = count; // Actualizar el campo oculto
+                    updateTotal();
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
