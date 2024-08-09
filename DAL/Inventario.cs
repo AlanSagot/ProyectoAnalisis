@@ -66,5 +66,6 @@ namespace DAL
         public ICollection<Catalogos> Catalogos { get; set; } = new List<Catalogos>();
         public ICollection<Envio> Envios { get; set; } = new List<Envio>();
         public ICollection<Factura> Facturas { get; set; } = new List<Factura>();
+        public ICollection<Inventario> Inventarios { get; set; } = new List<Inventario>();
     }
 }

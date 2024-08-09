@@ -101,14 +101,15 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Cedula)
-                    </th>
+                    <td>
+                        
+                    </td>
+
                     <th>
                         @Html.DisplayNameFor(model => model.Cantidad)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Inventario)
+                        @Html.DisplayNameFor(model => model.Subtotal)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.PrecioTotal)
@@ -121,7 +122,12 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Cedula)
+                            @if (item.Inventario.FotoProducto != null)
+                            {
+                                var imageBase64 = Convert.ToBase64String(item.Inventario.FotoProducto);
+                                var imageSrc = string.Format("data:image/jpeg;base64,{0}", imageBase64);
+                                <img src="@imageSrc" alt="Producto" width="50" height="50" />
+                            }
                         </td>
                         <td>
                             <div class="counter">
@@ -138,9 +144,7 @@
                             <span class="precio-total" id="precio-total-@item.CarritoId">@item.PrecioTotal</span>
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.CarritoId">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.CarritoId">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.CarritoId">Delete</a>
+                            <a asp-action="Delete" asp-route-id="@item.ProductoId"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                 }
@@ -186,6 +190,7 @@
             });
         });
     </script>
+
 </body>
 
 </html>
