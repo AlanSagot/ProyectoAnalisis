@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using iText.Kernel.Geom;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL
 {
@@ -14,6 +15,7 @@ namespace DAL
             optionsBuilder.UseSqlServer();
         }
         public DbSet<Administrador> Administradores { get; set; }
+        public DbSet<Carrito> Carritos { get; set; }
         public DbSet<Catalogos> Catalogos { get; set; }
         public DbSet<Empleado> Empleados { get; set; }
         public DbSet<Envio> Envios { get; set; }

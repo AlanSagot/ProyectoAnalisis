@@ -17,16 +17,16 @@ namespace DAL
 
         [Required]
         [MaxLength(256)]
-        public string UserName { get; set; }
-
-        [ForeignKey("UserName")]
+        [ForeignKey("Cedula")]
+        public string Cedula { get; set; }
         public ApplicationUser User { get; set; }
 
         public int Cantidad { get; set; }
 
         [Required]
+        [ForeignKey("Inventario")]
         public int ProductoId { get; set; }
-        public ICollection<Inventario> Inventarios { get; set; } = new List<Inventario>();
+        public Inventario Inventario { get; set; }
 
         [Required]
         public int PrecioTotal { get; set; }
