@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -31,9 +32,11 @@ namespace DAL
         public Inventario Inventario { get; set; }
 
         [Required]
+        [DisplayName("Precio P/U")]
         public int Subtotal { get; set; }
 
         [Required]
+        [DisplayName("Precio Total P/U")]
         public int PrecioTotal { get; set; }
 
         
