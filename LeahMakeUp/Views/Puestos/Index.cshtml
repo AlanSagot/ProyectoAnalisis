@@ -5,9 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
     <meta charset="utf-8">
-    <title>EShopper - Bootstrap Shop Template</title>
+    <title>Lista de Puestos - Bootstrap Shop Template</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -24,44 +27,127 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
-</head>
-<h1>Lista de Puestos</h1>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f7f7;
+        }
 
-<p>
-    <a asp-action="Create">Agregar un nuevo Puesto</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NombrePuesto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Departamento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Horario)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombrePuesto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Departamento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Horario)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.PuestoId"><i class="fa fa-pen"></i></a> |
-                <a asp-action="Delete" asp-route-id="@item.PuestoId"><i class="fa fa-trash"></i></a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        .container {
+            max-width: 95%;
+            margin: 30px auto 15px;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow-x: auto;
+        }
+
+        .btn.border {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px 20px;
+            background-color: #fff;
+            color: #333;
+            text-decoration: none;
+        }
+
+            .btn.border:hover {
+                background-color: #f8f9fa;
+            }
+
+        .btn .fas {
+            font-size: 1.2em;
+        }
+
+        .btn .fa-home {
+            color: #ffb6c1; /* Color rosado */
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid #ddd;
+            max-width: 95%;
+            margin: auto;
+        }
+
+            .navbar h1 {
+                margin: 0;
+                font-size: 1.5em;
+            }
+
+            .navbar a {
+                text-decoration: none;
+                color: #ffb6c1;
+                font-weight: 500;
+                font-size: 1.5em;
+            }
+
+                .navbar a:hover {
+                    text-decoration: none;
+                }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h1>Lista de Puestos</h1>
+            <a asp-controller="Home" asp-action="Index" class="btn border">
+                <i class="fas fa-home"></i>
+            </a>
+        </div>
+
+        <p>
+            <a asp-action="Create" class="btn border">
+                <i class="fas fa-plus" style="color: #ffb6c1;"></i>
+                <span>Agregar un nuevo Puesto</span>
+            </a>
+        </p>
+    </div>
+
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NombrePuesto)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Departamento)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Horario)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NombrePuesto)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Departamento)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Horario)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.PuestoId"><i class="fa fa-pen"></i></a> |
+                            <a asp-action="Delete" asp-route-id="@item.PuestoId"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

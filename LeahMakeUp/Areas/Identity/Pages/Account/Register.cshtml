@@ -61,6 +61,24 @@
                 background-color: #ff9aad;
             }
 
+        .btn-secondary {
+            background-color: #ffb6c1; /* Mismo color rosado */
+            border: none;
+            color: #fff;
+            font-weight: 500;
+            margin-top: 10px;
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+            .btn-secondary:hover {
+                background-color: #ff9aad; /* Color de hover */
+            }
+
         .alert {
             display: none;
             margin-top: 20px;
@@ -114,13 +132,13 @@
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" placeholder="Password" />
-                <label asp-for="Input.Password">Password</label>
+                <input asp-for="Input.Password" class="form-control" placeholder="Contraseña" />
+                <label asp-for="Input.Password">Contraseña</label>
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Confirm Password" />
-                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Confirmar Contraseña" />
+                <label asp-for="Input.ConfirmPassword">Confirmar Contraseña</label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Registrarse</button>
@@ -128,6 +146,7 @@
         <div id="successMessage" class="alert alert-success" role="alert">
             ¡Te has registrado correctamente!
         </div>
+        <a asp-controller="Home" asp-action="Index" class="btn-secondary">Volver</a>
     </div>
 
     <script>

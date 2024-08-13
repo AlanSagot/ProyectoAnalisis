@@ -62,6 +62,17 @@
                 background-color: #ff9aad;
             }
 
+        .btn-secondary {
+            background-color: #ffb6c1;
+            border: none;
+            color: #fff;
+            font-weight: 500;
+        }
+
+            .btn-secondary:hover {
+                background-color: #ff9aad;
+            }
+
         .alert {
             display: none;
             margin-top: 20px;
@@ -114,6 +125,9 @@
                 <span asp-validation-for="Input.CodigoPostal" class="text-danger"></span>
             </div>
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Guardar</button>
+            <div class="mt-3">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-secondary w-100">Volver</a>
+            </div>
         </form>
     </div>
 
@@ -131,8 +145,6 @@
                 if (response.ok) {
                     // Mostrar mensaje de éxito
                     alert('Perfil actualizado correctamente.');
-                    // Opcional: Redirigir a otra página
-                    // window.location.href = '/Perfil/Index';
                 } else {
                     // Manejar errores si es necesario
                     alert('Hubo un problema al actualizar el perfil.');

@@ -62,6 +62,17 @@
                 background-color: #ff9aad;
             }
 
+        .btn-secondary {
+            background-color: #ffb6c1;
+            border: none;
+            color: #fff;
+            font-weight: 500;
+        }
+
+            .btn-secondary:hover {
+                background-color: #ff9aad;
+            }
+
         .alert {
             display: none;
             margin-top: 20px;
@@ -98,6 +109,9 @@
                 <span asp-validation-for="Input.NewEmail" class="text-danger"></span>
             </div>
             <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="w-100 btn btn-lg btn-primary">Actualizar Correo Electrónico</button>
+            <div class="mt-3">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-secondary w-100">Volver</a>
+            </div>
         </form>
     </div>
 
@@ -115,8 +129,6 @@
                 if (response.ok) {
                     // Mostrar mensaje de éxito
                     document.getElementById('successMessage').style.display = 'block';
-                    // Opcional: Redirigir a otra página
-                    // window.location.href = '/Inventario/Index';
                 } else {
                     // Manejar errores si es necesario
                     alert('Hubo un problema al actualizar el correo electrónico.');

@@ -62,6 +62,17 @@
                 background-color: #c82333;
             }
 
+        .btn-secondary {
+            background-color: #ffb6c1;
+            border: none;
+            color: #fff;
+            font-weight: 500;
+        }
+
+            .btn-secondary:hover {
+                background-color: #ff9aad;
+            }
+
         .alert {
             margin-bottom: 20px;
         }
@@ -77,6 +88,9 @@
                 <p>
                     <a id="delete" asp-page="DeletePersonalData" class="w-100 btn btn-lg btn-danger">Eliminar</a>
                 </p>
+                <div class="mt-3">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary w-100">Volver</a>
+                </div>
             </div>
         </div>
     </div>
