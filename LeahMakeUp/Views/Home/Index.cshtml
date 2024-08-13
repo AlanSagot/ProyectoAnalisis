@@ -44,7 +44,7 @@
             </div>
             <div class="col-lg-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
-                    <a class="text-dark px-2" href="">
+                    <a class="text-dark px-2" href="https://wa.me/71397781?text=Buenas%2C%20estoy%20interesada%20en%20un%20producto%21">
                         <i class="fab fa-whatsapp"></i>
                     </a>
                     <a class="text-dark px-2" href="https://www.instagram.com/leah_makeup_and_accesories/">
@@ -73,11 +73,7 @@
                 </form>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12 text-right">
-                <a href="" class="btn border">
-                    <i class="fas fa-heart text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
-                <a href="" class="btn border">
+                <a asp-controller="Carritos" asp-action="Index" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
                     <span class="badge">0</span>
                 </a>
@@ -215,7 +211,6 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Inicio</a>
-                            <a asp-controller="Carritos" asp-action="Index" class="nav-item nav-link active">Carrito</a>
                             <!-- Catálogos -->
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="catalogosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -700,21 +695,21 @@
                 <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+506 7286-2118</p>
                 
             </div>
+            <!-- INICIO LINKS RAPIDOS -->
             <div class="col-lg-8 col-md-12">
                 <div class="row">
                     <div class="col-md-4 mb-5">
                         <h5 class="font-weight-bold text-dark mb-4">Links Rápidos</h5>
                         <div class="d-flex flex-column justify-content-start">
-                            <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Inicio</a>
-                            <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Productos</a>
-                            <a class="text-dark mb-2" href="detail.html"><i class="fa fa-angle-right mr-2"></i>Metodo de Pago</a>
-                            <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Ofertas</a>
-                            <a class="text-dark mb-2" href="checkout.html"><i class="fa fa-angle-right mr-2"></i>Mi Carrito</a>
-                            <a class="text-dark" href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contacto</a>
+                            <a class="text-dark mb-2" href="http://localhost:5059"><i class="fa fa-angle-right mr-2"></i>Inicio</a>
+                            <a asp-controller="Inventarios" asp-action="Productos" class="text-dark mb-2"><i class="fa fa-angle-right mr-2"></i>Productos</a>
+                            <a asp-controller="MetodoPago" asp-action="Index" class="text-dark mb-2"><i class="fa fa-angle-right mr-2"></i>Métodos de Pago</a>
+                            <a asp-controller="Carritos" asp-action="Index" class="text-dark mb-2 active"><i class="fa fa-angle-right mr-2"></i>Carrito</a>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- FIN LINKS RAPIDOS -->
         </div>
         <div class="row border-top border-light mx-xl-5 py-4">
             <div class="col-md-6 px-xl-0">
@@ -730,6 +725,7 @@
         </div>
     </div>
     <!-- Footer End -->
+
     <!--CHAT BOT-->
 
     <div class="fabs" id="fabs-chat">
