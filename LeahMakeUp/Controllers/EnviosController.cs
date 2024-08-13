@@ -21,8 +21,7 @@ namespace LeahMakeUp.Controllers
         // GET: Envios
         public async Task<IActionResult> Index()
         {
-            var leahDBContext = _context.Envios.Include(e => e.Inventario);
-            return View(await leahDBContext.ToListAsync());
+            return View(await _context.Envios.ToListAsync());
         }
 
         // GET: Envios/Details/5
@@ -34,7 +33,6 @@ namespace LeahMakeUp.Controllers
             }
 
             var envio = await _context.Envios
-                .Include(e => e.Inventario)
                 .FirstOrDefaultAsync(m => m.EnvioId == id);
             if (envio == null)
             {
@@ -47,7 +45,6 @@ namespace LeahMakeUp.Controllers
         // GET: Envios/Create
         public IActionResult Create()
         {
-            ViewData["ProductoId"] = new SelectList(_context.Inventarios, "ProductoId", "NombreProducto");
             return View();
         }
 
@@ -56,7 +53,7 @@ namespace LeahMakeUp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EnvioId,Detalle,Cedula,Email,Telefono,Direccion,CodigoPostal,Impuesto,ProductoId")] Envio envio)
+        public async Task<IActionResult> Create([Bind("EnvioId,Cedula,Nombre,Email,Telefono,Provincia,Canton,Distrito,Direccion,CodigoPostal")] Envio envio)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +61,6 @@ namespace LeahMakeUp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductoId"] = new SelectList(_context.Inventarios, "ProductoId", "NombreProducto", envio.ProductoId);
             return View(envio);
         }
 
@@ -81,7 +77,6 @@ namespace LeahMakeUp.Controllers
             {
                 return NotFound();
             }
-            ViewData["ProductoId"] = new SelectList(_context.Inventarios, "ProductoId", "NombreProducto", envio.ProductoId);
             return View(envio);
         }
 
@@ -90,7 +85,7 @@ namespace LeahMakeUp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EnvioId,Detalle,Cedula,Email,Telefono,Direccion,CodigoPostal,Impuesto,ProductoId")] Envio envio)
+        public async Task<IActionResult> Edit(int id, [Bind("EnvioId,Cedula,Nombre,Email,Telefono,Provincia,Canton,Distrito,Direccion,CodigoPostal")] Envio envio)
         {
             if (id != envio.EnvioId)
             {
@@ -117,7 +112,6 @@ namespace LeahMakeUp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductoId"] = new SelectList(_context.Inventarios, "ProductoId", "NombreProducto", envio.ProductoId);
             return View(envio);
         }
 
@@ -130,7 +124,6 @@ namespace LeahMakeUp.Controllers
             }
 
             var envio = await _context.Envios
-                .Include(e => e.Inventario)
                 .FirstOrDefaultAsync(m => m.EnvioId == id);
             if (envio == null)
             {

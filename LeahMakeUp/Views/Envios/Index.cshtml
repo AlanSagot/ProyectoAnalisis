@@ -14,10 +14,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Detalle)
+                @Html.DisplayNameFor(model => model.Cedula)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cedula)
+                @Html.DisplayNameFor(model => model.Nombre)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Email)
@@ -26,16 +26,19 @@
                 @Html.DisplayNameFor(model => model.Telefono)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Provincia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Canton)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Distrito)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Direccion)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CodigoPostal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Impuesto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Inventario)
             </th>
             <th></th>
         </tr>
@@ -44,10 +47,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Detalle)
+                @Html.DisplayFor(modelItem => item.Cedula)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Cedula)
+                @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
@@ -56,16 +59,19 @@
                 @Html.DisplayFor(modelItem => item.Telefono)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Provincia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Canton)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Distrito)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Direccion)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CodigoPostal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Impuesto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Inventario.NombreProducto)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.EnvioId">Edit</a> |

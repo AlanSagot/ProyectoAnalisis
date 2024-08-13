@@ -13,25 +13,25 @@ namespace DAL
     {
         [Key]
         public int EnvioId { get; set; }
-        [Required]
-        [MaxLength(250)]
-        public string Detalle { get; set; }
-        
         public ApplicationUser Usuario { get; set; }
-        [MaxLength(20)]
+        [MaxLength(50)]
         public string Cedula { get; set; }
         [MaxLength(50)]
+        public string Nombre { get; set; }
+        [MaxLength(20)]
         public string Email { get; set; }
         [MaxLength(20)]
         public string Telefono { get; set; }
         [MaxLength(300)]
+        public string Provincia { get; set; }
+        [MaxLength(300)]
+        public string Canton { get; set; }
+        [MaxLength(300)]
+        public string Distrito { get; set; }
+        [MaxLength(300)]
         public string Direccion { get; set; }
-        [MaxLength(10)]
+        [MaxLength(15)]
         public string CodigoPostal { get; set; }
-        public int Impuesto { get; set; }
-        [ForeignKey("Inventario")]
-        public int ProductoId { get; set; }
-        public Inventario Inventario { get; set; }
     }
 
 }
