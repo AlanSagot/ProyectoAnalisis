@@ -1,6 +1,4 @@
-﻿@model IEnumerable<DAL.Carrito>
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -25,7 +23,6 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
-
     <script src="~/js/index.js"></script>
 
     <link href="~/css/chat.css" rel="stylesheet">
@@ -82,21 +79,28 @@
     <!-- Topbar End -->
     <!-- Main Content Start -->
     <div class="container">
+        @model IEnumerable<DAL.Carrito>
 
-        <!-- Formulario para eliminar todo el carrito -->
-        <form asp-action="ClearCart" method="post" class="mb-3">
-            <button type="submit" class="btn btn-danger">Eliminar todo el carrito</button>
-        </form>
+        @{
+            ViewData["Title"] = "Index";
+            Layout = "~/Views/Shared/_Layout.cshtml";
+        }
 
-        <!-- Tabla de productos en el carrito -->
         <table class="table">
             <thead>
                 <tr>
                     <th></th>
-                    <th>Cantidad</th>
-                    <th>Precio Unitario</th>
-                    <th>Subtotal</th>
-                    <th>Acciones</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Cantidad)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Subtotal)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PrecioTotal)
+                    </th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -126,18 +130,23 @@
                             <span class="precio-total" id="precio-total-@item.CarritoId">@item.PrecioTotal</span>
                         </td>
                         <td>
-                            <form asp-action="RemoveFromCart" method="post" style="display:inline;">
+                            <form asp-action="RemoveFromCart" method="post" class="d-inline">
                                 <input type="hidden" name="id" value="@item.CarritoId" />
-                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                             </form>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
+
+        <!-- Botón para eliminar todos los productos del carrito -->
+        <form asp-action="ClearCart" method="post">
+            <button type="submit" class="btn btn-danger">Eliminar todos los productos</button>
+        </form>
+
     </div>
     <!-- Main Content End -->
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const counters = document.querySelectorAll('.counter');
@@ -152,10 +161,28 @@
 
                 let count = parseInt(countDisplay.textContent); // Obtener el valor inicial de la cantidad
                 const precioUnitario = parseFloat(precioUnitarioElem.dataset.precio); // Obtener el precio unitario
+                const carritoId = cantidadInput.dataset.id; // Obtener el ID del carrito
 
                 const updateTotal = () => {
                     const newTotal = count * precioUnitario;
                     precioTotalElem.textContent = newTotal.toFixed(2); // Actualizar el total
+                };
+
+                const updateQuantityOnServer = (newCount) => {
+                    $.ajax({
+                        url: '@Url.Action("UpdateQuantity", "Carritos")',
+                        type: 'POST',
+                        data: {
+                            id: carritoId,
+                            nuevaCantidad: newCount
+                        },
+                        success: function (response) {
+                            console.log('Cantidad actualizada en el servidor');
+                        },
+                        error: function (error) {
+                            console.error('Error al actualizar la cantidad en el servidor');
+                        }
+                    });
                 };
 
                 decrementBtn.addEventListener('click', () => {
@@ -164,6 +191,7 @@
                         countDisplay.textContent = count;
                         cantidadInput.value = count; // Actualizar el campo oculto
                         updateTotal();
+                        updateQuantityOnServer(count); // Actualizar en el servidor
                     }
                 });
 
@@ -172,11 +200,11 @@
                     countDisplay.textContent = count;
                     cantidadInput.value = count; // Actualizar el campo oculto
                     updateTotal();
+                    updateQuantityOnServer(count); // Actualizar en el servidor
                 });
             });
         });
     </script>
-
 </body>
 
 </html>

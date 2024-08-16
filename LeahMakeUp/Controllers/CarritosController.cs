@@ -213,19 +213,31 @@ namespace LeahMakeUp.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateQuantity(int id, int nuevaCantidad)
         {
-            var carritoItem = await _context.Carritos.FindAsync(id);
-            if (carritoItem == null || nuevaCantidad < 1)
+            // Incluye la entidad relacionada 'Inventario' para asegurarte de que esté cargada
+            var carritoItem = await _context.Carritos
+                                            .Include(c => c.Inventario)  // Asegura cargar la entidad relacionada
+                                            .FirstOrDefaultAsync(c => c.CarritoId == id);
+
+            // Verifica si el item del carrito o la cantidad nueva no es válida
+            if (carritoItem == null || carritoItem.Inventario == null || nuevaCantidad < 1)
             {
-                return BadRequest();
+                return BadRequest("No se pudo encontrar el carrito o el inventario, o la cantidad nueva no es válida.");
             }
 
+            // Actualiza la cantidad
             carritoItem.Cantidad = nuevaCantidad;
+
+            // Calcula el precio total (no necesitas usar GetValueOrDefault si PrecioXVenta es un decimal)
             carritoItem.PrecioTotal = carritoItem.Cantidad * carritoItem.Inventario.PrecioXVenta;
 
+            // Actualiza el carrito y guarda los cambios
             _context.Update(carritoItem);
             await _context.SaveChangesAsync();
+
+            // Redirige a la vista de índice
             return RedirectToAction(nameof(Index));
         }
+
         // POST: Carritos/RemoveFromCart
         [HttpPost]
         public async Task<IActionResult> RemoveFromCart(int id)
@@ -262,5 +274,8 @@ namespace LeahMakeUp.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+
+
     }
 }
