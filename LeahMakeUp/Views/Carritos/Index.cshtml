@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model IEnumerable<DAL.Carrito>
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -23,6 +25,7 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
+
     <script src="~/js/index.js"></script>
 
     <link href="~/css/chat.css" rel="stylesheet">
@@ -79,32 +82,21 @@
     <!-- Topbar End -->
     <!-- Main Content Start -->
     <div class="container">
-        @model IEnumerable<DAL.Carrito>
 
-        @{
-            ViewData["Title"] = "Index";
-            Layout = "~/Views/Shared/_Layout.cshtml";
-        }
+        <!-- Formulario para eliminar todo el carrito -->
+        <form asp-action="ClearCart" method="post" class="mb-3">
+            <button type="submit" class="btn btn-danger">Eliminar todo el carrito</button>
+        </form>
 
-       @*  <p>
-            <a asp-action="Create" class="btn btn-primary">Create New</a>
-        </p> *@
-
+        <!-- Tabla de productos en el carrito -->
         <table class="table">
             <thead>
                 <tr>
                     <th></th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Cantidad)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Subtotal)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.PrecioTotal)
-                    </th>
-                    <th></th>
-                    <th></th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Subtotal</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -134,7 +126,10 @@
                             <span class="precio-total" id="precio-total-@item.CarritoId">@item.PrecioTotal</span>
                         </td>
                         <td>
-                            <a asp-action="Delete" asp-route-id="@item.ProductoId"><i class="fa fa-trash"></i></a>
+                            <form asp-action="RemoveFromCart" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="@item.CarritoId" />
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                            </form>
                         </td>
                     </tr>
                 }
@@ -142,6 +137,7 @@
         </table>
     </div>
     <!-- Main Content End -->
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const counters = document.querySelectorAll('.counter');

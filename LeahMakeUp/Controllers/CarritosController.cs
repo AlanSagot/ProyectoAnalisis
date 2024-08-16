@@ -241,5 +241,26 @@ namespace LeahMakeUp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // POST: Carritos/ClearCart
+        [HttpPost]
+        public async Task<IActionResult> ClearCart()
+        {
+            var userCedula = User.Identity.Name; 
+
+            if (string.IsNullOrEmpty(userCedula))
+            {
+                return Unauthorized(); 
+            }
+
+            var carritos = _context.Carritos.Where(c => c.Cedula == userCedula); 
+
+            if (carritos.Any())
+            {
+                _context.Carritos.RemoveRange(carritos); 
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
