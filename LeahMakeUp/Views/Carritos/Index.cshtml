@@ -146,6 +146,11 @@
             </tbody>
         </table>
 
+        <!-- Precio Final -->
+        <div class="text-right">
+            <h4>Precio Final: <span id="precio-final">0.00</span></h4>
+        </div>
+
         <!-- Botón para eliminar todos los productos del carrito -->
         <form asp-action="ClearCart" method="post">
             <button type="submit" class="btn btn-danger">Eliminar todos los productos</button>
@@ -153,9 +158,19 @@
 
     </div>
     <!-- Main Content End -->
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const counters = document.querySelectorAll('.counter');
+            const precioFinalElem = document.getElementById('precio-final');
+
+            const updateFinalPrice = () => {
+                let totalPrice = 0;
+                document.querySelectorAll('.precio-total').forEach(elem => {
+                    totalPrice += parseFloat(elem.textContent) || 0;
+                });
+                precioFinalElem.textContent = totalPrice.toFixed(2);
+            };
 
             counters.forEach(counter => {
                 const decrementBtn = counter.querySelector('.decrement');
@@ -165,13 +180,14 @@
                 const precioUnitarioElem = counter.parentElement.nextElementSibling.querySelector('.precio-unitario');
                 const precioTotalElem = counter.parentElement.nextElementSibling.nextElementSibling.querySelector('.precio-total');
 
-                let count = parseInt(countDisplay.textContent); // Obtener el valor inicial de la cantidad
-                const precioUnitario = parseFloat(precioUnitarioElem.dataset.precio); // Obtener el precio unitario
-                const carritoId = cantidadInput.dataset.id; // Obtener el ID del carrito
+                let count = parseInt(countDisplay.textContent);
+                const precioUnitario = parseFloat(precioUnitarioElem.dataset.precio);
+                const carritoId = cantidadInput.dataset.id;
 
                 const updateTotal = () => {
                     const newTotal = count * precioUnitario;
-                    precioTotalElem.textContent = newTotal.toFixed(2); // Actualizar el total
+                    precioTotalElem.textContent = newTotal.toFixed(2);
+                    updateFinalPrice(); // Actualizar el precio final
                 };
 
                 const updateQuantityOnServer = (newCount) => {
@@ -192,38 +208,57 @@
                 };
 
                 decrementBtn.addEventListener('click', () => {
-                    if (count > 1) { // Prevenir que la cantidad sea menor que 1
+                    if (count > 1) {
                         count--;
                         countDisplay.textContent = count;
-                        cantidadInput.value = count; // Actualizar el campo oculto
+                        cantidadInput.value = count;
                         updateTotal();
-                        updateQuantityOnServer(count); // Actualizar en el servidor
+                        updateQuantityOnServer(count);
                     }
                 });
 
                 incrementBtn.addEventListener('click', () => {
                     count++;
                     countDisplay.textContent = count;
-                    cantidadInput.value = count; // Actualizar el campo oculto
+                    cantidadInput.value = count;
                     updateTotal();
-                    updateQuantityOnServer(count); // Actualizar en el servidor
+                    updateQuantityOnServer(count);
                 });
             });
+
+            // Inicializar el precio final al cargar la página
+            updateFinalPrice();
         });
     </script>
-    @{
-        // Check if there is an error message from the controller
-        var errorMessage = ViewData["ErrorMessage"] as string;
-    }
 
-    @if (!string.IsNullOrEmpty(errorMessage))
-    {
-        <script>
-            $(document).ready(function () {
-                alert('@errorMessage');
-            });
-        </script>
-    }
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light mt-5 pt-5 px-0">
+        <div class="container py-5">
+            <div class="row pt-5">
+                <div class="col-lg-4 col-md-6 mb-5 mb-md-0">
+                    <h5 class="text-light mb-4">Cita</h5>
+                    <p class="mb-4">“Tu belleza es mi pasión y mi arte. Estoy aquí para realzar tu belleza natural y hacer que te sientas segura y radiante.”</p>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-5 mb-md-0">
+                    <h5 class="text-light mb-4">Enlaces Rápidos</h5>
+                    <div class="d-flex flex-column">
+                        <a class="text-light mb-2" href="#">Inicio</a>
+                        <a class="text-light mb-2" href="#">Productos</a>
+                        <a class="text-light mb-2" href="#">Carrito</a>
+                        <a class="text-light mb-2" href="#">Contacto</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-5 mb-md-0">
+                    <h5 class="text-light mb-4">Ubicación</h5>
+                    <p class="mb-4">Leah Make Up</p>
+                    <p class="mb-4">Dirección: Tu Dirección</p>
+                    <p class="mb-4">Teléfono: Tu Teléfono</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
 </body>
 
 </html>

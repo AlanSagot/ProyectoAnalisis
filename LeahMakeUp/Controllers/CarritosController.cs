@@ -271,39 +271,65 @@ namespace LeahMakeUp.Controllers
         [HttpPost]
         public async Task<IActionResult> RemoveFromCart(int id)
         {
-            var carritoItem = await _context.Carritos.FindAsync(id);
+            var carritoItem = await _context.Carritos
+            .Include(c => c.Inventario) // Incluye el inventario para actualizar el stock
+            .FirstOrDefaultAsync(c => c.CarritoId == id);
+
             if (carritoItem == null)
             {
                 return NotFound();
             }
 
+            // Actualizar el stock del producto en el inventario
+            if (carritoItem.Inventario != null)
+            {
+                carritoItem.Inventario.Stock += carritoItem.Cantidad;
+                _context.Update(carritoItem.Inventario);
+            }
+
+            // Eliminar el ítem del carrito
             _context.Carritos.Remove(carritoItem);
+
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
+
 
         // POST: Carritos/ClearCart
         [HttpPost]
         public async Task<IActionResult> ClearCart()
         {
-            var userCedula = User.Identity.Name; 
+            var userCedula = User.Identity.Name;
 
             if (string.IsNullOrEmpty(userCedula))
             {
-                return Unauthorized(); 
+                return Unauthorized();
             }
 
-            var carritos = _context.Carritos.Where(c => c.Cedula == userCedula); 
+            // Obtener todos los ítems del carrito del usuario
+            var carritos = await _context.Carritos
+                .Where(c => c.Cedula == userCedula)
+                .Include(c => c.Inventario)  // Incluir el inventario para actualizar el stock
+                .ToListAsync();
 
-            if (carritos.Any())
+            // Actualizar el stock de cada producto
+            foreach (var carrito in carritos)
             {
-                _context.Carritos.RemoveRange(carritos); 
-                await _context.SaveChangesAsync();
+                if (carrito.Inventario != null)
+                {
+                    carrito.Inventario.Stock += carrito.Cantidad;
+                    _context.Update(carrito.Inventario);
+                }
             }
+
+            // Eliminar todos los ítems del carrito
+            _context.Carritos.RemoveRange(carritos);
+
+            await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }
-
 
 
     }
