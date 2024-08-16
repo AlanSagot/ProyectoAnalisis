@@ -185,37 +185,35 @@ namespace LeahMakeUp.Controllers
             var producto = await _context.Inventarios.FindAsync(id);
             if (producto == null)
             {
-                return NotFound();
+                return Json(new { success = false, message = "Producto no encontrado." });
             }
-            // Verifica si el producto tiene suficiente stock
+
             if (producto.Stock < cantidad)
             {
-                // Puedes retornar un mensaje de error o redirigir a otra página
-                return BadRequest("No hay suficiente stock disponible.");
+                // Devuelve un mensaje JSON indicando que no hay suficiente stock
+                return Json(new { success = false, message = "Producto insuficiente en stock." });
             }
+
             // Verifica si el usuario está autenticado
             if (!User.Identity.IsAuthenticated)
             {
-                // Redirige a la página de inicio de sesión si el usuario no está autenticado
-                return RedirectToPage("/Account/Login", new { area = "Identity" });
+                return Json(new { success = false, message = "Debe estar autenticado para añadir productos al carrito." });
             }
 
             // Obtener la cédula del usuario autenticado
-            var userCedula = User.Identity.Name; // O usar Claims si es necesario
+            var userCedula = User.Identity.Name;
 
             var carritoItem = await _context.Carritos
                 .FirstOrDefaultAsync(c => c.ProductoId == id && c.Cedula == userCedula);
 
             if (carritoItem != null)
             {
-                // Si el producto ya está en el carrito, solo actualiza la cantidad
                 carritoItem.Cantidad += cantidad;
                 carritoItem.PrecioTotal = carritoItem.Cantidad * producto.PrecioXVenta;
                 _context.Update(carritoItem);
             }
             else
             {
-                // Si no está, agrega un nuevo ítem al carrito
                 var nuevoCarritoItem = new Carrito
                 {
                     ProductoId = id,
@@ -226,14 +224,13 @@ namespace LeahMakeUp.Controllers
                 _context.Add(nuevoCarritoItem);
             }
 
-            // Descontar el stock del inventario
             producto.Stock -= cantidad;
             _context.Update(producto);
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-
+            return Json(new { success = true, message = "Producto añadido al carrito." });
         }
+
 
 
         // POST: Carritos/UpdateQuantity

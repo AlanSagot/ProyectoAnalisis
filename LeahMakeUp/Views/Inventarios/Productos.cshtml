@@ -463,12 +463,11 @@
                                 <h2>@producto.NombreProducto<br><span>@producto.Categoria</span></h2>
                                 <p>@producto.DescripcionProducto</p>
                                 <span class="price">CRC @producto.PrecioXVenta</span>
-                                <form action="@Url.Action("AddToCart", "Carritos")" method="post">
+                                <form id="addToCartForm" action="@Url.Action("AddToCart", "Carritos")" method="post">
                                     <input type="hidden" name="id" value="@producto.ProductoId" />
                                     <input type="number" name="cantidad" value="1" min="1" />
                                     <button type="submit">Add to Cart</button>
                                 </form>
-                                <a href="#" class="add-wish">Add to Wishlist</a>
                             </div>
                         </div>
                     </div>
@@ -498,6 +497,25 @@
                 closeBtn.addEventListener("click", () => {
                     popupViews.forEach((popupView) => {
                         popupView.classList.remove('active');
+                    });
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#addToCartForm').submit(function (event) {
+                    event.preventDefault(); // Evita que el formulario se envíe de la manera tradicional
+
+                    var form = $(this);
+                    var url = form.attr('action');
+                    var formData = form.serialize();
+
+                    $.post(url, formData, function (response) {
+                        if (response.success) {
+                            alert(response.message); // Mensaje de éxito
+                        } else {
+                            alert(response.message); // Mensaje de error
+                        }
                     });
                 });
             });
