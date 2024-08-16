@@ -170,6 +170,7 @@ namespace LeahMakeUp.Controllers
         public IActionResult Create()
         {
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion");
+            ViewData["ID_Estado"] = new SelectList(_context.Estados, "ID_Estado", "Tipo");
             return View();
         }
 
@@ -205,7 +206,8 @@ namespace LeahMakeUp.Controllers
                     Stock = inventario.Stock,
                     FechaAgregado = DateTime.Now,
                     FechaExpiracion = inventario.FechaExpiracion,
-                    SucursalId = inventario.SucursalId
+                    SucursalId = inventario.SucursalId,
+                    ID_Estado = inventario.ID_Estado
                 };
 
                 _context.Add(inv);
@@ -214,6 +216,7 @@ namespace LeahMakeUp.Controllers
             }
             
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion", inventario.SucursalId);
+            ViewData["ID_Estado"] = new SelectList(_context.Estados, "ID_Estado", "Tipo", inventario.ID_Estado);
             return View(inventario);
         }
 
@@ -233,13 +236,14 @@ namespace LeahMakeUp.Controllers
                 return NotFound();
             }
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion", inventario.SucursalId);
+            ViewData["ID_Estado"] = new SelectList(_context.Estados, "ID_Estado", "Tipo", inventario.ID_Estado);
             return View(inventario);
         }
 
         // POST: Inventarios/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductoId,Codigo,FotoProducto,NombreProducto,Categoria,DescripcionProducto,Marca,PrecioXVenta,PrecioXCosto,Stock,FechaAgregado,FechaExpiracion,SucursalId")] Inventario inventario, IFormFile FotoProducto)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductoId,Codigo,FotoProducto,NombreProducto,Categoria,DescripcionProducto,Marca,PrecioXVenta,PrecioXCosto,Stock,FechaAgregado,FechaExpiracion,SucursalId,ID_Estado")] Inventario inventario, IFormFile FotoProducto)
         {
             if (id != inventario.ProductoId)
             {
@@ -285,6 +289,7 @@ namespace LeahMakeUp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion", inventario.SucursalId);
+            ViewData["ID_Estado"] = new SelectList(_context.Estados, "ID_Estado", "Tipo", inventario.ID_Estado);
             return View(inventario);
         }
 

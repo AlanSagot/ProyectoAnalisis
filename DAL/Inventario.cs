@@ -63,9 +63,15 @@ namespace DAL
         public int SucursalId { get; set; }
         public Sucursal Sucursal { get; set; }
 
+        [ForeignKey("ID_Estado")]
+        public int ID_Estado { get; set; }
+        public Estado Estado { get; set; }
+
         public ICollection<Catalogos> Catalogos { get; set; } = new List<Catalogos>();
         public ICollection<Envio> Envios { get; set; } = new List<Envio>();
         public ICollection<Factura> Facturas { get; set; } = new List<Factura>();
         public ICollection<Inventario> Inventarios { get; set; } = new List<Inventario>();
+
+
     }
 }

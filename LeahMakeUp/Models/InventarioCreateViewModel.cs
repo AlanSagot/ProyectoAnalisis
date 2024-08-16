@@ -66,8 +66,12 @@ namespace LeahMakeUp.Models
 
         [DisplayName("Empleado")]
         [ForeignKey("Empleado")]
-        public int EpleadoId { get; set; }
+        public int EmpleadoId { get; set; }
         public Empleado Empleado { get; set; }
+
+        [ForeignKey("ID_Estado")]
+        public int ID_Estado { get; set; }
+        public Estado Estado { get; set; }
 
         public ICollection<Catalogos> Catalogos { get; set; } = new List<Catalogos>();
         public ICollection<Envio> Envios { get; set; } = new List<Envio>();

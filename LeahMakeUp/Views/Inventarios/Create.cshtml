@@ -135,6 +135,12 @@
                 </select>
                 <label asp-for="SucursalId">Sucursal</label>
             </div>
+            <div class="form-floating mb-3">
+                <select asp-for="ID_Estado" class="form-control" asp-items="ViewBag.ID_Estado" placeholder="Estado">
+                    <option value="">Seleccione un estado</option>
+                </select>
+                <label asp-for="ID_Estado">Estado</label>
+            </div>
 
             <button type="submit" class="w-100 btn btn-lg btn-primary">Crear</button>
         </form>

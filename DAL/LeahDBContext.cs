@@ -18,6 +18,7 @@ namespace DAL
         public DbSet<Carrito> Carritos { get; set; }
         public DbSet<Catalogos> Catalogos { get; set; }
         public DbSet<Empleado> Empleados { get; set; }
+        public DbSet<Estado> Estados { get; set; }
         public DbSet<Envio> Envios { get; set; }
         public DbSet<Factura> Facturas { get; set; }
         public DbSet<Inventario> Inventarios { get; set; }
