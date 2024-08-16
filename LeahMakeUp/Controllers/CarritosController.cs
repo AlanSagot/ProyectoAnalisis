@@ -187,7 +187,12 @@ namespace LeahMakeUp.Controllers
             {
                 return NotFound();
             }
-
+            // Verifica si el producto tiene suficiente stock
+            if (producto.Stock < cantidad)
+            {
+                // Puedes retornar un mensaje de error o redirigir a otra página
+                return BadRequest("No hay suficiente stock disponible.");
+            }
             // Verifica si el usuario está autenticado
             if (!User.Identity.IsAuthenticated)
             {
@@ -221,8 +226,13 @@ namespace LeahMakeUp.Controllers
                 _context.Add(nuevoCarritoItem);
             }
 
+            // Descontar el stock del inventario
+            producto.Stock -= cantidad;
+            _context.Update(producto);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+
         }
 
 
@@ -230,29 +240,31 @@ namespace LeahMakeUp.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateQuantity(int id, int nuevaCantidad)
         {
-            // Incluye la entidad relacionada 'Inventario' para asegurarte de que esté cargada
             var carritoItem = await _context.Carritos
-                                            .Include(c => c.Inventario)  // Asegura cargar la entidad relacionada
+                                            .Include(c => c.Inventario)
                                             .FirstOrDefaultAsync(c => c.CarritoId == id);
 
-            // Verifica si el item del carrito o la cantidad nueva no es válida
             if (carritoItem == null || carritoItem.Inventario == null || nuevaCantidad < 1)
             {
                 return BadRequest("No se pudo encontrar el carrito o el inventario, o la cantidad nueva no es válida.");
             }
 
-            // Actualiza la cantidad
-            carritoItem.Cantidad = nuevaCantidad;
+            int diferenciaCantidad = nuevaCantidad - carritoItem.Cantidad;
 
-            // Calcula el precio total (no necesitas usar GetValueOrDefault si PrecioXVenta es un decimal)
+            if (carritoItem.Inventario.Stock < diferenciaCantidad)
+            {
+                return Json(new { success = false, message = "No hay suficiente stock disponible." });
+            }
+
+            carritoItem.Inventario.Stock -= diferenciaCantidad;
+            carritoItem.Cantidad = nuevaCantidad;
             carritoItem.PrecioTotal = carritoItem.Cantidad * carritoItem.Inventario.PrecioXVenta;
 
-            // Actualiza el carrito y guarda los cambios
             _context.Update(carritoItem);
+            _context.Update(carritoItem.Inventario);
             await _context.SaveChangesAsync();
 
-            // Redirige a la vista de índice
-            return RedirectToAction(nameof(Index));
+            return Json(new { success = true });
         }
 
         // POST: Carritos/RemoveFromCart

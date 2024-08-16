@@ -211,6 +211,19 @@
             });
         });
     </script>
+    @{
+        // Check if there is an error message from the controller
+        var errorMessage = ViewData["ErrorMessage"] as string;
+    }
+
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <script>
+            $(document).ready(function () {
+                alert('@errorMessage');
+            });
+        </script>
+    }
 </body>
 
 </html>
