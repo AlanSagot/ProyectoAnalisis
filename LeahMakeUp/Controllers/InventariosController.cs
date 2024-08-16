@@ -243,7 +243,7 @@ namespace LeahMakeUp.Controllers
         // POST: Inventarios/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductoId,Codigo,FotoProducto,NombreProducto,Categoria,DescripcionProducto,Marca,PrecioXVenta,PrecioXCosto,Stock,FechaAgregado,FechaExpiracion,SucursalId,ID_Estado")] Inventario inventario, IFormFile FotoProducto)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductoId,Codigo,NombreProducto,Categoria,DescripcionProducto,Marca,PrecioXVenta,PrecioXCosto,Stock,FechaAgregado,FechaExpiracion,SucursalId")] Inventario inventario, IFormFile FotoProducto)
         {
             if (id != inventario.ProductoId)
             {
@@ -252,27 +252,34 @@ namespace LeahMakeUp.Controllers
 
             if (ModelState.IsValid)
             {
-                byte[]? imagen = null;
-
-
-                //Validar la imagen
-                if (FotoProducto != null && FotoProducto.Length > 0)
-                {
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        await FotoProducto.CopyToAsync(memoryStream);
-                        imagen = memoryStream.ToArray();
-                    }
-                }
-                else
-                {
-                    imagen = inventario.FotoProducto;
-                }
-
                 try
                 {
-                    inventario.FotoProducto = imagen;
-                    _context.Update(inventario);
+                    // Obtener el inventario existente
+                    var inventarioExistente = await _context.Inventarios.FindAsync(id);
+
+                    if (inventarioExistente == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Si se proporciona una nueva imagen, usarla; si no, mantener la imagen existente
+                    if (FotoProducto != null && FotoProducto.Length > 0)
+                    {
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            await FotoProducto.CopyToAsync(memoryStream);
+                            inventario.FotoProducto = memoryStream.ToArray();
+                        }
+                    }
+                    else
+                    {
+                        // Si no se proporciona nueva imagen, conservar la imagen existente
+                        inventario.FotoProducto = inventarioExistente.FotoProducto;
+                    }
+
+                    // Actualizar el inventario con los datos nuevos
+                    _context.Entry(inventarioExistente).CurrentValues.SetValues(inventario);
+                    _context.Entry(inventarioExistente).Property(x => x.FotoProducto).CurrentValue = inventario.FotoProducto;
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -288,8 +295,8 @@ namespace LeahMakeUp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion", inventario.SucursalId);
-            ViewData["ID_Estado"] = new SelectList(_context.Estados, "ID_Estado", "Tipo", inventario.ID_Estado);
             return View(inventario);
         }
 

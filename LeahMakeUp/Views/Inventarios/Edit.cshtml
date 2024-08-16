@@ -45,7 +45,13 @@
                     </div>
                     <div class="form-group">
                         <label for="FotoProducto" class="control-label">Foto Producto</label>
-                        <input type="file" accept="image/png" class="form-control" name="FotoProducto" />
+                        @if (Model.FotoProducto != null && Model.FotoProducto.Length > 0)
+                        {
+                            <div>
+                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.FotoProducto)" alt="Imagen del producto" style="width: 150px; height: auto;" />
+                            </div>
+                        }
+                        <input type="file" accept="image/png" class="form-control mt-2" name="FotoProducto"   />
                     </div>
                     <div class="form-group">
                         <label asp-for="NombreProducto" class="control-label"></label>
