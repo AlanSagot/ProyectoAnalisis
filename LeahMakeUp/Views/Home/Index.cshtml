@@ -38,8 +38,6 @@
             <div class="col-lg-6 d-none d-lg-block">
                 <div class="d-inline-flex align-items-center">
                     <a class="text-dark" href="">Preguntas Frecuentes</a>
-                    <span class="text-muted px-2">|</span>
-                    <a class="text-dark" href="">Soporte</a>
                 </div>
             </div>
             <div class="col-lg-6 text-center text-lg-right">
@@ -257,6 +255,7 @@
                             <a asp-controller="MetodoPago" asp-action="Index" class="nav-item nav-link">Métodos de Pago</a>
                             <a href="detail.html" class="nav-item nav-link">Ofertas</a>
                             <a asp-controller="Envios" asp-action="Index" class="nav-item nav-link">Envios</a>
+                            <a href="contact.html" class="nav-item nav-link">Contacto</a>
 
                         </div>
                         <div class="navbar-nav ml-auto py-0">
@@ -328,7 +327,7 @@
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                 <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
                     <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
-                    <h5 class="font-weight-semi-bold m-0">Entrega de 3-5 días</h5>
+                    <h5 class="font-weight-semi-bold m-0">Entrega 3-5 días</h5>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
@@ -344,57 +343,54 @@
 
     <!-- Categories Start -->
     <div class="container-fluid pt-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">Categorías</span></h2>
+        </div>
         <div class="row px-xl-5 pb-3">
             <div class="col-lg-4 col-md-6 pb-1">
                 <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">17 productos</p>
                     <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="~/img/labiales.jpg" alt="">
+                        <img class="img-fluid" src="~/img/labiales.jpg" alt="" style="width: 100%; height: 250px; object-fit: cover;">
                     </a>
                     <h5 class="font-weight-semi-bold m-0">Labiales</h5>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 pb-1">
                 <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">9 Productos</p>
                     <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="~/img/paletas.jpg" alt="">
+                        <img class="img-fluid" src="~/img/paletas.jpg" alt="" style="width: 100%; height: 250px; object-fit: cover;">
                     </a>
                     <h5 class="font-weight-semi-bold m-0">Paletas</h5>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 pb-1">
                 <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">22 Productos</p>
                     <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="~/img/accesorios.jpg" alt="">
+                        <img class="img-fluid" src="~/img/accesorios.jpg" alt="" style="width: 100%; height: 250px; object-fit: cover;">
                     </a>
                     <h5 class="font-weight-semi-bold m-0">Accesorios</h5>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 pb-1">
                 <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">15 Productos</p>
                     <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="~/img/sombras.jpg" alt="">
+                        <img class="img-fluid" src="~/img/sombras.jpg" alt="" style="width: 100%; height: 250px; object-fit: cover;">
                     </a>
                     <h5 class="font-weight-semi-bold m-0">Sombras</h5>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 pb-1">
                 <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">12 Producto</p>
                     <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="~/img/estuches.jpg" alt="">
+                        <img class="img-fluid" src="~/img/estuches.jpg" alt="" style="width: 100%; height: 250px; object-fit: cover;">
                     </a>
                     <h5 class="font-weight-semi-bold m-0">Estuches</h5>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 pb-1">
                 <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">6 Productos</p>
                     <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="~/img/sets.jpg" alt="">
+                        <img class="img-fluid" src="~/img/sets.jpg" alt="" style="width: 100%; height: 250px; object-fit: cover;">
                     </a>
                     <h5 class="font-weight-semi-bold m-0">Sets</h5>
                 </div>
@@ -402,35 +398,6 @@
         </div>
     </div>
     <!-- Categories End -->
-
-
-    <!-- Offer Start -->
-    <div class="container-fluid offer pt-5">
-        <div class="row px-xl-5">
-            <div class="col-md-6 pb-4">
-                <div class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-5 px-5">
-                    <img src="~/img/offer-1.png" alt="">
-                    <div class="position-relative" style="z-index: 1;">
-                        <h5 class="text-uppercase text-primary mb-3">Ofertas del mes</h5>
-                        <h1 class="mb-4 font-weight-semi-bold">Aprovecha</h1>
-                        <a href="" class="btn btn-outline-primary py-md-2 px-md-3">Comprar Ahora</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 pb-4">
-                <div class="position-relative bg-secondary text-center text-md-left text-white mb-2 py-5 px-5">
-                    <img src="~/img/offer-2.png" alt="">
-                    <div class="position-relative" style="z-index: 1;">
-                        <h5 class="text-uppercase text-primary mb-3">Tiempo limitado</h5>
-                        <h1 class="mb-4 font-weight-semi-bold">Exclusivo</h1>
-                        <a href="" class="btn btn-outline-primary py-md-2 px-md-3">Comprar Ahora</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Offer End -->
-
 
     <!-- Products Start -->
     <div class="container-fluid pt-5">
@@ -680,43 +647,48 @@
     </div>
     <!-- Products End -->
 
+
     <!-- Footer Start -->
     <div class="container-fluid bg-secondary text-dark mt-5 pt-5">
         <div class="row px-xl-5 pt-5">
-            <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+            <!-- PRIMERA COLUMNA -->
+            <div class="col-lg-4 col-md-12 mb-5">
                 <a href="" class="text-decoration-none">
-                    <h1 class="mb-4 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border border-white px-3 mr-1">L</span>Leah Make Up</h1>
+                    <h1 class="mb-4 display-5 font-weight-semi-bold">
+                        <span class="text-primary font-weight-bold border border-white px-3 mr-1">L</span>
+                        Leah Make Up
+                    </h1>
                 </a>
-                <p>Sin maquillaje soy fantástica, maquillada son una obra de arte.</p>
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Mall San Pedro, 3er piso</p>
-                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+506 7139-7781</p>
-                <p ></p>
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Expresso Desamparados</p>
-                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+506 7286-2118</p>
-                
+                <p>Sin maquillaje soy fantástica, maquillada soy una obra de arte.</p>
             </div>
-            <!-- INICIO LINKS RAPIDOS -->
-            <div class="col-lg-8 col-md-12">
-                <div class="row">
-                    <div class="col-md-4 mb-5">
-                        <h5 class="font-weight-bold text-dark mb-4">Links Rápidos</h5>
-                        <div class="d-flex flex-column justify-content-start">
-                            <a class="text-dark mb-2" href="http://localhost:5059"><i class="fa fa-angle-right mr-2"></i>Inicio</a>
-                            <a asp-controller="Inventarios" asp-action="Productos" class="text-dark mb-2"><i class="fa fa-angle-right mr-2"></i>Productos</a>
-                            <a asp-controller="MetodoPago" asp-action="Index" class="text-dark mb-2"><i class="fa fa-angle-right mr-2"></i>Métodos de Pago</a>
-                            <a asp-controller="Carritos" asp-action="Index" class="text-dark mb-2 active"><i class="fa fa-angle-right mr-2"></i>Carrito</a>
-                        </div>
-                    </div>
+
+            <!-- SEGUNDA COLUMNA (LINKS RAPIDOS) -->
+            <div class="col-lg-4 col-md-12 mb-5">
+                <h5 class="font-weight-bold text-dark mb-4">Links Rápidos</h5>
+                <div class="d-flex flex-column justify-content-start text-left">
+                    <a class="text-dark mb-2 text-left" href="http://localhost:5059"><i class="fa fa-angle-right mr-2"></i>Inicio</a>
+                    <a asp-controller="Inventarios" asp-action="Productos" class="text-dark mb-2 text-left"><i class="fa fa-angle-right mr-2"></i>Productos</a>
+                    <a asp-controller="MetodoPago" asp-action="Index" class="text-dark mb-2 text-left"><i class="fa fa-angle-right mr-2"></i>Métodos de Pago</a>
+                    <a asp-controller="Carritos" asp-action="Index" class="text-dark mb-2 text-left active"><i class="fa fa-angle-right mr-2"></i>Carrito</a>
                 </div>
             </div>
-            <!-- FIN LINKS RAPIDOS -->
+
+            <!-- TERCERA COLUMNA (UBICACIONES) -->
+            <div class="col-lg-4 col-md-12 mb-5">
+                <h5 class="font-weight-bold text-dark mb-4">Ubicaciones</h5>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Mall San Pedro, 3er piso</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+506 7139-7781</p>
+                <br>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Expresso Desamparados</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+506 7286-2118</p>
+            </div>
         </div>
+
         <div class="row border-top border-light mx-xl-5 py-4">
             <div class="col-md-6 px-xl-0">
                 <p class="mb-md-0 text-center text-md-left text-dark">
                     &copy; <a class="text-dark font-weight-semi-bold" href="#">Leah Make Up</a>. Nos reservamos el derecho de admisión. Diseñado
-                    por
-                    <a class="text-dark font-weight-semi-bold" href="https://sistemas.ufidelitas.ac.cr/">Grupo 2</a>
+                    por <a class="text-dark font-weight-semi-bold" href="https://sistemas.ufidelitas.ac.cr/">Grupo 2</a>
                 </p>
             </div>
             <div class="col-md-6 px-xl-0 text-center text-md-right">
@@ -725,7 +697,6 @@
         </div>
     </div>
     <!-- Footer End -->
-
     <!--CHAT BOT-->
 
     <div class="fabs" id="fabs-chat">

@@ -65,15 +65,13 @@
 <body>
     <!-- Topbar Start -->
     <div class="container-fluid">
-        <div class="row bg-secondary py-2 px-xl-5">
+        <div class="row bg-secondary py-2">
             <div class="col-lg-6 d-none d-lg-block">
                 <div class="d-inline-flex align-items-center">
                     <a class="text-dark" href="">Preguntas Frecuentes</a>
-                    <span class="text-muted px-2">|</span>
-                    <a class="text-dark" href="">Soporte</a>
                 </div>
             </div>
-            <<div class="col-lg-6 text-center text-lg-right">
+            <div class="col-lg-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
                     <a class="text-dark px-2" href="https://wa.me/71397781?text=Buenas%2C%20estoy%20interesada%20en%20un%20producto%21">
                         <i class="fab fa-whatsapp"></i>
@@ -153,6 +151,7 @@
                             <a asp-controller="Inventarios" asp-action="Productos" class="nav-item nav-link">Productos</a>
                             <!-- METODO DE PAGO -->
                             <a href="~/MetodoPago" class="nav-item nav-link">Métodos de Pago</a>
+                            <a asp-controller="Envios" asp-action="Index" class="nav-item nav-link">Envios</a>
                             <a href="detail.html" class="nav-item nav-link">Ofertas</a>
                             <a href="contact.html" class="nav-item nav-link">Contacto</a>
                         </div>
