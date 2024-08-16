@@ -166,7 +166,7 @@ namespace LeahMakeUp.Controllers
         }
 
         // POST: Carritos/AddToCart
-       [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> AddToCart(int id, int cantidad = 1)
         {
             var producto = await _context.Inventarios.FindAsync(id);
@@ -175,13 +175,15 @@ namespace LeahMakeUp.Controllers
                 return NotFound();
             }
 
+            // Verifica si el usuario está autenticado
+            if (!User.Identity.IsAuthenticated)
+            {
+                // Redirige a la página de inicio de sesión si el usuario no está autenticado
+                return RedirectToPage("/Account/Login", new { area = "Identity" });
+            }
+
             // Obtener la cédula del usuario autenticado
             var userCedula = User.Identity.Name; // O usar Claims si es necesario
-
-            if (string.IsNullOrEmpty(userCedula))
-            {
-                return Unauthorized(); // Maneja el caso donde el usuario no esté autenticado
-            }
 
             var carritoItem = await _context.Carritos
                 .FirstOrDefaultAsync(c => c.ProductoId == id && c.Cedula == userCedula);
@@ -209,6 +211,8 @@ namespace LeahMakeUp.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+
         // POST: Carritos/UpdateQuantity
         [HttpPost]
         public async Task<IActionResult> UpdateQuantity(int id, int nuevaCantidad)
