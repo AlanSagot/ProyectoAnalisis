@@ -4,81 +4,244 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<!DOCTYPE html>
+<html lang="en">
 
-<h1>Index</h1>
+<head>
+    <meta charset="utf-8">
+    <title>Envios - Bootstrap Shop Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Cedula)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Provincia)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Canton)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Distrito)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Direccion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CodigoPostal)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cedula)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Provincia)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Canton)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Distrito)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Direccion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CodigoPostal)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.EnvioId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.EnvioId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EnvioId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <!-- Favicon -->
+    <link href="~/img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/css/style.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid #ddd;
+            max-width: 95%;
+            margin: auto;
+        }
+
+            .navbar h1 {
+                margin: 0;
+            }
+
+            .navbar a {
+                text-decoration: none;
+                color: #ffb6c1;
+                font-weight: 500;
+                font-size: 1.5em;
+            }
+
+                .navbar a:hover {
+                    text-decoration: none;
+                }
+
+            .navbar .home-icon {
+                font-size: 1.5em;
+            }
+
+        .container {
+            max-width: 95%;
+            margin: 30px auto 15px;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow-x: auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .btn-light {
+            background-color: #ffb6c1;
+            border: none;
+            color: #fff;
+            font-weight: 500;
+            padding: 10px 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 1em;
+        }
+
+            table thead tr {
+                background-color: #f2f2f2;
+                text-align: left;
+                font-weight: bold;
+            }
+
+            table th, table td {
+                padding: 12px 15px;
+                white-space: nowrap;
+                text-align: center;
+            }
+
+            table tbody tr {
+                border-bottom: 1px solid #dddddd;
+            }
+
+                table tbody tr:nth-of-type(even) {
+                    background-color: #f3f3f3;
+                }
+
+                table tbody tr:last-of-type {
+                    border-bottom: 2px solid #ffb6c1;
+                }
+
+                table tbody tr.active-row {
+                    font-weight: bold;
+                    color: #009879;
+                }
+
+        .btn {
+            font-size: 0.875em;
+        }
+
+        .btn-primary {
+            background-color: #ffb6c1;
+            border: none;
+            margin-right: 10px;
+        }
+
+        .btn-danger {
+            background-color: #ff6961;
+            border: none;
+        }
+
+        .btn-primary, .btn-danger {
+            padding: 0.5em 1em;
+            font-size: 0.875em;
+        }
+
+        .btn-group .btn {
+            margin-right: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <h1>
+            <span class="text-primary font-weight-bold border px-3 mr-1">L</span>Leah Make Up
+        </h1>
+        <a href="@Url.Action("Index", "Home")" class="home-icon">
+            <i class="fas fa-home"></i>
+        </a>
+    </div>
+
+    <div class="container">
+        <h2>Envios</h2>
+
+        <p>
+            <a class="btn btn-light" asp-action="Create">Crear Envio</a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Cedula)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Telefono)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Provincia)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Canton)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Distrito)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Direccion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().CodigoPostal)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cedula)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Telefono)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Provincia)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Canton)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Distrito)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Direccion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CodigoPostal)
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.EnvioId">
+                                <i class="fa fa-pen"></i>
+                            </a>
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.EnvioId">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -4,87 +4,232 @@
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<!DOCTYPE html>
+<html lang="en">
 
-<h1>Edit</h1>
+<head>
+    <meta charset="utf-8">
+    <title>Edit Empleado - Bootstrap Shop Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
 
-<h4>Empleado</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="EmpleadoId" />
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PrimerApellido" class="control-label"></label>
-                <input asp-for="PrimerApellido" class="form-control" />
-                <span asp-validation-for="PrimerApellido" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SegundoApellido" class="control-label"></label>
-                <input asp-for="SegundoApellido" class="form-control" />
-                <span asp-validation-for="SegundoApellido" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Cedula" class="control-label"></label>
-                <input asp-for="Cedula" class="form-control" />
-                <span asp-validation-for="Cedula" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Telefono" class="control-label"></label>
-                <input asp-for="Telefono" class="form-control" />
-                <span asp-validation-for="Telefono" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Direccion" class="control-label"></label>
-                <input asp-for="Direccion" class="form-control" />
-                <span asp-validation-for="Direccion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaContratacion" class="control-label"></label>
-                <input asp-for="FechaContratacion" class="form-control" />
-                <span asp-validation-for="FechaContratacion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Estado" class="control-label"></label>
-                <input asp-for="Estado" class="form-control" />
-                <span asp-validation-for="Estado" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PuestoId" class="control-label"></label>
-                <select asp-for="PuestoId" class="form-control" asp-items="ViewBag.PuestoId"></select>
-                <span asp-validation-for="PuestoId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PlanillaId" class="control-label"></label>
-                <input asp-for="PlanillaId" class="form-control" />
-                <span asp-validation-for="PlanillaId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SucursalId" class="control-label"></label>
-                <select asp-for="SucursalId" class="form-control" asp-items="ViewBag.SucursalId"></select>
-                <span asp-validation-for="SucursalId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+    <!-- Favicon -->
+    <link href="~/img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/css/style.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid #ddd;
+            max-width: 95%;
+            margin: auto;
+        }
+
+            .navbar h1 {
+                margin: 0;
+            }
+
+            .navbar a {
+                text-decoration: none;
+                color: #ffb6c1;
+                font-weight: 500;
+                font-size: 1.5em;
+            }
+
+                .navbar a:hover {
+                    text-decoration: none;
+                }
+
+            .navbar .home-icon {
+                font-size: 1.5em;
+            }
+
+        .container {
+            max-width: 95%;
+            margin: 30px auto 15px;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow-x: auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .btn-light {
+            background-color: #ffb6c1;
+            border: none;
+            color: #fff;
+            font-weight: 500;
+            padding: 10px 20px;
+        }
+
+        .btn-primary {
+            background-color: #ffb6c1;
+            border: none;
+            color: #fff; /* Cambia el color del texto del botón a blanco */
+            margin-right: 10px;
+        }
+
+        .btn-danger {
+            background-color: #ff6961;
+            border: none;
+        }
+
+        .btn-primary, .btn-danger {
+            padding: 0.5em 1em;
+            font-size: 0.875em;
+        }
+
+        .btn-group .btn {
+            margin-right: 10px;
+        }
+
+        .form-group {
+            text-align: center; /* Centra los campos de texto */
+        }
+
+            .form-group label {
+                font-weight: 500;
+            }
+
+        .form-control {
+            border-radius: 5px;
+            width: 80%; /* Ajusta el ancho de los campos de texto aquí */
+            max-width: 400px; /* Establece un ancho máximo para los campos de texto */
+            margin: 0 auto; /* Centra los campos de texto */
+        }
+
+        .row {
+            margin-bottom: 20px;
+        }
+
+        .form-group input[type="submit"] {
+            width: auto; /* Asegura que el botón mantenga su tamaño de contenido */
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <h1>
+            <span class="text-primary font-weight-bold border px-3 mr-1">L</span>Leah Make Up
+        </h1>
+        <a href="@Url.Action("Index", "Home")" class="home-icon">
+            <i class="fas fa-home"></i>
+        </a>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="container">
+        <h2>Edit Empleado</h2>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+        <h4>Empleado</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="EmpleadoId" />
+                    <div class="form-group">
+                        <label asp-for="Nombre" class="control-label"></label>
+                        <input asp-for="Nombre" class="form-control" />
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PrimerApellido" class="control-label"></label>
+                        <input asp-for="PrimerApellido" class="form-control" />
+                        <span asp-validation-for="PrimerApellido" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SegundoApellido" class="control-label"></label>
+                        <input asp-for="SegundoApellido" class="form-control" />
+                        <span asp-validation-for="SegundoApellido" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Cedula" class="control-label"></label>
+                        <input asp-for="Cedula" class="form-control" />
+                        <span asp-validation-for="Cedula" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Telefono" class="control-label"></label>
+                        <input asp-for="Telefono" class="form-control" />
+                        <span asp-validation-for="Telefono" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Direccion" class="control-label"></label>
+                        <input asp-for="Direccion" class="form-control" />
+                        <span asp-validation-for="Direccion" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FechaContratacion" class="control-label"></label>
+                        <input asp-for="FechaContratacion" class="form-control" />
+                        <span asp-validation-for="FechaContratacion" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Estado" class="control-label"></label>
+                        <input asp-for="Estado" class="form-control" />
+                        <span asp-validation-for="Estado" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PuestoId" class="control-label"></label>
+                        <select asp-for="PuestoId" class="form-control" asp-items="ViewBag.PuestoId"></select>
+                        <span asp-validation-for="PuestoId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PlanillaId" class="control-label"></label>
+                        <input asp-for="PlanillaId" class="form-control" />
+                        <span asp-validation-for="PlanillaId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SucursalId" class="control-label"></label>
+                        <select asp-for="SucursalId" class="form-control" asp-items="ViewBag.SucursalId"></select>
+                        <span asp-validation-for="SucursalId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a class="btn btn-light" asp-action="Index">Back to List</a>
+        </div>
+    </div>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+</body>
+</html>
