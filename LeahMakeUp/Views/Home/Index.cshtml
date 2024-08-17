@@ -34,7 +34,7 @@
 <body>
     <!-- Topbar Start -->
     <div class="container-fluid">
-        <div class="row bg-secondary py-2">
+        <div class="row" style="background-color: #f9f2f2; padding-top: 0.5rem; padding-bottom: 0.5rem;">
             <div class="col-lg-6 d-none d-lg-block">
                 <div class="d-inline-flex align-items-center">
                     <a class="text-dark" href="">Preguntas Frecuentes</a>
@@ -255,7 +255,7 @@
                             <a asp-controller="MetodoPago" asp-action="Index" class="nav-item nav-link">Métodos de Pago</a>
                             <a href="detail.html" class="nav-item nav-link">Ofertas</a>
                             <a asp-controller="Envios" asp-action="Index" class="nav-item nav-link">Envios</a>
-                            <a href="contact.html" class="nav-item nav-link">Contacto</a>
+                            <a asp-controller="Contacto" asp-action="Index" class="nav-item nav-link">Contacto</a>
 
                         </div>
                         <div class="navbar-nav ml-auto py-0">
@@ -547,11 +547,13 @@
 
 
     <!-- Subscribe Start -->
-    <div class="container-fluid bg-secondary my-5">
+    <div class="container-fluid" style="background-color: #f2e2e2; margin-top: 3rem; margin-bottom: 3rem;">
         <div class="row justify-content-md-center py-5 px-xl-5">
             <div class="col-md-6 col-12 py-5">
                 <div class="text-center mb-2 pb-2">
-                    <h2 class="section-title px-5 mb-3"><span class="bg-secondary px-2">Mantente Actualizado</span></h2>
+                    <h2 class="section-title px-5 mb-3">
+                        <span class="bg-secondary px-2">Mantente Actualizado</span>
+                    </h2>
                     <p>Si te gustaría recibir recomendaciones y ofertas, puedes ingresar tu correo electrónico para enviarte notificaciones sobre nosotros.</p>
                 </div>
                 <form action="">
@@ -649,7 +651,7 @@
 
 
     <!-- Footer Start -->
-    <div class="container-fluid bg-secondary text-dark mt-5 pt-5">
+    <div class="container-fluid" style="background-color: #f2e2e2; color: #333; mt-5 pt-5;">
         <div class="row px-xl-5 pt-5">
             <!-- PRIMERA COLUMNA -->
             <div class="col-lg-4 col-md-12 mb-5">
