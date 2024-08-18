@@ -171,12 +171,17 @@
             <label for="categoria" class="mr-2">Categoría</label>
             <select id="categoria" name="categoria" class="form-control ml-2">
                 <option value="">Todas</option>
-                @foreach (var categoria in Model.Select(i => i.Categoria).Distinct())
+                @foreach (var categoria in Model
+                .Where(i => i.Categoria != null)
+                .Select(i => i.Categoria.Descripcion)
+                .Distinct())
                 {
                     <option value="@categoria">@categoria</option>
                 }
             </select>
         </div>
+
+
     </form>
 
 
@@ -234,9 +239,9 @@
                         }
                     </td>
                     <td>@Html.DisplayFor(modelItem => item.NombreProducto)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Categoria)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Categoria.Descripcion)</td>
                     <td>@Html.DisplayFor(modelItem => item.DescripcionProducto)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Marca)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Marca.Descripcion)</td>
                     <td>@Html.DisplayFor(modelItem => item.PrecioXVenta)</td>
                     <td>@Html.DisplayFor(modelItem => item.PrecioXCosto)</td>
                     <td>@Html.DisplayFor(modelItem => item.Stock)</td>

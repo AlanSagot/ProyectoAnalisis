@@ -21,15 +21,19 @@ namespace DAL
         [DisplayName("Producto")]
         public string NombreProducto { get; set; }
 
-        [MaxLength(500)]
-        public string Categoria { get; set; }
+        [ForeignKey("Categoria")]
+        [DisplayName("Categoría")]
+        public int ID_Categoria { get; set; }
+        public Categoria Categoria { get; set; }
 
         [Required]
         [DisplayName("Descripción")]
         public string DescripcionProducto { get; set; }
 
-        [Required]
-        public string Marca { get; set; }
+        [DisplayName("Marca")]
+        [ForeignKey("Marca")]
+        public int ID_Marca { get; set; }
+        public Marca Marca { get; set; }
 
         [Required]
         [DisplayName("Precio Venta")]
@@ -63,7 +67,8 @@ namespace DAL
         public int SucursalId { get; set; }
         public Sucursal Sucursal { get; set; }
 
-        [ForeignKey("ID_Estado")]
+        [DisplayName("Estado")]
+        [ForeignKey("Estado")]
         public int ID_Estado { get; set; }
         public Estado Estado { get; set; }
 

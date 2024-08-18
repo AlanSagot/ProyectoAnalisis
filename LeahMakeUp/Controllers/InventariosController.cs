@@ -38,90 +38,108 @@ namespace LeahMakeUp.Controllers
         }
         public async Task<IActionResult> SkinCare()
         {
-            var productos = _context.Inventarios
-                                        .Where(i => i.Categoria.Equals("SkinCare"))
-                                        .ToList();
+            var productos = await _context.Inventarios
+                                          .Include(i => i.Categoria) // Incluye la relación con la categoría
+                                          .Where(i => i.Categoria.Descripcion.Equals("SkinCare"))
+                                          .ToListAsync();
 
             ViewBag.Categoria = "SkinCare";
             return View("SkinCare", productos);
         }
+
         public async Task<IActionResult> Articulos()
         {
-            var productos = _context.Inventarios
-                                        .Where(i => i.Categoria.Equals("Articulos"))
-                                        .ToList();
+            var productos = await _context.Inventarios
+                                          .Include(i => i.Categoria) // Incluye la relación con la categoría
+                                          .Where(i => i.Categoria.Descripcion.Equals("Artículos"))
+                                          .ToListAsync();
 
             ViewBag.Categoria = "Articulos";
             return View("Articulos", productos);
         }
+
         public async Task<IActionResult> Maquillaje()
         {
-            var productos = _context.Inventarios
-                                        .Where(i => i.Categoria.Equals("Maquillaje"))
-                                        .ToList();
+            var productos = await _context.Inventarios
+                                          .Include(i => i.Categoria) // Incluye la relación con la categoría
+                                          .Where(i => i.Categoria.Descripcion.Equals("Maquillaje"))
+                                          .ToListAsync();
 
             ViewBag.Categoria = "Maquillaje";
             return View("Maquillaje", productos);
         }
 
-        // Método para generar informe PDF
+
+        //Método para generar informe PDF
         public async Task<IActionResult> GenerarInformePDF(DateTime fechaInicio, DateTime fechaFin, string categoria)
         {
             try
             {
+                // Filtrar inventarios según las fechas y la categoría proporcionada
                 var inventarios = await _context.Inventarios
                     .Include(i => i.Sucursal)
-                    .Where(i => i.FechaAgregado >= fechaInicio && i.FechaAgregado <= fechaFin && (string.IsNullOrEmpty(categoria) || i.Categoria == categoria))
+                    .Include(i => i.Categoria)
+                    .Include(i => i.Marca)
+                    .Where(i => i.FechaAgregado >= fechaInicio && i.FechaAgregado <= fechaFin &&
+                                (string.IsNullOrEmpty(categoria) || i.Categoria.Descripcion == categoria))
                     .ToListAsync();
 
+                // Crear un archivo temporal para el PDF
                 string tempFilePath = System.IO.Path.GetTempFileName();
 
                 using (var writer = new PdfWriter(tempFilePath))
-                {                    
+                {
                     using (var pdf = new PdfDocument(writer))
-                    {              
-                        var pageSize = PageSize.A4.Rotate(); 
+                    {
+                        var pageSize = PageSize.A4.Rotate();
                         using (var document = new Document(pdf, pageSize))
                         {
+                            // Agregar título y fecha al documento
                             document.Add(new Paragraph("Informe de Inventario"));
                             document.Add(new Paragraph($"Fecha: {DateTime.Now}"));
                             document.Add(new Paragraph(" "));
 
-                            var table = new Table(10);
+                            // Crear tabla con las columnas necesarias
+                            var table = new Table(12);
                             table.AddCell("ProductoId");
+                            table.AddCell("Código");
                             table.AddCell("NombreProducto");
-                            table.AddCell("Categoria");
-                            table.AddCell("DescripcionProducto");
+                            table.AddCell("Categoría");
+                            table.AddCell("DescripciónProducto");
                             table.AddCell("Marca");
                             table.AddCell("PrecioXVenta");
                             table.AddCell("PrecioXCosto");
                             table.AddCell("Stock");
                             table.AddCell("FechaAgregado");
                             table.AddCell("FechaExpiracion");
-                           
+                            table.AddCell("Sucursal");
+
+                            // Llenar la tabla con los datos del inventario
                             foreach (var item in inventarios)
                             {
                                 table.AddCell(item.ProductoId.ToString());
+                                table.AddCell(item.Codigo);
                                 table.AddCell(item.NombreProducto);
-                                table.AddCell(item.Categoria);
+                                table.AddCell(item.Categoria.Descripcion);
                                 table.AddCell(item.DescripcionProducto);
-                                table.AddCell(item.Marca);
+                                table.AddCell(item.Marca.Descripcion); // Suponiendo que Marca tiene un campo NombreCatalogo
                                 table.AddCell(item.PrecioXVenta.ToString());
                                 table.AddCell(item.PrecioXCosto.ToString());
                                 table.AddCell(item.Stock.ToString());
                                 table.AddCell(item.FechaAgregado.ToString("dd/MM/yyyy"));
                                 table.AddCell(item.FechaExpiracion.ToString("dd/MM/yyyy"));
+                                table.AddCell(item.Sucursal.Direccion); // Suponiendo que Sucursal tiene un campo Nombre
                             }
 
                             document.Add(table);
                         }
-
                     }
+                }
 
-                } 
-
+                // Leer el archivo PDF generado y devolverlo como una respuesta
                 var pdfBytes = await System.IO.File.ReadAllBytesAsync(tempFilePath);
-                                
+
+                // Eliminar el archivo temporal
                 System.IO.File.Delete(tempFilePath);
 
                 if (pdfBytes.Length > 0)
@@ -134,17 +152,24 @@ namespace LeahMakeUp.Controllers
                 }
             }
             catch (Exception ex)
-            {               
+            {
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Error al generar el informe: {ex.Message}");
             }
         }
 
+
         //GET: Inventarios
         public async Task<IActionResult> Index()
         {
-            var leahDBContext = _context.Inventarios.Include(i => i.Sucursal);
+            var leahDBContext = _context.Inventarios
+                                        .Include(i => i.Sucursal)   
+                                        .Include(i => i.Categoria)  
+                                        .Include(i => i.Marca) 
+                                                    .Include(i => i.Estado);
+
             return View(await leahDBContext.ToListAsync());
         }
+
 
         // GET: Inventarios/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -171,6 +196,9 @@ namespace LeahMakeUp.Controllers
         {
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion");
             ViewData["ID_Estado"] = new SelectList(_context.Estados, "ID_Estado", "Tipo");
+            ViewData["ID_Categoria"] = new SelectList(_context.Categorias, "ID_Categoria", "Descripcion");
+            ViewData["ID_Marca"] = new SelectList(_context.Marcas, "ID_Marca", "Descripcion");
+
             return View();
         }
 
@@ -198,9 +226,9 @@ namespace LeahMakeUp.Controllers
                     Codigo = inventario.Codigo,
                     FotoProducto = imagen,
                     NombreProducto = inventario.NombreProducto,
-                    Categoria = inventario.Categoria,
+                    ID_Categoria = inventario.ID_Categoria,
                     DescripcionProducto = inventario.DescripcionProducto,
-                    Marca = inventario.Marca,
+                    ID_Marca = inventario.ID_Marca,
                     PrecioXVenta = inventario.PrecioXVenta,
                     PrecioXCosto = inventario.PrecioXCosto,
                     Stock = inventario.Stock,
@@ -217,6 +245,8 @@ namespace LeahMakeUp.Controllers
             
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion", inventario.SucursalId);
             ViewData["ID_Estado"] = new SelectList(_context.Estados, "ID_Estado", "Tipo", inventario.ID_Estado);
+            ViewData["ID_Categoria"] = new SelectList(_context.Categorias, "ID_Categoria", "Descripcion", inventario.ID_Categoria);
+            ViewData["ID_Marca"] = new SelectList(_context.Marcas, "ID_Marca", "Descripcion", inventario.ID_Marca);
             return View(inventario);
         }
 
@@ -237,13 +267,15 @@ namespace LeahMakeUp.Controllers
             }
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion", inventario.SucursalId);
             ViewData["ID_Estado"] = new SelectList(_context.Estados, "ID_Estado", "Tipo", inventario.ID_Estado);
+            ViewData["ID_Categoria"] = new SelectList(_context.Categorias, "ID_Categoria", "Descripcion", inventario.ID_Categoria);
+            ViewData["ID_Marca"] = new SelectList(_context.Marcas, "ID_Marca", "Descripcion", inventario.ID_Marca);
             return View(inventario);
         }
 
         // POST: Inventarios/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductoId,Codigo,NombreProducto,Categoria,DescripcionProducto,Marca,PrecioXVenta,PrecioXCosto,Stock,FechaAgregado,FechaExpiracion,SucursalId")] Inventario inventario, IFormFile FotoProducto)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductoId,Codigo,NombreProducto,ID_Categoria,DescripcionProducto,ID_Marca,PrecioXVenta,PrecioXCosto,Stock,FechaAgregado,FechaExpiracion,SucursalId")] Inventario inventario, IFormFile FotoProducto)
         {
             if (id != inventario.ProductoId)
             {
@@ -297,6 +329,9 @@ namespace LeahMakeUp.Controllers
             }
 
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion", inventario.SucursalId);
+            ViewData["ID_Estado"] = new SelectList(_context.Estados, "ID_Estado", "Tipo", inventario.ID_Estado);
+            ViewData["ID_Categoria"] = new SelectList(_context.Categorias, "ID_Categoria", "Descripcion", inventario.ID_Categoria);
+            ViewData["ID_Marca"] = new SelectList(_context.Marcas, "ID_Marca", "Descripcion", inventario.ID_Marca);
             return View(inventario);
         }
 
@@ -310,6 +345,9 @@ namespace LeahMakeUp.Controllers
 
             var inventario = await _context.Inventarios
                 .Include(i => i.Sucursal)
+                .Include(i => i.Categoria)
+                .Include(i => i.Marca)
+                .Include(i => i.Estado)
                 .FirstOrDefaultAsync(m => m.ProductoId == id);
             if (inventario == null)
             {
@@ -344,6 +382,9 @@ namespace LeahMakeUp.Controllers
         public async Task<IActionResult> Index(string searchString)
         {
             var productos = from p in _context.Inventarios.Include(i => i.Sucursal)
+                            .Include(i => i.Categoria)
+                            .Include(i => i.Marca)
+                            .Include(i => i.Estado)
                             select p;
 
             if (!string.IsNullOrEmpty(searchString))

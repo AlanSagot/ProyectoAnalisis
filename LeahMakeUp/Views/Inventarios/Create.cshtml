@@ -90,9 +90,10 @@
                 <span asp-validation-for="NombreProducto" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Categoria" class="form-control" placeholder="Categoría" />
-                <label asp-for="Categoria">Categoría</label>
-                <span asp-validation-for="Categoria" class="text-danger"></span>
+                <select asp-for="ID_Categoria" class="form-control" asp-items="ViewBag.ID_Categoria" placeholder="Categoría">
+                    <option value="">Seleccione una categoría</option>
+                </select>
+                <label asp-for="ID_Categoria">Categoría</label>
             </div>
             <div class="form-floating mb-3">
                 <input asp-for="DescripcionProducto" class="form-control" placeholder="Descripción Producto" />
@@ -100,9 +101,10 @@
                 <span asp-validation-for="DescripcionProducto" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Marca" class="form-control" placeholder="Marca" />
-                <label asp-for="Marca">Marca</label>
-                <span asp-validation-for="Marca" class="text-danger"></span>
+                <select asp-for="ID_Marca" class="form-control" asp-items="ViewBag.ID_Marca" placeholder="Marca">
+                    <option value="">Seleccione una marca</option>
+                </select>
+                <label asp-for="ID_Marca">Marca</label>
             </div>
             <div class="form-floating mb-3">
                 <input asp-for="PrecioXVenta" class="form-control" placeholder="Precio por Venta" />

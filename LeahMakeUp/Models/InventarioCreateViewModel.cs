@@ -22,15 +22,17 @@ namespace LeahMakeUp.Models
         [DisplayName("Producto")]
         public string NombreProducto { get; set; }
 
-        [MaxLength(500)]
-        public string Categoria { get; set; }
+        [ForeignKey("ID_Categoria")]
+        public int ID_Categoria { get; set; }
+        public Categoria Categoria { get; set; }
 
         [Required]
         [DisplayName("Descripción")]
         public string DescripcionProducto { get; set; }
 
-        [Required]
-        public string Marca { get; set; }
+        [ForeignKey("ID_Marca")]
+        public int ID_Marca { get; set; }
+        public Marca Marca { get; set; }
 
         [Required]
         [DisplayName("Precio Venta")]

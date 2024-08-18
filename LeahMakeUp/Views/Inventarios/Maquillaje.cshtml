@@ -459,7 +459,7 @@
                                 <img src="@(producto.FotoProducto != null ? $"data:image/jpeg;base64,{Convert.ToBase64String(producto.FotoProducto)}" : Url.Content("~/img/default.jpg"))" alt="">
                             </div>
                             <div class="info">
-                                <h2>@producto.NombreProducto<br><span>@producto.Categoria</span></h2>
+                                <h2>@producto.NombreProducto<br><span>@producto.Categoria.Descripcion</span></h2>
                                 <p>@producto.DescripcionProducto</p>
                                 <span class="price">CRC @producto.PrecioXVenta</span>
                                 <a href="@Url.Action("AddToCart", new { id = producto.ProductoId })" class="add-cart-btn">Add to Cart</a>
