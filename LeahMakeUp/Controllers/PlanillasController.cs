@@ -78,25 +78,19 @@ namespace LeahMakeUp.Controllers
 
                 Empleado newEmpleado = new Empleado
                 {
-                    Cedula = planillas.Cedula,
+                    EmpleadoId = planillas.Cedula,
                     Nombre = planillas.Nombre,
                     PrimerApellido = planillas.PrimerApellido,
                     SegundoApellido = planillas.SegundoApellido,
-                    Telefono = planillas.Telefono,
-                    Direccion = planillas.Direccion,
-                    Email = planillas.Email,
-                    Estado = planillas.Estado,
-                    FechaContratacion = planillas.FechaContratacion,
                     PuestoId = planillas.PuestoId,
                     SucursalId = planillas.SucursalId,
                 };
 
                 Planillas newPlanilla = new Planillas
                 {
-                    EmpleadoId = newEmpleado.EmpleadoId,
+                    EmpleadoId = planillas.Cedula,
                     PuestoId = planillas.PuestoId,
                     SucursalId = planillas.SucursalId,
-                    Salario = planillas.Salario,
                 };
 
                 _context.Planillas.Add(newPlanilla);

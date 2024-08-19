@@ -204,9 +204,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Sucursal)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Salario)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -248,9 +245,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Sucursal.Direccion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Salario)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.PlanillaId"><i class="fa fa-pen"></i></a>

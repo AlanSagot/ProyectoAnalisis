@@ -58,7 +58,7 @@ namespace LeahMakeUp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmpleadoId,Nombre,PrimerApellido,SegundoApellido,Cedula,Email,Telefono,Direccion,FechaContratacion,Estado,PuestoId,PlanillaId,SucursalId")] Empleado empleado)
+        public async Task<IActionResult> Create([Bind("EmpleadoId,Nombre,PrimerApellido,SegundoApellido,EmpleadoId,Email,Telefono,Direccion,FechaContratacion,Estado,PuestoId,PlanillaId,SucursalId")] Empleado empleado)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace LeahMakeUp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EmpleadoId,Nombre,PrimerApellido,SegundoApellido,Cedula,Email,Telefono,Direccion,FechaContratacion,Estado,PuestoId,PlanillaId,SucursalId")] Empleado empleado)
+        public async Task<IActionResult> Edit(int id, [Bind("EmpleadoId,Nombre,PrimerApellido,SegundoApellido,EmpleadoId,Email,Telefono,Direccion,FechaContratacion,Estado,PuestoId,PlanillaId,SucursalId")] Empleado empleado)
         {
             if (id != empleado.EmpleadoId)
             {

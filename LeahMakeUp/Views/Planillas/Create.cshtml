@@ -94,31 +94,6 @@
                 <span asp-validation-for="SegundoApellido" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Telefono" class="form-control" placeholder="Teléfono" />
-                <label asp-for="Telefono">Teléfono</label>
-                <span asp-validation-for="Telefono" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Direccion" class="form-control" placeholder="Dirección" />
-                <label asp-for="Direccion">Dirección</label>
-                <span asp-validation-for="Direccion" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Email" class="form-control" placeholder="Email" />
-                <label asp-for="Email">Email</label>
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Estado" class="form-control" placeholder="Estado" />
-                <label asp-for="Estado">Estado</label>
-                <span asp-validation-for="Estado" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="FechaContratacion" class="form-control" placeholder="Fecha de Contratación" />
-                <label asp-for="FechaContratacion">Fecha de Contratación</label>
-                <span asp-validation-for="FechaContratacion" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
                 <select asp-for="PuestoId" class="form-control" asp-items="ViewBag.PuestoId"></select>
                 <label asp-for="PuestoId">Puesto</label>
                 <span asp-validation-for="PuestoId" class="text-danger"></span>
@@ -131,11 +106,6 @@
             <div class="form-floating mb-3">
                 <select asp-for="SucursalId" class="form-control" asp-items="ViewBag.SucursalId"></select>
                 <label asp-for="SucursalId">Sucursal</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Salario" class="form-control" placeholder="Salario" />
-                <label asp-for="Salario">Salario</label>
-                <span asp-validation-for="Salario" class="text-danger"></span>
             </div>
             <button id="planillaSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Crear</button>
         </form>

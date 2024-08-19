@@ -13,7 +13,7 @@ namespace LeahMakeUp.Models
         [Key]
         public int PlanillaId { get; set; }
         [Required]
-        public string Cedula { get; set; }
+        public int Cedula { get; set; }
         [Required]
         public string Nombre { get; set; }
         [Required]
@@ -21,22 +21,32 @@ namespace LeahMakeUp.Models
         [Required]
         public string SegundoApellido { get; set; }
         [Required]
-        public string Telefono { get; set; }
-        [Required]
-        public string Direccion { get; set; }
-        [Required]
-        public string Email { get; set; }
-        [Required]
-        public string Estado { get; set; }
-        [Required]
-        public DateTime FechaContratacion { get; set; }
-        [Required]
         public int PuestoId { get; set; }
         public string Departamento { get; set; }
         public string NombrePuesto { get; set; }
         [Required]
         public int SucursalId { get; set; }
         [Required]
-        public int Salario { get; set; }
+        public double PrecioPorHora { get; set; }
+        [Required]
+        public int HorasTrabajadas { get; set; }
+        [Required]
+        public double HorasExtra { get; set; }
+        [Required]
+        public double SalarioBruto { get; set; }
+        [Required]
+        public double RebajoCCSS { get; set; } = 0.0917;
+        [Required]
+        public double RebajoINS { get; set; } = 0.01;
+        [Required]
+        public double RebajoIncapacidadINS { get; set; } = 0.4;
+        [Required]
+        public double RebajoIncapacidadCCSS { get; set; } = 0.4;
+        public double DeduccionesEmbargo { get; set; }
+        [Required]
+        public double Feriado { get; set; }
+        [Required]
+        public double SalarioNeto { get; set; }
+
     }
 }

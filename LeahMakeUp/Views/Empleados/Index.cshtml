@@ -179,7 +179,7 @@
                         @Html.DisplayNameFor(model => model.FirstOrDefault().SegundoApellido)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Cedula)
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().EmpleadoId)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().Email)
@@ -198,9 +198,6 @@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().Puesto.Departamento)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().PlanillaId)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().Sucursal.Direccion)
@@ -222,7 +219,7 @@
                             @Html.DisplayFor(modelItem => item.SegundoApellido)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Cedula)
+                            @Html.DisplayFor(modelItem => item.EmpleadoId)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Email)
@@ -241,9 +238,6 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Puesto.Departamento)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PlanillaId)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Sucursal.Direccion)
