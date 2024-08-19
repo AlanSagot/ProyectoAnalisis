@@ -180,7 +180,7 @@ namespace LeahMakeUp.Controllers
 
         // POST: Carritos/AddToCart
         [HttpPost]
-        public async Task<IActionResult> AddToCart(int id, int cantidad = 1)
+        public async Task<IActionResult> AddToCart(int id, int cantidad = 1, string returnUrl = null)
         {
             var producto = await _context.Inventarios.FindAsync(id);
             if (producto == null)
@@ -231,7 +231,7 @@ namespace LeahMakeUp.Controllers
             _context.Update(producto);
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return returnUrl != null ? Redirect(returnUrl) : RedirectToAction(nameof(Index));
 
         }
 

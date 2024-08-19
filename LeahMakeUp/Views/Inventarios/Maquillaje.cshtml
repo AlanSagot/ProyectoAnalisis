@@ -470,8 +470,13 @@
                                 <h2>@producto.NombreProducto<br><span>@producto.Categoria.Descripcion</span></h2>
                                 <p>@producto.DescripcionProducto</p>
                                 <span class="price">CRC @producto.PrecioXVenta</span>
-                                <a href="@Url.Action("AddToCart", new { id = producto.ProductoId })" class="add-cart-btn">Add to Cart</a>
-                                <a href="#" class="add-wish">Add to Wishlist</a>
+                                <form action="@Url.Action("AddToCart", "Carritos")" method="post">
+                                    <input type="hidden" name="id" value="@producto.ProductoId" />
+                                    <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+                                    <input type="number" name="cantidad" value="1" min="1" class="add-cart-btn" style="background-color:#fff; color: #4b4b4b;" />
+                                    <button type="submit" class="add-cart-btn">Añadir a Carrito</button>
+                                </form>
+
                             </div>
                         </div>
                     </div>
@@ -479,7 +484,7 @@
             }
         </div>
     </div>
-
+    <script></script>
     <script type="text/javascript">
         var popupViews = document.querySelectorAll('.popup-view');
         var popupBtns = document.querySelectorAll('.popup-btn');
