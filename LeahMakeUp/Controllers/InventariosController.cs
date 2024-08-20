@@ -16,6 +16,7 @@ using LeahMakeUp.Models;
 using iText.Kernel.Exceptions;
 using iText.Kernel.Geom;
 
+
 namespace LeahMakeUp.Controllers
 {
     public class InventariosController : Controller
@@ -26,11 +27,7 @@ namespace LeahMakeUp.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> VentanaProduct()
-        {
-            var productos = await _context.Inventarios.ToListAsync();
-            return View(productos);
-        }
+       
         public async Task<IActionResult> Productos()
         {
             var productos = await _context.Inventarios.Include(i => i.Estado)

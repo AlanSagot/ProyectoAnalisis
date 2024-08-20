@@ -22,12 +22,6 @@
     padding-right: 80px;
 }
 
-.product {
-    flex: 0 1 15%; /* Ajustado para ser más flexible */
-    margin-bottom: 30px;
-    margin-inline: 90px;
-    margin-left: 70px;
-}
 
 .product-img {
     width: 180px;
@@ -103,7 +97,7 @@
         position: absolute;
         text-align: center;
         bottom: 60px;
-        left: 25%;
+        left: 28%;
         font-size: 28px;
         font-weight: 300;
     }
