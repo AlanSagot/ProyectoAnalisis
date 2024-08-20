@@ -52,10 +52,14 @@ namespace LeahMakeUp.Models
 
         [ForeignKey("Sucursal")]
         public int SucursalId { get; set; }
+        public string Direccion {  get; set; }
 
         [ForeignKey("Empleado")]
         public int EmpleadoId { get; set; }
         public int Cedula { get; set; }
+        public string Nombre {  get; set; }
+        public string PrimerApellido { get; set; }
+        public string SegundoApellido { get; set; }
 
     }
 }

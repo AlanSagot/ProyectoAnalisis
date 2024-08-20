@@ -68,60 +68,98 @@
     </style>
 </head>
 <body>
+    <h2>@ViewData["Title"]</h2>
+
+    <h4>Planilla</h4>
+    <hr />
+
     <div class="container">
-        <h1>@ViewData["Title"]</h1>
         <form id="planillaForm" asp-action="Create" method="post">
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Cedula" class="form-control" placeholder="Cédula" />
-                <label asp-for="Cedula">Cédula</label>
-                <span asp-validation-for="Cedula" class="text-danger"></span>
+            <div class="form-horizontal">
+                <h4>Información del Empleado</h4>
+                <hr />
+                <div class="form-group">
+                    <label asp-for="EmpleadoId" class="control-label">Código del Empleado</label>
+                    <input asp-for="EmpleadoId" class="form-control" />
+                    <span asp-validation-for="EmpleadoId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Cedula" class="control-label">Cédula</label>
+                    <input asp-for="Cedula" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Nombre" class="control-label">Nombre</label>
+                    <input asp-for="Nombre" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="PrimerApellido" class="control-label">Primer Apellido</label>
+                    <input asp-for="PrimerApellido" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="SegundoApellido" class="control-label">Segundo Apellido</label>
+                    <input asp-for="SegundoApellido" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="NombrePuesto" class="control-label">Nombre del Puesto</label>
+                    <input asp-for="NombrePuesto" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Direccion" class="control-label">Dirección</label>
+                    <input asp-for="Direccion" class="form-control" readonly />
+                </div>
+
+                <h4>Detalles de la Planilla</h4>
+                <hr />
+                <div class="form-group">
+                    <label asp-for="HorasTrabajadas" class="control-label">Horas Trabajadas</label>
+                    <input asp-for="HorasTrabajadas" class="form-control" />
+                    <span asp-validation-for="HorasTrabajadas" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="HorasExtra" class="control-label">Horas Extra</label>
+                    <input asp-for="HorasExtra" class="form-control" />
+                    <span asp-validation-for="HorasExtra" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PrecioPorHora" class="control-label">Precio por Hora</label>
+                    <input asp-for="PrecioPorHora" class="form-control" readonly value="1800" />
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                </div>
             </div>
-            
-            <div class="form-floating mb-3">
-                <select asp-for="PuestoId" class="form-control" asp-items="ViewBag.PuestoId"></select>
-                <label asp-for="PuestoId">Puesto</label>
-                <span asp-validation-for="PuestoId" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <select asp-for="Departamento" class="form-control" asp-items="ViewBag.Departamento"></select>
-                <label asp-for="Departamento">Departamento</label>
-                <span asp-validation-for="Departamento" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <select asp-for="SucursalId" class="form-control" asp-items="ViewBag.SucursalId"></select>
-                <label asp-for="SucursalId">Sucursal</label>
-            </div>
-            <button id="planillaSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Crear</button>
         </form>
-        <div id="successMessage" class="alert alert-success" role="alert">
-            ¡Planilla creada correctamente!
-        </div>
     </div>
 
+    <div>
+        <a asp-action="Index">Volver al listado</a>
+    </div>
+
+    @section Scripts {
+        @await Html.PartialAsync("_ValidationScriptsPartial")
+    }
+
     <script>
-        document.getElementById('planillaForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevenir el envío normal del formulario
+        document.getElementById('EmpleadoId').addEventListener('change', function () {
+            var empleadoId = this.value;
 
-            var form = event.target;
-            var formData = new FormData(form);
-
-            fetch(form.action, {
-                method: form.method,
-                body: formData
-            }).then(response => {
-                if (response.ok) {
-                    // Redirigir a la página de índice
-                    window.location.href = '@Url.Action("Index", "Planillas")';
-                } else {
-                    // Manejar errores si es necesario
-                    alert('Hubo un problema al crear la planilla.');
-                }
-            }).catch(error => {
-                console.error('Error:', error);
-                alert('Hubo un problema al crear la planilla.');
-            });
+            fetch(`/api/empleados/obtenerDatosPorEmpleadoId/${empleadoId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        document.getElementById('Cedula').value = data.cedula || '';
+                        document.getElementById('Nombre').value = data.nombre || '';
+                        document.getElementById('PrimerApellido').value = data.primerApellido || '';
+                        document.getElementById('SegundoApellido').value = data.segundoApellido || '';
+                        document.getElementById('NombrePuesto').value = data.nombrePuesto || '';
+                        document.getElementById('Direccion').value = data.direccion || '';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Hubo un problema al obtener los datos del empleado.');
+                });
         });
     </script>
 </body>

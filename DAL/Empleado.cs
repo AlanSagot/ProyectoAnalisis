@@ -69,6 +69,7 @@ namespace DAL
         [ForeignKey("Puesto")]
         public int PuestoId { get; set; }
         public Puesto Puesto { get; set; }
+        public string NombrePuesto { get; set; }
 
         [ForeignKey("Sucursal")]
         public int SucursalId { get; set; }

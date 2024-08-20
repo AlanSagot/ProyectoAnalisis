@@ -232,28 +232,50 @@
     </script>
 
     <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-light mt-5 pt-5 px-0">
-        <div class="container py-5">
-            <div class="row pt-5">
-                <div class="col-lg-4 col-md-6 mb-5 mb-md-0">
-                    <h5 class="text-light mb-4">Cita</h5>
-                    <p class="mb-4">“Tu belleza es mi pasión y mi arte. Estoy aquí para realzar tu belleza natural y hacer que te sientas segura y radiante.”</p>
+    <div class="container-fluid" style="background-color: #f2e2e2; color: #333; mt-5 pt-5;">
+        <div class="row px-xl-5 pt-5">
+            <!-- PRIMERA COLUMNA -->
+            <div class="col-lg-4 col-md-12 mb-5">
+                <a href="" class="text-decoration-none">
+                    <h1 class="mb-4 display-5 font-weight-semi-bold">
+                        <span class="text-primary font-weight-bold border border-white px-3 mr-1">L</span>
+                        Leah Make Up
+                    </h1>
+                </a>
+                <p>Sin maquillaje soy fantástica, maquillada soy una obra de arte.</p>
+            </div>
+
+            <!-- SEGUNDA COLUMNA (LINKS RAPIDOS) -->
+            <div class="col-lg-4 col-md-12 mb-5">
+                <h5 class="font-weight-bold text-dark mb-4">Links Rápidos</h5>
+                <div class="d-flex flex-column justify-content-start text-left">
+                    <a class="text-dark mb-2 text-left" href="http://localhost:5059"><i class="fa fa-angle-right mr-2"></i>Inicio</a>
+                    <a asp-controller="Inventarios" asp-action="Productos" class="text-dark mb-2 text-left"><i class="fa fa-angle-right mr-2"></i>Productos</a>
+                    <a asp-controller="MetodoPago" asp-action="Index" class="text-dark mb-2 text-left"><i class="fa fa-angle-right mr-2"></i>Métodos de Pago</a>
+                    <a asp-controller="Carritos" asp-action="Index" class="text-dark mb-2 text-left active"><i class="fa fa-angle-right mr-2"></i>Carrito</a>
                 </div>
-                <div class="col-lg-4 col-md-6 mb-5 mb-md-0">
-                    <h5 class="text-light mb-4">Enlaces Rápidos</h5>
-                    <div class="d-flex flex-column">
-                        <a class="text-light mb-2" href="#">Inicio</a>
-                        <a class="text-light mb-2" href="#">Productos</a>
-                        <a class="text-light mb-2" href="#">Carrito</a>
-                        <a class="text-light mb-2" href="#">Contacto</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-5 mb-md-0">
-                    <h5 class="text-light mb-4">Ubicación</h5>
-                    <p class="mb-4">Leah Make Up</p>
-                    <p class="mb-4">Dirección: Tu Dirección</p>
-                    <p class="mb-4">Teléfono: Tu Teléfono</p>
-                </div>
+            </div>
+
+            <!-- TERCERA COLUMNA (UBICACIONES) -->
+            <div class="col-lg-4 col-md-12 mb-5">
+                <h5 class="font-weight-bold text-dark mb-4">Ubicaciones</h5>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Mall San Pedro, 3er piso</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+506 7139-7781</p>
+                <br>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Expresso Desamparados</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+506 7286-2118</p>
+            </div>
+        </div>
+
+        <div class="row border-top border-light mx-xl-5 py-4">
+            <div class="col-md-6 px-xl-0">
+                <p class="mb-md-0 text-center text-md-left text-dark">
+                    &copy; <a class="text-dark font-weight-semi-bold" href="#">Leah Make Up</a>. Nos reservamos el derecho de admisión. Diseñado
+                    por <a class="text-dark font-weight-semi-bold" href="https://sistemas.ufidelitas.ac.cr/">Grupo 2</a>
+                </p>
+            </div>
+            <div class="col-md-6 px-xl-0 text-center text-md-right">
+                <img class="img-fluid" src="~/img/pagos.png" alt="">
             </div>
         </div>
     </div>

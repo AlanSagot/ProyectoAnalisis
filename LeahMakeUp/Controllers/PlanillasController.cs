@@ -47,89 +47,113 @@ namespace LeahMakeUp.Controllers
             return View(planillas);
         }
 
-        // GET: Planillas/Create
+        /// GET: Planillas/Create
         public IActionResult Create()
         {
-            ViewData["PuestoId"] = new SelectList(_context.Puestos, "PuestoId", "NombrePuesto");
-            ViewData["Departamento"] = new SelectList(_context.Puestos.Select(p => p.Departamento).Distinct());
-            ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion"); 
+            ViewData["EmpleadoId"] = new SelectList(_context.Empleados, "EmpleadoId", "Cedula");
             return View();
         }
 
         // POST: Planillas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PlanillasCreateViewModel planillas)
         {
             if (ModelState.IsValid)
             {
-                var puesto = await _context.Puestos.FindAsync(planillas.PuestoId);
-                if (puesto == null)
+                // Obtén el empleado para poder acceder a los detalles necesarios
+                var empleado = await _context.Empleados
+                                             .Include(e => e.Puesto)
+                                             .Include(e => e.Sucursal)
+                                             .FirstOrDefaultAsync(e => e.EmpleadoId == planillas.EmpleadoId);
+
+                if (empleado == null)
                 {
                     return NotFound();
                 }
 
-                planillas.Departamento = puesto.Departamento;
-                planillas.NombrePuesto = puesto.NombrePuesto;
+                // Calcula el salario bruto
+                double salarioBruto = (planillas.HorasTrabajadas + planillas.HorasExtra) * planillas.PrecioPorHora;
 
-                
+                // Calcula las deducciones
+                double deduccionCCSS = Math.Round(salarioBruto * 0.0917, 2);
+                double deduccionINS = Math.Round(salarioBruto * 0.01, 2);
+                double otrasDeducciones = 0;
 
-                Empleado newEmpleado = new Empleado
-                {
-                    EmpleadoId = planillas.Cedula,
-                    PuestoId = planillas.PuestoId,
-                    SucursalId = planillas.SucursalId,
-                };
+                // Suma todas las deducciones
+                double totalDeducciones = deduccionCCSS + deduccionINS + otrasDeducciones;
 
+                // Calcula el salario neto
+                double salarioNeto = salarioBruto - totalDeducciones;
+
+                // Crear la nueva planilla
                 Planillas newPlanilla = new Planillas
                 {
-                    EmpleadoId = planillas.Cedula,
-                    PuestoId = planillas.PuestoId,
-                    SucursalId = planillas.SucursalId,
+                    EmpleadoId = empleado.EmpleadoId,
+                    PuestoId = empleado.PuestoId,
+                    SucursalId = empleado.SucursalId,
+                    PrecioPorHora = 1800,
+                    HorasTrabajadas = planillas.HorasTrabajadas,
+                    HorasExtra = planillas.HorasExtra,
+                    SalarioBruto = salarioBruto,
+                    RebajoCCSS = deduccionCCSS,
+                    RebajoINS = deduccionINS,
+                    Feriado = 1800,
+                    SalarioNeto = salarioNeto
                 };
 
+                // Guardar la nueva planilla en la base de datos
                 _context.Planillas.Add(newPlanilla);
-
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["PuestoId"] = new SelectList(_context.Puestos, "PuestoId", "NombrePuesto");
-            ViewData["Departamento"] = new SelectList(_context.Puestos.Select(p => p.Departamento).Distinct());
-            ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion"); 
+            // Si el modelo no es válido, volver a mostrar la vista con los campos seleccionados
+            ViewData["EmpleadoId"] = new SelectList(_context.Empleados, "EmpleadoId", "Cedula");
             return View(planillas);
         }
 
-
-        // GET: Planillas/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        //GET: Planillas/Edit
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
+            var planilla = await _context.Planillas.FindAsync(id);
+            if (planilla == null)
             {
                 return NotFound();
             }
 
-            var planillas = await _context.Planillas.FindAsync(id);
-            if (planillas == null)
+            // Obtener la información del empleado relacionado
+            var empleado = await _context.Empleados.FindAsync(planilla.EmpleadoId);
+            if (empleado == null)
             {
                 return NotFound();
             }
-            ViewData["PuestoId"] = new SelectList(_context.Puestos, "PuestoId", "NombrePuesto");
-            ViewData["Departamento"] = new SelectList(_context.Puestos.Select(p => p.Departamento).Distinct());
-            ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion"); 
-            return View(planillas);
+
+            // Crear el ViewModel para la vista de edición
+            var viewModel = new PlanillasCreateViewModel
+            {
+                PlanillaId = planilla.PlanillaId,
+                EmpleadoId = empleado.EmpleadoId, 
+                Cedula = empleado.Cedula,
+                Nombre = empleado.Nombre,
+                PrimerApellido = empleado.PrimerApellido,
+                SegundoApellido = empleado.SegundoApellido,
+                NombrePuesto = empleado.NombrePuesto,
+                Direccion = empleado.Direccion,
+                HorasTrabajadas = planilla.HorasTrabajadas,
+                HorasExtra = planilla.HorasExtra,
+                PrecioPorHora = planilla.PrecioPorHora
+            };
+
+            return View(viewModel);
         }
 
-        // POST: Planillas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //POST: Planillas/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PlanillaId,EmpleadoId,PuestoId,SucursalId,Salario,FechaIngreso")] Planillas planillas)
+        public async Task<IActionResult> Edit(int id, PlanillasCreateViewModel viewModel)
         {
-            if (id != planillas.PlanillaId)
+            if (id != viewModel.PlanillaId)
             {
                 return NotFound();
             }
@@ -138,12 +162,37 @@ namespace LeahMakeUp.Controllers
             {
                 try
                 {
-                    _context.Update(planillas);
+                    var planilla = await _context.Planillas.FindAsync(id);
+                    if (planilla == null)
+                    {
+                        return NotFound();
+                    }
+
+                    planilla.HorasTrabajadas = viewModel.HorasTrabajadas;
+                    planilla.HorasExtra = viewModel.HorasExtra;
+                    planilla.PrecioPorHora = viewModel.PrecioPorHora;
+
+                    // Calcula los nuevos montos
+                    double salarioBruto = (viewModel.HorasTrabajadas + viewModel.HorasExtra) * viewModel.PrecioPorHora;
+                    double deduccionCCSS = Math.Round(salarioBruto * 0.0917, 2);
+                    double deduccionINS = Math.Round(salarioBruto * 0.01, 2);
+                    double salarioNeto = salarioBruto - (deduccionCCSS + deduccionINS);
+
+                    // Actualiza el planilla con los nuevos valores
+                    planilla.SalarioBruto = salarioBruto;
+                    planilla.RebajoCCSS = deduccionCCSS;
+                    planilla.RebajoINS = deduccionINS;
+                    planilla.SalarioNeto = salarioNeto;
+
+                    _context.Update(planilla);
                     await _context.SaveChangesAsync();
+
+                    // Redirige a la vista Index
+                    return RedirectToAction("Index");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PlanillasExists(planillas.PlanillaId))
+                    if (!PlanillasExists(viewModel.PlanillaId))
                     {
                         return NotFound();
                     }
@@ -152,33 +201,45 @@ namespace LeahMakeUp.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
-            ViewData["PuestoId"] = new SelectList(_context.Puestos, "PuestoId", "NombrePuesto");
-            ViewData["Departamento"] = new SelectList(_context.Puestos.Select(p => p.Departamento).Distinct());
-            ViewData["SucursalId"] = new SelectList(_context.Sucursales, "SucursalId", "Direccion"); 
-            return View(planillas);
+
+            // Si el modelo no es válido, vuelve a la vista Edit
+            return View(viewModel);
         }
 
         // GET: Planillas/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var planillas = await _context.Planillas
-                .Include(p => p.Puesto)
-                .Include(p => p.Sucursal)
-                .Include(p => p.Empleado)
+            var planilla = await _context.Planillas
                 .FirstOrDefaultAsync(m => m.PlanillaId == id);
-            if (planillas == null)
+
+            if (planilla == null)
             {
                 return NotFound();
             }
 
-            return View(planillas);
+            var empleado = await _context.Empleados.FindAsync(planilla.EmpleadoId);
+            if (empleado == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = new PlanillasCreateViewModel
+            {
+                PlanillaId = planilla.PlanillaId,
+                EmpleadoId = empleado.EmpleadoId,
+                Cedula = empleado.Cedula,
+                Nombre = empleado.Nombre,
+                PrimerApellido = empleado.PrimerApellido,
+                SegundoApellido = empleado.SegundoApellido,
+                NombrePuesto = empleado.NombrePuesto,
+                Direccion = empleado.Direccion,
+                HorasTrabajadas = planilla.HorasTrabajadas,
+                HorasExtra = planilla.HorasExtra,
+                PrecioPorHora = planilla.PrecioPorHora
+            };
+
+            return View(viewModel);
         }
 
         // POST: Planillas/Delete/5
@@ -186,19 +247,48 @@ namespace LeahMakeUp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var planillas = await _context.Planillas.FindAsync(id);
-            if (planillas != null)
+            var planilla = await _context.Planillas.FindAsync(id);
+            if (planilla == null)
             {
-                _context.Planillas.Remove(planillas);
+                return NotFound();
             }
 
+            _context.Planillas.Remove(planilla);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return RedirectToAction(nameof(Index)); // Redirige al índice después de eliminar
         }
+
+
 
         private bool PlanillasExists(int id)
         {
             return _context.Planillas.Any(e => e.PlanillaId == id);
         }
+
+        [HttpGet("api/empleados/obtenerDatosPorEmpleadoId/{empleadoId}")]
+        public async Task<IActionResult> ObtenerDatosPorEmpleadoId(int empleadoId)
+        {
+            var empleado = await _context.Empleados
+                .Include(e => e.Puesto)
+                .Include(e => e.Sucursal)
+                .FirstOrDefaultAsync(e => e.EmpleadoId == empleadoId);
+
+            if (empleado == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(new
+            {
+                cedula = empleado.Cedula,
+                nombre = empleado.Nombre,
+                primerApellido = empleado.PrimerApellido,
+                segundoApellido = empleado.SegundoApellido,
+                nombrePuesto = empleado.Puesto.NombrePuesto,
+                direccion = empleado.Sucursal.Direccion
+            });
+        }
+
     }
 }

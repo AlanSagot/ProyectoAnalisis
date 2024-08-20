@@ -165,94 +165,45 @@
 <p>
     <a asp-action="Create">Crear Planilla</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Empleado.Cedula)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Empleado.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Empleado.PrimerApellido)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Empleado.SegundoApellido)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Empleado.Telefono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Empleado.Direccion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Empleado.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Empleado.Estado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Empleado.FechaContratacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Puesto.Departamento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Puesto.NombrePuesto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sucursal)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Empleado.Cedula)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Empleado.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Empleado.PrimerApellido)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Empleado.SegundoApellido)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Empleado.Telefono)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Empleado.Direccion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Empleado.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Empleado.Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Empleado.FechaContratacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Puesto.Departamento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Puesto.NombrePuesto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sucursal.Direccion)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.PlanillaId"><i class="fa fa-pen"></i></a>
-                        @*<a asp-action="Details" asp-route-id="@item.PlanillaId">Details</a> |*@
-                <a asp-action="Delete" asp-route-id="@item.PlanillaId"><i class="fa fa-trash"></i></a>
-            </td>
-        </tr> 
-    }
-    </tbody>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Empleado.Cedula)</th>
+                <th>@Html.DisplayNameFor(model => model.Empleado.Nombre)</th>
+                <th>@Html.DisplayNameFor(model => model.Empleado.PrimerApellido)</th>
+                <th>@Html.DisplayNameFor(model => model.Empleado.SegundoApellido)</th>
+                <th>@Html.DisplayNameFor(model => model.Puesto.Departamento)</th>
+                <th>@Html.DisplayNameFor(model => model.Puesto.NombrePuesto)</th>
+                <th>@Html.DisplayNameFor(model => model.Sucursal.Direccion)</th>
+                <th>@Html.DisplayNameFor(model => model.SalarioBruto)</th>
+                <th>@Html.DisplayNameFor(model => model.RebajoCCSS)</th>
+                <th>@Html.DisplayNameFor(model => model.RebajoINS)</th>
+                <th>@Html.DisplayNameFor(model => model.SalarioNeto)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Empleado.Cedula)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Empleado.Nombre)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Empleado.PrimerApellido)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Empleado.SegundoApellido)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Puesto.Departamento)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Puesto.NombrePuesto)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Sucursal.Direccion)</td>
+                    <td>@Html.DisplayFor(modelItem => item.SalarioBruto)</td>
+                    <td>@Html.DisplayFor(modelItem => item.RebajoCCSS)</td>
+                    <td>@Html.DisplayFor(modelItem => item.RebajoINS)</td>
+                    <td>@Html.DisplayFor(modelItem => item.SalarioNeto)</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.PlanillaId"><i class="fa fa-pen"></i></a>
+                        <a asp-action="Delete" asp-route-id="@item.PlanillaId"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
+
 </body>

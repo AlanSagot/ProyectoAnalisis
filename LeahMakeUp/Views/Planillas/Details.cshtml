@@ -1,31 +1,131 @@
-﻿@model DAL.Planillas
+﻿@model PlanillasCreateViewModel
 
 @{
-    ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Detalles de la Planilla";
 }
 
-<h1>Details</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>@ViewData["Title"]</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Detalles de la Planilla" name="description">
 
-<div>
-    <h4>Planillas</h4>
+    <!-- Favicon -->
+    <link href="~/img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/css/style.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .form-floating {
+            margin-bottom: 15px;
+        }
+
+        .btn-primary {
+            background-color: #ffb6c1;
+            border: none;
+            color: #fff;
+            font-weight: 500;
+        }
+
+            .btn-primary:hover {
+                background-color: #ff9aad;
+            }
+
+        .alert {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>@ViewData["Title"]</h2>
+
+    <h4>Planilla</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Puesto)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Puesto.Departamento)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sucursal)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sucursal.Direccion)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.PlanillaId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+    <div class="container">
+        <div class="form-horizontal">
+            <h4>Información del Empleado</h4>
+            <hr />
+            <div class="form-group">
+                <label class="control-label">Código del Empleado</label>
+                <p>@Model.EmpleadoId</p>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Cédula</label>
+                <p>@Model.Cedula</p>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Nombre</label>
+                <p>@Model.Nombre</p>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Primer Apellido</label>
+                <p>@Model.PrimerApellido</p>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Segundo Apellido</label>
+                <p>@Model.SegundoApellido</p>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Nombre del Puesto</label>
+                <p>@Model.NombrePuesto</p>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Dirección</label>
+                <p>@Model.Direccion</p>
+            </div>
+
+            <h4>Detalles de la Planilla</h4>
+            <hr />
+            <div class="form-group">
+                <label class="control-label">Horas Trabajadas</label>
+                <p>@Model.HorasTrabajadas</p>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Horas Extra</label>
+                <p>@Model.HorasExtra</p>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Precio por Hora</label>
+                <p>@Model.PrecioPorHora</p>
+            </div>
+
+            <div>
+                <a asp-action="Edit" asp-route-id="@Model.PlanillaId" class="btn btn-primary">Editar</a>
+                <a asp-action="Index" class="btn btn-secondary">Volver al listado</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
