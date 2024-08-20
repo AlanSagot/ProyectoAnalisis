@@ -54,7 +54,7 @@
                     <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">L</span>Leah Make Up</h1>
                 </a>
             </div>
-            
+
             <div class="col-lg-6 col-6 text-left">
                 <form asp-action="Index" asp-controller="Inventarios" method="get">
                     <div class="input-group">
@@ -83,7 +83,6 @@
         </div>
     </div>
     <!-- Topbar End -->
-
     <!-- Navbar Start -->
     <div class="container-fluid mb-5">
         <div class="row border-top px-xl-5">
@@ -101,12 +100,7 @@
                                     Catálogos
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="catalogosDropdown">
-                                    @if (User.IsInRole("Admin"))
-                                    {
-                                        <a asp-controller="Catalogos" asp-action="Index" class="dropdown-item">Catálogo</a>
 
-                                        <div class="dropdown-divider"></div>
-                                    }
                                     <a asp-controller="Inventarios" asp-action="Maquillaje" class="dropdown-item">Maquillaje</a>
                                     <a asp-controller="Inventarios" asp-action="SkinCare" class="dropdown-item">SkinCare</a>
                                     <a asp-controller="Inventarios" asp-action="Articulos" class="dropdown-item">Artículos</a>
@@ -134,13 +128,12 @@
                                 </div>
                             }
 
-
                             <a asp-controller="Inventarios" asp-action="Productos" class="nav-item nav-link">Productos</a>
                             <!-- METODO DE PAGO -->
                             @if (!User.IsInRole("Admin"))
                             {
                                 <a asp-controller="MetodoPago" asp-action="Index" class="nav-item nav-link">Métodos de Pago</a>
-                                <a href="detail.html" class="nav-item nav-link">Ofertas</a>
+                                //<a href="detail.html" class="nav-item nav-link">Ofertas</a>
                                 <a asp-controller="Envios" asp-action="Index" class="nav-item nav-link">Envios</a>
                                 <a asp-controller="Contacto" asp-action="Index" class="nav-item nav-link">Contacto</a>
                             }
@@ -152,7 +145,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </nav>
             </div>
         </div>
@@ -246,7 +239,7 @@
                         }
                     </td>
                     <td>@Html.DisplayFor(modelItem => item.NombreProducto)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Categoria.Descripcion)</td>
+                    <td> @Html.DisplayFor(modelItem => item.Categoria.Descripcion)</td>
                     <td>@Html.DisplayFor(modelItem => item.DescripcionProducto)</td>
                     <td>@Html.DisplayFor(modelItem => item.Marca.Descripcion)</td>
                     <td>@Html.DisplayFor(modelItem => item.PrecioXVenta)</td>

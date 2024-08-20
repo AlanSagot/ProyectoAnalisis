@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    [Table("Categorias")]
+    [Table("Categoria")]
     public class Categoria
     {
         [Key]

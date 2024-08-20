@@ -135,26 +135,43 @@
                                     Catálogos
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="catalogosDropdown">
-                                    @if (User.IsInRole("Admin"))
-                                    {
-                                        <a asp-controller="Inventarios" asp-action="Index" class="dropdown-item">Inventario</a>
-                                        <a asp-controller="Admin" asp-action="Index" class="dropdown-item">Usuarios</a>
-                                        <a asp-controller="Catalogos" asp-action="Index" class="dropdown-item">Catálogo</a>
-                                        <a asp-controller="Sucursales" asp-action="Index" class="dropdown-item">Sucursales</a>
-                                        <div class="dropdown-divider"></div>
-                                    }
-                                    <a asp-controller="Catalogos" asp-action="Maquillaje" class="dropdown-item">Maquillaje</a>
-                                    <a asp-controller="Catalogos" asp-action="SkinCare" class="dropdown-item">SkinCare</a>
-                                    <a asp-controller="Catalogos" asp-action="Articulos" class="dropdown-item">Artículos</a>
+
+                                    <a asp-controller="Inventarios" asp-action="Maquillaje" class="dropdown-item">Maquillaje</a>
+                                    <a asp-controller="Inventarios" asp-action="SkinCare" class="dropdown-item">SkinCare</a>
+                                    <a asp-controller="Inventarios" asp-action="Articulos" class="dropdown-item">Artículos</a>
                                 </div>
                             </div>
+
+                            <!-- Dropdown Admin -->
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <div class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Admin
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="adminDropdown">
+
+                                        <a asp-controller="Admin" asp-action="Index" class="dropdown-item">Usuarios</a>
+                                        <a asp-controller="Planillas" asp-action="Index" class="dropdown-item">Planillas</a>
+                                        <a asp-controller="Empleados" asp-action="Index" class="dropdown-item">Empleados</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a asp-controller="Inventarios" asp-action="Index" class="dropdown-item">Inventario</a>
+                                        <a asp-controller="Sucursales" asp-action="Index" class="dropdown-item">Sucursales</a>
+                                        <a asp-controller="Puestos" asp-action="Index" class="dropdown-item">Puestos</a>
+
+                                    </div>
+                                </div>
+                            }
+
                             <a asp-controller="Inventarios" asp-action="Productos" class="nav-item nav-link">Productos</a>
                             <!-- METODO DE PAGO -->
-                            <a href="~/MetodoPago" class="nav-item nav-link">Métodos de Pago</a>
-                            <a asp-controller="Envios" asp-action="Index" class="nav-item nav-link">Envios</a>
-                            <a href="detail.html" class="nav-item nav-link">Ofertas</a>
-                            <a href="contact.html" class="nav-item nav-link">Contacto</a>
-                        </div>
+                            @if (!User.IsInRole("Admin"))
+                            {
+                                <a asp-controller="MetodoPago" asp-action="Index" class="nav-item nav-link">Métodos de Pago</a>
+                                //<a href="detail.html" class="nav-item nav-link">Ofertas</a>
+                                <a asp-controller="Envios" asp-action="Index" class="nav-item nav-link">Envios</a>
+                                <a asp-controller="Contacto" asp-action="Index" class="nav-item nav-link">Contacto</a>
+                            }
                         <div class="navbar-nav ml-auto py-0">
                             <div id="LoginPartial">
                                 <partial name="_LoginPartial" />

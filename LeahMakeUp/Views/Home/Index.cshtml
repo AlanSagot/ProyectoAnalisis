@@ -71,10 +71,13 @@
                 </form>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12 text-right">
-                <a asp-controller="Carritos" asp-action="Index" class="btn border">
-                    <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
+                @if (!User.IsInRole("Admin"))
+                {
+                    <a asp-controller="Carritos" asp-action="Index" class="btn border">
+                        <i class="fas fa-shopping-cart text-primary"></i>
+                        <span class="badge">0</span>
+                    </a>
+                }
             </div>
         </div>
     </div>
@@ -215,12 +218,7 @@
                                     Catálogos
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="catalogosDropdown">
-                                    @if (User.IsInRole("Admin"))
-                                    {
-                                        <a asp-controller="Catalogos" asp-action="Index" class="dropdown-item">Catálogo</a>
-
-                                        <div class="dropdown-divider"></div>
-                                    }
+                                    
                                     <a asp-controller="Inventarios" asp-action="Maquillaje" class="dropdown-item">Maquillaje</a>
                                     <a asp-controller="Inventarios" asp-action="SkinCare" class="dropdown-item">SkinCare</a>
                                     <a asp-controller="Inventarios" asp-action="Articulos" class="dropdown-item">Artículos</a>
@@ -253,7 +251,7 @@
                             @if (!User.IsInRole("Admin"))
                             {
                                 <a asp-controller="MetodoPago" asp-action="Index" class="nav-item nav-link">Métodos de Pago</a>
-                                <a href="detail.html" class="nav-item nav-link">Ofertas</a>
+                                //<a href="detail.html" class="nav-item nav-link">Ofertas</a>
                                 <a asp-controller="Envios" asp-action="Index" class="nav-item nav-link">Envios</a>
                                 <a asp-controller="Contacto" asp-action="Index" class="nav-item nav-link">Contacto</a>
                             }

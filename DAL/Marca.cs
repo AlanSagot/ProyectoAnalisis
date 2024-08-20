@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    [Table("Marcas")]
+    [Table("Marca")]
     public class Marca
     {
         [Key]
