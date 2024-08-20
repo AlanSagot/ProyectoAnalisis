@@ -67,20 +67,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 text-right">
-                <a asp-controller="Carritos" asp-action="Index" class="btn border">
-                    <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
-                @if (!User.IsInRole("Admin"))
-                {
-                    <a asp-controller="Carritos" asp-action="Index" class="btn border">
-                        <i class="fas fa-shopping-cart text-primary"></i>
-                        <span class="badge">0</span>
-                    </a>
-                }
-            </div>
-        </div>
+            
     </div>
     <!-- Topbar End -->
     <!-- Navbar Start -->
