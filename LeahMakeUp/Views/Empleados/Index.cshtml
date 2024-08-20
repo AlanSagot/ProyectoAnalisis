@@ -170,6 +170,9 @@
             <thead>
                 <tr>
                     <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Cedula)
+                    </th>
+                    <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
                     </th>
                     <th>
@@ -179,7 +182,13 @@
                         @Html.DisplayNameFor(model => model.FirstOrDefault().SegundoApellido)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().EmpleadoId)
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Sexo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().FechaNacimiento)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Edad)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().Email)
@@ -191,16 +200,10 @@
                         @Html.DisplayNameFor(model => model.FirstOrDefault().Direccion)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().FechaContratacion)
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Vacaciones)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().Estado)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Puesto.Departamento)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Sucursal.Direccion)
                     </th>
                     <th></th>
                 </tr>
@@ -209,6 +212,9 @@
                 @foreach (var item in Model)
                 {
                     <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cedula)
+                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Nombre)
                         </td>
@@ -219,7 +225,13 @@
                             @Html.DisplayFor(modelItem => item.SegundoApellido)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.EmpleadoId)
+                            @Html.DisplayFor(modelItem => item.Sexo)
+                        </td>
+                        <td>
+                            @item.FechaNacimiento.ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Edad)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Email)
@@ -231,23 +243,14 @@
                             @Html.DisplayFor(modelItem => item.Direccion)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.FechaContratacion)
+                            @Html.DisplayFor(modelItem => item.Vacaciones)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Estado)
+                            @Html.DisplayFor(modelItem => item.Estado.Tipo)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Puesto.Departamento)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Sucursal.Direccion)
-                        </td>
-                        <td>
-                            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.EmpleadoId">
-                                <i class="fa fa-pen"></i>
-                            </a>
-                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.EmpleadoId">
-                                <i class="fa fa-trash"></i>
+                            <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.EmpleadoId">
+                                Ver más
                             </a>
                         </td>
                     </tr>

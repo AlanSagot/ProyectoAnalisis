@@ -17,7 +17,9 @@ namespace DAL
         public string Institucion { get; set; } 
         public string Motivo { get; set; }
         public double Porcentaje {  get; set; }
+        [DisplayName("Fecha de Inicio")]
         public DateTime FechaInicio { get; set; }
+        [DisplayName("Fecha Final")]
         public DateTime FechaFin { get; set; }
 
         [ForeignKey("Empleado")]

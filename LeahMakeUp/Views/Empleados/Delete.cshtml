@@ -188,10 +188,10 @@
                     <dd>@Html.DisplayFor(model => model.Direccion)</dd>
 
                     <dt>Fecha de Contratación:</dt>
-                    <dd>@Html.DisplayFor(model => model.FechaContratacion)</dd>
+                    <dd>@Model.FechaContratacion.ToString("dd/MM/yyyy")</dd>
 
                     <dt>Estado:</dt>
-                    <dd>@Html.DisplayFor(model => model.Estado)</dd>
+                    <dd>@Html.DisplayFor(model => model.Estado.Tipo)</dd>
 
                     <dt>Puesto:</dt>
                     <dd>@Html.DisplayFor(model => model.Puesto.Departamento)</dd>
@@ -201,10 +201,10 @@
                 </dl>
             </div>
 
-            <form asp-action="Delete" style="text-align: center;">
+            <form asp-action="Delete" method="post" style="text-align: center;">
                 <input type="hidden" asp-for="EmpleadoId" />
                 <input type="submit" value="Eliminar" class="btn btn-danger" />
-                <a class="btn btn-light" asp-action="Index">Volver a la lista</a>
+                <a class="btn btn-light" asp-action="Details" asp-route-id="@Model.EmpleadoId">Atrás</a>
             </form>
         </div>
     </div>

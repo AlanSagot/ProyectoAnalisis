@@ -1,11 +1,11 @@
-﻿@model DAL.Empleado
+﻿@model EmpleadoCreateViewModel
 
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>Crear</h1>
 
 <h4>Empleado</h4>
 <hr />
@@ -13,6 +13,11 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Cedula" class="control-label"></label>
+                <input asp-for="Cedula" class="form-control" />
+                <span asp-validation-for="Cedula" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />
@@ -29,9 +34,16 @@
                 <span asp-validation-for="SegundoApellido" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EmpleadoId" class="control-label"></label>
-                <input asp-for="EmpleadoId" class="form-control" />
-                <span asp-validation-for="EmpleadoId" class="text-danger"></span>
+                <label asp-for="Sexo" class="control-label"></label>
+                <select asp-for="Sexo" class="form-control" asp-items="ViewBag.SexoOptions">
+                    <option value="">Seleccione</option>
+                </select>
+                <span asp-validation-for="Sexo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaNacimiento" class="control-label"></label>
+                <input asp-for="FechaNacimiento" class="form-control" type="date" />
+                <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
@@ -50,21 +62,28 @@
             </div>
             <div class="form-group">
                 <label asp-for="FechaContratacion" class="control-label"></label>
-                <input asp-for="FechaContratacion" class="form-control" />
+                <input asp-for="FechaContratacion" class="form-control" type="date" />
                 <span asp-validation-for="FechaContratacion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Estado" class="control-label"></label>
-                <input asp-for="Estado" class="form-control" />
-                <span asp-validation-for="Estado" class="text-danger"></span>
+                <label asp-for="PuestoId" class="control-label"></label>
+                <select asp-for="PuestoId" class="form-control" asp-items="ViewBag.PuestoId"></select>
+                <span asp-validation-for="PuestoId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PuestoId" class="control-label"></label>
-                <select asp-for="PuestoId" class ="form-control" asp-items="ViewBag.PuestoId"></select>
+                <label asp-for="Departamento" class="control-label"></label>
+                <select asp-for="Departamento" class="form-control" asp-items="ViewBag.Departamento"></select>
+                <span asp-validation-for="Departamento" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="SucursalId" class="control-label"></label>
-                <select asp-for="SucursalId" class ="form-control" asp-items="ViewBag.SucursalId"></select>
+                <select asp-for="SucursalId" class="form-control" asp-items="ViewBag.SucursalId"></select>
+                <span asp-validation-for="SucursalId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ID_Estado" class="control-label"></label>
+                <select asp-for="ID_Estado" class="form-control" asp-items="ViewBag.ID_Estado"></select>
+                <span asp-validation-for="ID_Estado" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -78,5 +97,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

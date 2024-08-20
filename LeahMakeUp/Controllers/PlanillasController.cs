@@ -79,9 +79,6 @@ namespace LeahMakeUp.Controllers
                 Empleado newEmpleado = new Empleado
                 {
                     EmpleadoId = planillas.Cedula,
-                    Nombre = planillas.Nombre,
-                    PrimerApellido = planillas.PrimerApellido,
-                    SegundoApellido = planillas.SegundoApellido,
                     PuestoId = planillas.PuestoId,
                     SucursalId = planillas.SucursalId,
                 };

@@ -216,9 +216,9 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="catalogosDropdown">
                                     @if (User.IsInRole("Admin"))
-                                    { 
-                                    <a asp-controller="Catalogos" asp-action="Index" class="dropdown-item">Catálogo</a>
-                                       
+                                    {
+                                        <a asp-controller="Catalogos" asp-action="Index" class="dropdown-item">Catálogo</a>
+
                                         <div class="dropdown-divider"></div>
                                     }
                                     <a asp-controller="Inventarios" asp-action="Maquillaje" class="dropdown-item">Maquillaje</a>
@@ -228,7 +228,6 @@
                             </div>
 
                             <!-- Dropdown Admin -->
-
                             @if (User.IsInRole("Admin"))
                             {
                                 <div class="nav-item dropdown">
@@ -248,7 +247,7 @@
                                     </div>
                                 </div>
                             }
-                            
+
                             <a asp-controller="Inventarios" asp-action="Productos" class="nav-item nav-link">Productos</a>
                             <!-- METODO DE PAGO -->
                             @if (!User.IsInRole("Admin"))
@@ -258,7 +257,7 @@
                                 <a asp-controller="Envios" asp-action="Index" class="nav-item nav-link">Envios</a>
                                 <a asp-controller="Contacto" asp-action="Index" class="nav-item nav-link">Contacto</a>
                             }
-                            
+
 
                         </div>
                         <div class="navbar-nav ml-auto py-0">
@@ -272,7 +271,7 @@
                 <div id="header-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active" style="height: 600px;">
-                            <img class="img-fluid" src="~/img/carousel-1.jpg" alt="Image">
+                            <img class="img-fluid" src="~/img/carousel1.jpg" alt="Image">
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
                                     <h4 class="text-light text-uppercase font-weight-medium mb-3">-10% En tu primera compra</h4>
@@ -283,7 +282,7 @@
                         </div>
 
                         <div class="carousel-item" style="height: 600px;">
-                            <img class="img-fluid" src="~/img/carousel-2.jpg" alt="Image">
+                            <img class="img-fluid" src="~/img/carousel2.jpg" alt="Image">
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
                                     <h4 class="text-light text-uppercase font-weight-medium mb-3">-10% En tu primera compra</h4>
@@ -292,19 +291,19 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Tercera imagen del carrusel -->
                         <div class="carousel-item" style="height: 600px;">
                             <img class="img-fluid" src="~/img/carousel-3.jpg" alt="Image">
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
-                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">¡Ya ingresaron!</h4>
+                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">¡Beauty Creations X YeriMua</h4>
                                     <h3 class="display-4 text-white font-weight-semi-bold mb-4">Beauty Creations X YeriMua</h3>
-                                    <a asp-controller="Inventarios" asp-action="Productos" class="btn btn-light py-2 px-3">Comprar ahora</a>
+                                    <a asp-controller="Inventarios" asp-action="Productos" class="btn btn-light py-2 px-3">Ver más</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    </div>
-                  
 
                     <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
                         <div class="btn btn-dark" style="width: 45px; height: 45px;">
@@ -317,14 +316,12 @@
                             <span class="carousel-control-next-icon mb-n2"></span>
                         </div>
                     </a>
-
                 </div>
+
             </div>
         </div>
     </div>
     <!-- Navbar End -->
-
-
     <!-- Featured Start -->
     <div class="container-fluid pt-5">
         <div class="row px-xl-5 pb-3">
@@ -355,8 +352,6 @@
         </div>
     </div>
     <!-- Featured End -->
-
-
     <!-- Categories Start -->
     <div class="container-fluid pt-5">
         <div class="text-center mb-4">
@@ -414,7 +409,6 @@
         </div>
     </div>
     <!-- Categories End -->
-
     <!-- Products Start -->
     <div class="container-fluid pt-5">
         <div class="text-center mb-4">
@@ -560,8 +554,6 @@
         </div>
     </div>
     <!-- Products End -->
-
-
     <!-- Subscribe Start -->
     <div class="container-fluid" style="background-color: #f2e2e2; margin-top: 3rem; margin-bottom: 3rem;">
         <div class="row justify-content-md-center py-5 px-xl-5">
@@ -584,8 +576,6 @@
         </div>
     </div>
     <!-- Subscribe End -->
-
-
     <!-- Products Start -->
     <div class="container-fluid pt-5">
         <div class="text-center mb-4">
@@ -664,8 +654,6 @@
         </div>
     </div>
     <!-- Products End -->
-
-
     <!-- Footer Start -->
     <div class="container-fluid" style="background-color: #f2e2e2; color: #333; mt-5 pt-5;">
         <div class="row px-xl-5 pt-5">
@@ -715,7 +703,6 @@
         </div>
     </div>
     <!-- Footer End -->
-
     <!--CHAT BOT-->
 
     <div class="fabs" id="fabs-chat">
@@ -875,7 +862,6 @@
 
     </script>
     <!--Final CHAT BOT-->
-
     <!-- Back to Top -->
     <a href="#" style="bottom: 80px" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 

@@ -1,23 +1,22 @@
-﻿using System;
+﻿using DAL;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DAL
+namespace LeahMakeUp.Models
 {
-    [Table("Empleados")]
-    public class Empleado
+    [Table("Empleado")]
+    public class EmpleadoCreateViewModel
     {
         [Key]
         [Required]
         public int EmpleadoId { get; set; }
 
         [DisplayName("Cédula")]
-        public int Cedula {  get; set; }
+        public int Cedula { get; set; }
 
         [Required]
         [MaxLength(100)]
@@ -47,35 +46,41 @@ namespace DAL
         [DisplayName("Dirección")]
         public string Direccion { get; set; }
 
+        private DateTime _fechaContratacion;
         [DisplayName("Fecha de Contratación")]
-        public DateTime FechaContratacion { get; set; }
+        public DateTime FechaContratacion {
+            get => _fechaContratacion.Date;
+            set => _fechaContratacion = value.Date;
+        }
 
+        private DateTime _fechaNacimiento;
         [DisplayName("Fecha de Nacimiento")]
-        public DateTime FechaNacimiento { get; set; }
+        public DateTime FechaNacimiento {
+            get => _fechaNacimiento.Date;
+            set => _fechaNacimiento = value.Date;
+        }
 
         public int Vacaciones { get; set; }
 
-        [Required]
-        [MaxLength(20)]
+        [Required(ErrorMessage = "El campo Sexo es obligatorio.")]
         public string Sexo { get; set; }
 
-        public int Edad { get; set; }
-
         [Required]
-        [ForeignKey("Estado")]
+        [DisplayName("Estado")]
         public int ID_Estado { get; set; }
-        public Estado Estado { get; set; }
+        public string Tipo { get; set; }
 
-        [ForeignKey("Puesto")]
         public int PuestoId { get; set; }
-        public Puesto Puesto { get; set; }
+        public string Departamento { get; set; }
 
-        [ForeignKey("Sucursal")]
+        [DisplayName("Puesto")]
+        public string NombrePuesto { get; set; }
+
         public int SucursalId { get; set; }
-        public Sucursal Sucursal { get; set; }
 
         public ICollection<Planillas> Planillas { get; set; } = new List<Planillas>();
 
         public ICollection<Incapacidades> Incapacidades { get; set; } = new List<Incapacidades>();
+        public List<SelectListItem> SexoOptions { get; internal set; }
     }
 }

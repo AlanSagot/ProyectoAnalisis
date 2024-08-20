@@ -78,21 +78,7 @@
                 <label asp-for="Cedula">Cédula</label>
                 <span asp-validation-for="Cedula" class="text-danger"></span>
             </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Nombre" class="form-control" placeholder="Nombre" />
-                <label asp-for="Nombre">Nombre</label>
-                <span asp-validation-for="Nombre" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="PrimerApellido" class="form-control" placeholder="Primer Apellido" />
-                <label asp-for="PrimerApellido">Primer Apellido</label>
-                <span asp-validation-for="PrimerApellido" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="SegundoApellido" class="form-control" placeholder="Segundo Apellido" />
-                <label asp-for="SegundoApellido">Segundo Apellido</label>
-                <span asp-validation-for="SegundoApellido" class="text-danger"></span>
-            </div>
+            
             <div class="form-floating mb-3">
                 <select asp-for="PuestoId" class="form-control" asp-items="ViewBag.PuestoId"></select>
                 <label asp-for="PuestoId">Puesto</label>

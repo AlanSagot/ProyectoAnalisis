@@ -15,25 +15,35 @@ namespace DAL
         [Key]
         public int PlanillaId { get; set; }
         [Required]
+        [DisplayName("Salario por Hora")]
         public double PrecioPorHora { get; set; }
         [Required]
+        [DisplayName("Horas Trabajadas")]
         public int HorasTrabajadas { get; set; }
         [Required]
+        [DisplayName("Horas Extra")]
         public double HorasExtra { get; set; }
         [Required]
+        [DisplayName("Salario Bruto")]
         public double SalarioBruto { get; set; }
         [Required]
+        [DisplayName("CCSS")]
         public double RebajoCCSS { get; set; } = 0.0917;
         [Required]
+        [DisplayName("INS")]
         public double RebajoINS { get; set; } = 0.01;
         [Required]
+        [DisplayName("Incapacidad INS")]
         public double RebajoIncapacidadINS { get; set; } = 0.4;
         [Required]
+        [DisplayName("Incapacidad CCSS")]
         public double RebajoIncapacidadCCSS { get; set; } = 0.4;
+        [DisplayName("Embargo")]
         public double DeduccionesEmbargo { get; set; }
         [Required]
         public double Feriado { get; set; }
         [Required]
+        [DisplayName("Salario Neto")]
         public double SalarioNeto { get; set; } 
 
         [ForeignKey("Puesto")]
