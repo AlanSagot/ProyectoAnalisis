@@ -37,6 +37,25 @@ namespace LeahMakeUp.Controllers
             return View(await leahDBContext.ToListAsync());
         }
 
+        public async Task<IActionResult> RealizarPago()
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                // Redirige a la página de inicio de sesión si el usuario no está autenticado
+                return RedirectToPage("/Account/Login", new { area = "Identity" });
+            }
+
+            var userCedula = User.Identity.Name; // O usar Claims si es necesario
+
+            // Filtrar los ítems del carrito por el usuario autenticado
+            var carritos = await _context.Carritos
+                .Include(c => c.Inventario)
+                .Where(c => c.Cedula == userCedula)
+                .ToListAsync();
+
+            return View(carritos); // Pasar la lista de productos a la vista RealizarPago
+        }
+
 
         // GET: Carritos/Details/5
         public async Task<IActionResult> Details(int? id)

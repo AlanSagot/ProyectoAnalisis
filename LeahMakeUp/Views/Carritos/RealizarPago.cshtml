@@ -1,0 +1,114 @@
+﻿@model IEnumerable<DAL.Carrito>
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <title>Confirmación de Orden - Leah Make Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Leah Make Up">
+    <meta name="description" content="Confirmación de Orden">
+
+    <!-- Favicon -->
+    <link rel="icon" href="~/img/favicon.ico">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Main Container -->
+    <div class="container my-5">
+        <!-- Confirmation Message -->
+        <div class="text-center">
+            <h2>¡Dentro de poco podrás disfrutar de tu bikini!</h2>
+            <p>Solamente tienes que hacer el pago de tus productos en efectivo o mediante SINPE por los siguientes links:</p>
+            <p>
+                <a href="#" class="btn btn-primary">CLICK AQUÍ para que te atienda Yoselyn.</a><br>
+                <a href="#" class="btn btn-primary">CLICK AQUÍ para que te atienda Marco.</a>
+            </p>
+            <p>Recuerda agregar el número de tu orden que aparece abajo, será un placer para nosotros atenderte.</p>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="card mt-5">
+            <div class="card-header">
+                <h3 class="text-center">GRACIAS POR TU ORDEN</h3>
+                <p class="text-center">Recibirás un email de confirmación en breve.</p>
+            </div>
+            <div class="card-body">
+                @if (!Model.Any())
+                {
+                    <p>Tu carrito está vacío.</p>
+                }
+                else
+                {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Inventario.NombreProducto)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Cantidad)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Subtotal)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PrecioTotal)
+                                </th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (item.Inventario.FotoProducto != null)
+                                        {
+                                            var imageBase64 = Convert.ToBase64String(item.Inventario.FotoProducto);
+                                            var imageSrc = string.Format("data:image/jpeg;base64,{0}", imageBase64);
+                                            <img src="@imageSrc" alt="Producto" width="50" height="50" />
+                                        }
+                                    </td>
+                                    <td>
+                                        <span class="precio-unitario" data-precio="@item.Inventario.NombreProducto">@item.Inventario.NombreProducto</span>
+                                    </td>
+                                    <td>           
+                                            <span class="count" id="count-@item.CarritoId">@item.Cantidad</span>
+                                    </td>
+                                    <td>
+                                        <span class="precio-unitario" data-precio="@item.Inventario.PrecioXVenta">@item.Inventario.PrecioXVenta</span>
+                                    </td>
+                                    <td>
+                                        <span class="precio-total" id="precio-total-@item.CarritoId">@item.PrecioTotal</span>
+                                    </td>
+ 
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <!-- Botón para realizar el pago -->
+                    <form asp-controller="Carritos" asp-action="ProcesarPago" method="post">
+                        <button type="submit" class="btn btn-primary">Proceder con el Pago</button>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
