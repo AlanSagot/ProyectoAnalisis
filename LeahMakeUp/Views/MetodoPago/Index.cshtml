@@ -1,14 +1,15 @@
 ﻿<!DOCTYPE html>
-<html lang="es">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Métodos de Pago</title>
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
+    <meta charset="utf-8">
+    <title>Leah Make Up</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Free HTML Templates">
+    <meta name="description" content="Free HTML Templates">
 
     <!-- Favicon -->
-    <link href="~/img/favicon.ico" rel="icon">
+    <link rel="icon" href="~/img/favicon.ico">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -17,49 +18,17 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
+    <!-- Libraries Stylesheet -->
+    <link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
+    <script src="~/js/index.js"></script>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #fff;
-        }
+    <link href="~/css/chat.css" rel="stylesheet">
+    <link href="~/img" rel="stylesheet">
 
-        .container {
-            text-align: center;
-            max-width: 100%;
-            padding: 20px;
-            margin: 20px auto;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
 
-        .main-message {
-            font-size: 22px;
-            margin-bottom: 10px;
-        }
-
-        .payment-methods {
-            font-size: 22px;
-            color: #ffb6c1;
-        }
-
-        .image-container {
-            margin-top: 20px;
-        }
-
-            .image-container img {
-                width: 65%;
-                max-width: 500px;
-                height: auto;
-                display: block;
-                margin: 0 auto;
-            }
-    </style>
 </head>
 
 <body>
@@ -82,38 +51,152 @@
                 </div>
             </div>
         </div>
-        <div class="row align-items-center py-3 px-xl-5">
-            <div class="col-lg-3 d-none d-lg-block">
+        <div class="row align-items-center py-3">
+            <div class="col-lg-3 col-md-6 col-sm-12">
                 <a href="" class="text-decoration-none">
                     <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">L</span>Leah Make Up</h1>
                 </a>
             </div>
-            <div class="col-lg-6 col-6 text-left">
-                <form asp-action="Index" asp-controller="Home">
+            <!-- BUSCAR -->
+            <div class="col-lg-6 col-md-6 col-sm-12 text-left">
+                <form id="searchForm">
                     <div class="input-group">
-                        <input type="text" name="searchString" class="form-control" placeholder="Buscar productos">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Buscar productos">
                         <div class="input-group-append">
-                            <button type="submit" class="input-group-text bg-transparent text-primary border-0">
+                            <span class="input-group-text bg-transparent text-primary">
                                 <i class="fa fa-search"></i>
-                            </button>
+                            </span>
                         </div>
                     </div>
                 </form>
             </div>
-
-            <div class="col-lg-3 col-6 text-right">
-                <a asp-controller="Home" asp-action="Index" class="btn border">
-                    <i class="fas fa-home text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
-                <a asp-controller="Carritos" asp-action="Index" class="btn border">
-                    <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
+            <div class="col-lg-3 col-md-6 col-sm-12 text-right">
+                @if (!User.IsInRole("Admin"))
+                {
+                    <a asp-controller="Carritos" asp-action="Index" class="btn border">
+                        <i class="fas fa-shopping-cart text-primary"></i>
+                        <span class="badge">0</span>
+                    </a>
+                }
             </div>
         </div>
     </div>
     <!-- Topbar End -->
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const suggestionsBox = document.createElement('div');
+        suggestionsBox.classList.add('suggestions-box');
+        document.body.appendChild(suggestionsBox);
+        const historyList = document.getElementById('historyList');
+        const clearHistoryBtn = document.getElementById('clearHistory');
+        const searchHistoryContainer = document.getElementById('searchHistory');
+
+        // Simulación de productos
+        const products = [
+            'Maquillaje Base', 'Sombra de Ojos', 'Labial Rojo', 'Brochas de Maquillaje', 'Crema Hidratante', 'Tónico Facial', 'Esmalte de Uñas'
+        ];
+
+        // Manejar la búsqueda
+        function handleSearch(query) {
+            if (query) {
+                // Guardar en el historial local
+                const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+                if (!history.includes(query)) {
+                    history.push(query);
+                    localStorage.setItem('searchHistory', JSON.stringify(history));
+                    updateHistory();
+                }
+                // Realizar búsqueda y mostrar resultados
+                const results = products.filter(product => product.toLowerCase().includes(query.toLowerCase()));
+                suggestionsBox.innerHTML = results.map(product => `<a href="#" class="list-group-item list-group-item-action">${product}</a>`).join('');
+                suggestionsBox.style.display = 'block';
+                positionSuggestionsBox();
+            } else {
+                suggestionsBox.innerHTML = '';
+                suggestionsBox.style.display = 'none';
+            }
+        }
+
+        // Mostrar sugerencias en tiempo real
+        function showSuggestions() {
+            const query = searchInput.value.trim();
+            handleSearch(query);
+            updateHistory();
+        }
+
+        // Actualizar historial de búsqueda
+        function updateHistory() {
+            const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            historyList.innerHTML = history.map((item, index) => `<li class="list-group-item d-flex justify-content-between align-items-center">${item}<button class="btn btn-sm btn-danger" onclick="removeHistoryItem(${index})">X</button></li>`).join('');
+        }
+
+        // Eliminar un ítem del historial
+        function removeHistoryItem(index) {
+            const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            history.splice(index, 1);
+            localStorage.setItem('searchHistory', JSON.stringify(history));
+            updateHistory();
+        }
+
+        // Eliminar todo el historial
+        clearHistoryBtn.addEventListener('click', () => {
+            localStorage.removeItem('searchHistory');
+            updateHistory();
+            searchHistoryContainer.style.display = 'none';
+        });
+
+        // Inicializar historial al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            updateHistory();
+        });
+
+        // Manejar clic en sugerencias
+        suggestionsBox.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A' || e.target.tagName === 'LI') {
+                searchInput.value = e.target.textContent;
+                handleSearch(e.target.textContent);
+                suggestionsBox.style.display = 'none';
+            }
+        });
+
+        // Manejar envío del formulario
+        document.getElementById('searchForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const query = searchInput.value.trim();
+            if (query) {
+                handleSearch(query);
+            }
+        });
+
+        // Ocultar lista desplegable cuando se hace clic fuera
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#searchForm') && !e.target.closest('.suggestions-box')) {
+                suggestionsBox.style.display = 'none';
+                searchHistoryContainer.style.display = 'none';
+            }
+        });
+
+        // Mostrar lista desplegable cuando se hace clic en el input
+        searchInput.addEventListener('focus', () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                handleSearch(query);
+            } else {
+                searchHistoryContainer.style.display = 'block';
+            }
+        });
+
+        // Posicionar el cuadro de sugerencias
+        function positionSuggestionsBox() {
+            const rect = searchInput.getBoundingClientRect();
+            suggestionsBox.style.top = `${rect.bottom + window.scrollY}px`;
+            suggestionsBox.style.left = `${rect.left + window.scrollX}px`;
+            suggestionsBox.style.width = `${rect.width}px`;
+        }
+    </script>
+
+
 
     <!-- Navbar Start -->
     <div class="container-fluid mb-5">
@@ -172,6 +255,9 @@
                                 <a asp-controller="Envios" asp-action="Index" class="nav-item nav-link">Envios</a>
                                 <a asp-controller="Contacto" asp-action="Index" class="nav-item nav-link">Contacto</a>
                             }
+
+
+                        </div>
                         <div class="navbar-nav ml-auto py-0">
                             <div id="LoginPartial">
                                 <partial name="_LoginPartial" />
@@ -184,13 +270,16 @@
     </div>
     <!-- Navbar End -->
 
-    <div class="container">
-        <h1 class="main-message">En Leah Make Up contamos con 2 métodos de pago:</h1>
-        <p class="payment-methods">SINPE Móvil y Efectivo</p>
-
-        <div class="image-container">
-            <img src="~/img/metpago.jpg" class="img-fluid" alt="Imagen de Métodos de Pago">
+    <!-- Carousel Start -->
+    <div id="header-carousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active" style="height: 600px;">
+                <img class="img-fluid" src="~/img/imgMetPago.jpg" alt="Image">
+            </div>
         </div>
     </div>
+    <!-- Carousel End -->
+
 </body>
+
 </html>
