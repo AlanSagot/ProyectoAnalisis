@@ -222,7 +222,7 @@ namespace DAL.Migrations
 
                     b.HasKey("ID_Categoria");
 
-                    b.ToTable("Categorias");
+                    b.ToTable("Categoria");
                 });
 
             modelBuilder.Entity("DAL.Empleado", b =>
@@ -532,7 +532,7 @@ namespace DAL.Migrations
 
                     b.HasKey("ID_Marca");
 
-                    b.ToTable("Marcas");
+                    b.ToTable("Marca");
                 });
 
             modelBuilder.Entity("DAL.Pago", b =>

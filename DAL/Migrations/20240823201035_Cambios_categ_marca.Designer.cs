@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(LeahDBContext))]
-    [Migration("20240818190539_Marca_Categoria")]
-    partial class Marca_Categoria
+    [Migration("20240823201035_Cambios_categ_marca")]
+    partial class Cambios_categ_marca
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -225,7 +225,7 @@ namespace DAL.Migrations
 
                     b.HasKey("ID_Categoria");
 
-                    b.ToTable("Categorias");
+                    b.ToTable("Categoria");
                 });
 
             modelBuilder.Entity("DAL.Empleado", b =>
@@ -236,49 +236,56 @@ namespace DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmpleadoId"));
 
-                    b.Property<string>("Cedula")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                    b.Property<int>("Cedula")
+                        .HasColumnType("int");
 
                     b.Property<string>("Direccion")
                         .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
+                    b.Property<int>("Edad")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(70)
                         .HasColumnType("nvarchar(70)");
 
-                    b.Property<string>("Estado")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
                     b.Property<DateTime>("FechaContratacion")
                         .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FechaNacimiento")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ID_Estado")
+                        .HasColumnType("int");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("PlanillaId")
-                        .HasColumnType("int");
+                    b.Property<string>("NombrePuesto")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PrimerApellido")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("PuestoId")
                         .HasColumnType("int");
 
                     b.Property<string>("SegundoApellido")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Sexo")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("SucursalId")
                         .HasColumnType("int");
@@ -288,7 +295,12 @@ namespace DAL.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<int>("Vacaciones")
+                        .HasColumnType("int");
+
                     b.HasKey("EmpleadoId");
+
+                    b.HasIndex("ID_Estado");
 
                     b.HasIndex("PuestoId");
 
@@ -409,6 +421,39 @@ namespace DAL.Migrations
                     b.ToTable("Facturas");
                 });
 
+            modelBuilder.Entity("DAL.Incapacidades", b =>
+                {
+                    b.Property<int>("IncapacidadId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IncapacidadId"));
+
+                    b.Property<int>("EmpleadoId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("FechaFin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FechaInicio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Institucion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Motivo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Porcentaje")
+                        .HasColumnType("float");
+
+                    b.HasKey("IncapacidadId");
+
+                    b.HasIndex("EmpleadoId");
+
+                    b.ToTable("Incapacidades");
+                });
+
             modelBuilder.Entity("DAL.Inventario", b =>
                 {
                     b.Property<int>("ProductoId")
@@ -416,9 +461,6 @@ namespace DAL.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductoId"));
-
-                    b.Property<int?>("CategoriaID_Categoria")
-                        .HasColumnType("int");
 
                     b.Property<string>("Codigo")
                         .IsRequired()
@@ -428,9 +470,6 @@ namespace DAL.Migrations
                     b.Property<string>("DescripcionProducto")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("EstadoID_Estado")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("FechaAgregado")
                         .HasColumnType("datetime2");
@@ -453,9 +492,6 @@ namespace DAL.Migrations
                     b.Property<int?>("InventarioProductoId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MarcaID_Marca")
-                        .HasColumnType("int");
-
                     b.Property<string>("NombreProducto")
                         .HasColumnType("nvarchar(max)");
 
@@ -473,13 +509,13 @@ namespace DAL.Migrations
 
                     b.HasKey("ProductoId");
 
-                    b.HasIndex("CategoriaID_Categoria");
+                    b.HasIndex("ID_Categoria");
 
-                    b.HasIndex("EstadoID_Estado");
+                    b.HasIndex("ID_Estado");
+
+                    b.HasIndex("ID_Marca");
 
                     b.HasIndex("InventarioProductoId");
-
-                    b.HasIndex("MarcaID_Marca");
 
                     b.HasIndex("SucursalId");
 
@@ -499,7 +535,7 @@ namespace DAL.Migrations
 
                     b.HasKey("ID_Marca");
 
-                    b.ToTable("Marcas");
+                    b.ToTable("Marca");
                 });
 
             modelBuilder.Entity("DAL.Pago", b =>
@@ -532,22 +568,51 @@ namespace DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PlanillaId"));
 
+                    b.Property<double>("DeduccionesEmbargo")
+                        .HasColumnType("float");
+
                     b.Property<int>("EmpleadoId")
                         .HasColumnType("int");
+
+                    b.Property<double>("Feriado")
+                        .HasColumnType("float");
+
+                    b.Property<double>("HorasExtra")
+                        .HasColumnType("float");
+
+                    b.Property<int>("HorasTrabajadas")
+                        .HasColumnType("int");
+
+                    b.Property<double>("PrecioPorHora")
+                        .HasColumnType("float");
 
                     b.Property<int>("PuestoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Salario")
-                        .HasColumnType("int");
+                    b.Property<double>("RebajoCCSS")
+                        .HasColumnType("float");
+
+                    b.Property<double>("RebajoINS")
+                        .HasColumnType("float");
+
+                    b.Property<double>("RebajoIncapacidadCCSS")
+                        .HasColumnType("float");
+
+                    b.Property<double>("RebajoIncapacidadINS")
+                        .HasColumnType("float");
+
+                    b.Property<double>("SalarioBruto")
+                        .HasColumnType("float");
+
+                    b.Property<double>("SalarioNeto")
+                        .HasColumnType("float");
 
                     b.Property<int>("SucursalId")
                         .HasColumnType("int");
 
                     b.HasKey("PlanillaId");
 
-                    b.HasIndex("EmpleadoId")
-                        .IsUnique();
+                    b.HasIndex("EmpleadoId");
 
                     b.HasIndex("PuestoId");
 
@@ -648,6 +713,12 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Empleado", b =>
                 {
+                    b.HasOne("DAL.Estado", "Estado")
+                        .WithMany()
+                        .HasForeignKey("ID_Estado")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DAL.Puesto", "Puesto")
                         .WithMany("Empleados")
                         .HasForeignKey("PuestoId")
@@ -659,6 +730,8 @@ namespace DAL.Migrations
                         .HasForeignKey("SucursalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Estado");
 
                     b.Navigation("Puesto");
 
@@ -703,23 +776,40 @@ namespace DAL.Migrations
                     b.Navigation("Usuario");
                 });
 
+            modelBuilder.Entity("DAL.Incapacidades", b =>
+                {
+                    b.HasOne("DAL.Empleado", "Empleado")
+                        .WithMany("Incapacidades")
+                        .HasForeignKey("EmpleadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Empleado");
+                });
+
             modelBuilder.Entity("DAL.Inventario", b =>
                 {
                     b.HasOne("DAL.Categoria", "Categoria")
                         .WithMany("Inventarios")
-                        .HasForeignKey("CategoriaID_Categoria");
+                        .HasForeignKey("ID_Categoria")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DAL.Estado", "Estado")
                         .WithMany("Inventarios")
-                        .HasForeignKey("EstadoID_Estado");
+                        .HasForeignKey("ID_Estado")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DAL.Marca", "Marca")
+                        .WithMany("Inventarios")
+                        .HasForeignKey("ID_Marca")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DAL.Inventario", null)
                         .WithMany("Inventarios")
                         .HasForeignKey("InventarioProductoId");
-
-                    b.HasOne("DAL.Marca", "Marca")
-                        .WithMany("Inventarios")
-                        .HasForeignKey("MarcaID_Marca");
 
                     b.HasOne("DAL.Sucursal", "Sucursal")
                         .WithMany("Inventarios")
@@ -739,8 +829,8 @@ namespace DAL.Migrations
             modelBuilder.Entity("DAL.Planillas", b =>
                 {
                     b.HasOne("DAL.Empleado", "Empleado")
-                        .WithOne("Planillas")
-                        .HasForeignKey("DAL.Planillas", "EmpleadoId")
+                        .WithMany("Planillas")
+                        .HasForeignKey("EmpleadoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -770,6 +860,8 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Empleado", b =>
                 {
+                    b.Navigation("Incapacidades");
+
                     b.Navigation("Planillas");
                 });
 
