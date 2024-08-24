@@ -181,6 +181,38 @@ namespace DAL.Migrations
                     b.ToTable("Carritos");
                 });
 
+            modelBuilder.Entity("DAL.CarritoItem", b =>
+                {
+                    b.Property<int>("CarritoItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CarritoItemId"));
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CarritoId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("InventarioProductoId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("PrecioTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProductoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CarritoItemId");
+
+                    b.HasIndex("CarritoId");
+
+                    b.HasIndex("InventarioProductoId");
+
+                    b.ToTable("CarritoItems");
+                });
+
             modelBuilder.Entity("DAL.Catalogos", b =>
                 {
                     b.Property<int>("CatalogoId")
@@ -697,6 +729,23 @@ namespace DAL.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("DAL.CarritoItem", b =>
+                {
+                    b.HasOne("DAL.Carrito", "Carrito")
+                        .WithMany("CarritoItems")
+                        .HasForeignKey("CarritoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DAL.Inventario", "Inventario")
+                        .WithMany()
+                        .HasForeignKey("InventarioProductoId");
+
+                    b.Navigation("Carrito");
+
+                    b.Navigation("Inventario");
+                });
+
             modelBuilder.Entity("DAL.Catalogos", b =>
                 {
                     b.HasOne("DAL.Inventario", "Inventario")
@@ -848,6 +897,11 @@ namespace DAL.Migrations
                     b.Navigation("Puesto");
 
                     b.Navigation("Sucursal");
+                });
+
+            modelBuilder.Entity("DAL.Carrito", b =>
+                {
+                    b.Navigation("CarritoItems");
                 });
 
             modelBuilder.Entity("DAL.Categoria", b =>

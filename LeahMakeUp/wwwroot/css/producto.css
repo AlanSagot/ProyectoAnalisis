@@ -18,11 +18,15 @@
     display: flex;
     flex-wrap: wrap;
     padding-top: 10px;
-    padding-left: 80px;
-    padding-right: 80px;
+    padding-right: 130px;
 }
 
-
+ .product {
+            flex: 0 1 15%; /* Ajustado para ser más flexible */
+            margin-bottom: 30px;
+            margin-inline: 85px;
+            margin-left: 70px; /* Establece un tamaño máximo */
+        }
 .product-img {
     width: 180px;
     height: 150px;
@@ -41,7 +45,7 @@
     z-index: 1;
     background: #d19c97;
     position: relative;
-    width: 200%;
+    width: 210%;
     height: 380px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra en la tarjeta */

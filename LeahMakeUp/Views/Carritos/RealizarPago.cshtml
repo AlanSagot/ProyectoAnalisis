@@ -5,10 +5,10 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Confirmación de Orden - Leah Make Up</title>
+    <title>Leah Make Up</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="Leah Make Up">
-    <meta name="description" content="Confirmación de Orden">
+    <meta name="keywords" content="Free HTML Templates">
+    <meta name="description" content="Free HTML Templates">
 
     <!-- Favicon -->
     <link rel="icon" href="~/img/favicon.ico">
@@ -20,95 +20,268 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
+    <!-- Libraries Stylesheet -->
+    <link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
+    <script src="~/js/index.js"></script>
+
+    <link href="~/css/chat.css" rel="stylesheet">
+    <link href="~/img" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+
+
 </head>
 
 <body>
-    <!-- Main Container -->
-    <div class="container my-5">
-        <!-- Confirmation Message -->
-        <div class="text-center">
-            <h2>¡Dentro de poco podrás disfrutar de tu bikini!</h2>
-            <p>Solamente tienes que hacer el pago de tus productos en efectivo o mediante SINPE por los siguientes links:</p>
-            <p>
-                <a href="#" class="btn btn-primary">CLICK AQUÍ para que te atienda Yoselyn.</a><br>
-                <a href="#" class="btn btn-primary">CLICK AQUÍ para que te atienda Marco.</a>
-            </p>
-            <p>Recuerda agregar el número de tu orden que aparece abajo, será un placer para nosotros atenderte.</p>
-        </div>
-
-        <!-- Order Summary -->
-        <div class="card mt-5">
-            <div class="card-header">
-                <h3 class="text-center">GRACIAS POR TU ORDEN</h3>
-                <p class="text-center">Recibirás un email de confirmación en breve.</p>
+    <!-- Topbar Start -->
+    <div class="container-fluid">
+        <div class="row" style="background-color: #f9f2f2; padding-top: 0.5rem; padding-bottom: 0.5rem;">
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="d-inline-flex align-items-center">
+                    <a asp-controller="PreguntasF" asp-action="Index" class="nav-item nav-link text-dark">Preguntas Frecuentes</a>
+                </div>
             </div>
-            <div class="card-body">
-                @if (!Model.Any())
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-dark px-2" href="https://wa.me/71397781?text=Buenas%2C%20estoy%20interesada%20en%20un%20producto%21">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a class="text-dark px-2" href="https://www.instagram.com/leah_makeup_and_accesories/">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center py-3">
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <a href="" class="text-decoration-none">
+                    <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">L</span>Leah Make Up</h1>
+                </a>
+            </div>
+            <!-- BUSCAR -->
+            <div class="col-lg-6 col-md-6 col-sm-12 text-left">
+                <form id="searchForm">
+                    <div class="input-group">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Buscar productos">
+                        <div class="input-group-append">
+                            <span class="input-group-text bg-transparent text-primary">
+                                <i class="fa fa-search"></i>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 text-right">
+                @if (!User.IsInRole("Admin"))
                 {
-                    <p>Tu carrito está vacío.</p>
-                }
-                else
-                {
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Inventario.NombreProducto)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Cantidad)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Subtotal)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.PrecioTotal)
-                                </th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        @if (item.Inventario.FotoProducto != null)
-                                        {
-                                            var imageBase64 = Convert.ToBase64String(item.Inventario.FotoProducto);
-                                            var imageSrc = string.Format("data:image/jpeg;base64,{0}", imageBase64);
-                                            <img src="@imageSrc" alt="Producto" width="50" height="50" />
-                                        }
-                                    </td>
-                                    <td>
-                                        <span class="precio-unitario" data-precio="@item.Inventario.NombreProducto">@item.Inventario.NombreProducto</span>
-                                    </td>
-                                    <td>           
-                                            <span class="count" id="count-@item.CarritoId">@item.Cantidad</span>
-                                    </td>
-                                    <td>
-                                        <span class="precio-unitario" data-precio="@item.Inventario.PrecioXVenta">@item.Inventario.PrecioXVenta</span>
-                                    </td>
-                                    <td>
-                                        <span class="precio-total" id="precio-total-@item.CarritoId">@item.PrecioTotal</span>
-                                    </td>
- 
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-
-                    <!-- Botón para realizar el pago -->
-                    <form asp-controller="Carritos" asp-action="ProcesarPago" method="post">
-                        <button type="submit" class="btn btn-primary">Proceder con el Pago</button>
-                    </form>
+                    <a asp-controller="Carritos" asp-action="Index" class="btn border">
+                        <i class="fas fa-shopping-cart text-primary"></i>
+                        <span class="badge">0</span>
+                    </a>
                 }
             </div>
         </div>
     </div>
+    <!-- Topbar End -->
+    <!-- Navbar Start -->
+    <div class="container-fluid mb-5">
+        <div class="row border-top px-xl-5">
+            <div class="col-lg-12">
+                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                    <a href="" class="text-decoration-none d-block d-lg-none">
+                        <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">L</span>Leah Make Up</h1>
+                    </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto py-0">
+                            <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Inicio</a>
+                            <!-- Catálogos -->
+                            <div class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="catalogosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Catálogos
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="catalogosDropdown">
+
+                                    <a asp-controller="Inventarios" asp-action="Maquillaje" class="dropdown-item">Maquillaje</a>
+                                    <a asp-controller="Inventarios" asp-action="SkinCare" class="dropdown-item">SkinCare</a>
+                                    <a asp-controller="Inventarios" asp-action="Articulos" class="dropdown-item">Artículos</a>
+                                </div>
+                            </div>
+
+                            <!-- Dropdown Admin -->
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <div class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Admin
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="adminDropdown">
+
+                                        <a asp-controller="Admin" asp-action="Index" class="dropdown-item">Usuarios</a>
+                                        <a asp-controller="Planillas" asp-action="Index" class="dropdown-item">Planillas</a>
+                                        <a asp-controller="Empleados" asp-action="Index" class="dropdown-item">Empleados</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a asp-controller="Inventarios" asp-action="Index" class="dropdown-item">Inventario</a>
+                                        <a asp-controller="Sucursales" asp-action="Index" class="dropdown-item">Sucursales</a>
+                                        <a asp-controller="Puestos" asp-action="Index" class="dropdown-item">Puestos</a>
+
+                                    </div>
+                                </div>
+                            }
+
+                            <a asp-controller="Inventarios" asp-action="Productos" class="nav-item nav-link">Productos</a>
+                            <!-- METODO DE PAGO -->
+                            @if (!User.IsInRole("Admin"))
+                            {
+                                <a asp-controller="MetodoPago" asp-action="Index" class="nav-item nav-link">Métodos de Pago</a>
+                                //<a href="detail.html" class="nav-item nav-link">Ofertas</a>
+                                <a asp-controller="Envios" asp-action="Index" class="nav-item nav-link">Envios</a>
+                                <a asp-controller="Contacto" asp-action="Index" class="nav-item nav-link">Contacto</a>
+                            }
+
+
+                        </div>
+                        <div class="navbar-nav ml-auto py-0">
+                            <div id="LoginPartial">
+                                <partial name="_LoginPartial" />
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- Main Container -->
+                <div class="container my-5">
+                    <!-- Confirmation Message -->
+                    <div class="text-center">
+                        <h2>¡Dentro de poco podrás disfrutar de tus productos!</h2>
+                        <p>Solamente tienes que hacer el pago de tus productos en efectivo o mediante SINPE por los siguientes links:</p>
+                        <p>
+                            <a href="#" class="btn btn-primary">CLICK AQUÍ para que te atienda Fiorella</a><br>
+                        </p>
+                        <br />
+                        <p>Recuerda agregar el número de tu orden que aparece abajo, será un placer para nosotros atenderte.</p>
+                        <div class="text-center mb-4">
+                            <h4><strong>Número de Orden: @Model.LastOrDefault()?.CarritoId</strong></h4>
+                        </div>
+
+                    </div>
+
+                    <!-- Order Summary -->
+                    <div class="card mt-5">
+                        <div class="card-header">
+                            <h3 class="text-center">¡GRACIAS POR TU ORDEN!</h3>
+                        </div>
+                        <div class="card-body">
+                            @if (!Model.Any())
+                            {
+                                <p class="text-center">Tu carrito está vacío.</p>
+                            }
+                            else
+                            {
+                                <table class="table text-center">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Producto</th>
+                                            <th>Cantidad</th>
+                                            <th>Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @if (item.Inventario.FotoProducto != null)
+                                                    {
+                                                        var imageBase64 = Convert.ToBase64String(item.Inventario.FotoProducto);
+                                                        var imageSrc = string.Format("data:image/jpeg;base64,{0}", imageBase64);
+                                                        <img src="@imageSrc" alt="Producto" width="50" height="50" />
+                                                    }
+                                                </td>
+                                                <td>@item.Inventario.NombreProducto</td>
+                                                <td>@item.Cantidad</td>
+                                                <td>₡@item.Inventario.PrecioXVenta</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="3" class="text-right"><strong>Total Final:</strong></td>
+                                            <td><strong>₡@Model.Sum(item => item.Cantidad * item.Inventario.PrecioXVenta).ToString("N2")</strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+
+                                <!-- Botón para realizar el pago -->
+                                <form asp-controller="Home" asp-action="Index" method="post" class="text-center">
+                                    <button type="submit" class="btn btn-primary">Finalizar Pedido</button>
+                                </form>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- Footer Start -->
+                <div class="container-fluid" style="background-color: #f2e2e2; color: #333; mt-5 pt-5;">
+                    <div class="row px-xl-5 pt-5">
+                        <!-- PRIMERA COLUMNA -->
+                        <div class="col-lg-4 col-md-12 mb-5">
+                            <a href="" class="text-decoration-none">
+                                <h1 class="mb-4 display-5 font-weight-semi-bold">
+                                    <span class="text-primary font-weight-bold border border-white px-3 mr-1">L</span>
+                                    Leah Make Up
+                                </h1>
+                            </a>
+                            <p>Sin maquillaje soy fantástica, maquillada soy una obra de arte.</p>
+                        </div>
+
+                        <!-- SEGUNDA COLUMNA (LINKS RAPIDOS) -->
+                        <div class="col-lg-4 col-md-12 mb-5">
+                            <h5 class="font-weight-bold text-dark mb-4">Links Rápidos</h5>
+                            <div class="d-flex flex-column justify-content-start text-left">
+                                <a class="text-dark mb-2 text-left" href="http://localhost:5059"><i class="fa fa-angle-right mr-2"></i>Inicio</a>
+                                <a asp-controller="Inventarios" asp-action="Productos" class="text-dark mb-2 text-left"><i class="fa fa-angle-right mr-2"></i>Productos</a>
+                                <a asp-controller="MetodoPago" asp-action="Index" class="text-dark mb-2 text-left"><i class="fa fa-angle-right mr-2"></i>Métodos de Pago</a>
+                                <a asp-controller="Carritos" asp-action="Index" class="text-dark mb-2 text-left active"><i class="fa fa-angle-right mr-2"></i>Carrito</a>
+                            </div>
+                        </div>
+
+                        <!-- TERCERA COLUMNA (UBICACIONES) -->
+                        <div class="col-lg-4 col-md-12 mb-5">
+                            <h5 class="font-weight-bold text-dark mb-4">Ubicaciones</h5>
+                            <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Mall San Pedro, 3er piso</p>
+                            <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+506 7139-7781</p>
+                            <br>
+                            <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Expresso Desamparados</p>
+                            <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+506 7286-2118</p>
+                        </div>
+                    </div>
+
+                    <div class="row border-top border-light mx-xl-5 py-4">
+                        <div class="col-md-6 px-xl-0">
+                            <p class="mb-md-0 text-center text-md-left text-dark">
+                                &copy; <a class="text-dark font-weight-semi-bold" href="#">Leah Make Up</a>. Nos reservamos el derecho de admisión. Diseñado
+                                por <a class="text-dark font-weight-semi-bold" href="https://sistemas.ufidelitas.ac.cr/">Grupo 2</a>
+                            </p>
+                        </div>
+                        <div class="col-md-6 px-xl-0 text-center text-md-right">
+                            <img class="img-fluid" src="~/img/pagos.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <!-- Footer End -->
+
 </body>
 
 </html>

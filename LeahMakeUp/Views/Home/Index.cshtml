@@ -1,5 +1,7 @@
+@model IEnumerable<DAL.Carrito>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
@@ -27,6 +29,11 @@
 
     <link href="~/css/chat.css" rel="stylesheet">
     <link href="~/img" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
 
 
 </head>
@@ -82,122 +89,6 @@
         </div>
     </div>
     <!-- Topbar End -->
-
-    <script>
-        const searchInput = document.getElementById('searchInput');
-        const suggestionsBox = document.createElement('div');
-        suggestionsBox.classList.add('suggestions-box');
-        document.body.appendChild(suggestionsBox);
-        const historyList = document.getElementById('historyList');
-        const clearHistoryBtn = document.getElementById('clearHistory');
-        const searchHistoryContainer = document.getElementById('searchHistory');
-
-        // Simulación de productos
-        const products = [
-            'Maquillaje Base', 'Sombra de Ojos', 'Labial Rojo', 'Brochas de Maquillaje', 'Crema Hidratante', 'Tónico Facial', 'Esmalte de Uñas'
-        ];
-
-        // Manejar la búsqueda
-        function handleSearch(query) {
-            if (query) {
-                // Guardar en el historial local
-                const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
-                if (!history.includes(query)) {
-                    history.push(query);
-                    localStorage.setItem('searchHistory', JSON.stringify(history));
-                    updateHistory();
-                }
-                // Realizar búsqueda y mostrar resultados
-                const results = products.filter(product => product.toLowerCase().includes(query.toLowerCase()));
-                suggestionsBox.innerHTML = results.map(product => `<a href="#" class="list-group-item list-group-item-action">${product}</a>`).join('');
-                suggestionsBox.style.display = 'block';
-                positionSuggestionsBox();
-            } else {
-                suggestionsBox.innerHTML = '';
-                suggestionsBox.style.display = 'none';
-            }
-        }
-
-        // Mostrar sugerencias en tiempo real
-        function showSuggestions() {
-            const query = searchInput.value.trim();
-            handleSearch(query);
-            updateHistory();
-        }
-
-        // Actualizar historial de búsqueda
-        function updateHistory() {
-            const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
-            historyList.innerHTML = history.map((item, index) => `<li class="list-group-item d-flex justify-content-between align-items-center">${item}<button class="btn btn-sm btn-danger" onclick="removeHistoryItem(${index})">X</button></li>`).join('');
-        }
-
-        // Eliminar un ítem del historial
-        function removeHistoryItem(index) {
-            const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
-            history.splice(index, 1);
-            localStorage.setItem('searchHistory', JSON.stringify(history));
-            updateHistory();
-        }
-
-        // Eliminar todo el historial
-        clearHistoryBtn.addEventListener('click', () => {
-            localStorage.removeItem('searchHistory');
-            updateHistory();
-            searchHistoryContainer.style.display = 'none';
-        });
-
-        // Inicializar historial al cargar la página
-        document.addEventListener('DOMContentLoaded', () => {
-            updateHistory();
-        });
-
-        // Manejar clic en sugerencias
-        suggestionsBox.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A' || e.target.tagName === 'LI') {
-                searchInput.value = e.target.textContent;
-                handleSearch(e.target.textContent);
-                suggestionsBox.style.display = 'none';
-            }
-        });
-
-        // Manejar envío del formulario
-        document.getElementById('searchForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const query = searchInput.value.trim();
-            if (query) {
-                handleSearch(query);
-            }
-        });
-
-        // Ocultar lista desplegable cuando se hace clic fuera
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('#searchForm') && !e.target.closest('.suggestions-box')) {
-                suggestionsBox.style.display = 'none';
-                searchHistoryContainer.style.display = 'none';
-            }
-        });
-
-        // Mostrar lista desplegable cuando se hace clic en el input
-        searchInput.addEventListener('focus', () => {
-            const query = searchInput.value.trim();
-            if (query) {
-                handleSearch(query);
-            } else {
-                searchHistoryContainer.style.display = 'block';
-            }
-        });
-
-        // Posicionar el cuadro de sugerencias
-        function positionSuggestionsBox() {
-            const rect = searchInput.getBoundingClientRect();
-            suggestionsBox.style.top = `${rect.bottom + window.scrollY}px`;
-            suggestionsBox.style.left = `${rect.left + window.scrollX}px`;
-            suggestionsBox.style.width = `${rect.width}px`;
-        }
-    </script>
-
-
-
     <!-- Navbar Start -->
     <div class="container-fluid mb-5">
         <div class="row border-top px-xl-5">
@@ -218,7 +109,7 @@
                                     Catálogos
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="catalogosDropdown">
-                                    
+
                                     <a asp-controller="Inventarios" asp-action="Maquillaje" class="dropdown-item">Maquillaje</a>
                                     <a asp-controller="Inventarios" asp-action="SkinCare" class="dropdown-item">SkinCare</a>
                                     <a asp-controller="Inventarios" asp-action="Articulos" class="dropdown-item">Artículos</a>
@@ -266,6 +157,7 @@
                     </div>
                 </nav>
 
+                <!-- Main Container -->
                 <div id="header-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active" style="height: 600px;">
@@ -316,572 +208,486 @@
                     </a>
                 </div>
 
-            </div>
-        </div>
-    </div>
-    <!-- Navbar End -->
+                <!-- Featured Start -->
+                <div class="container-fluid pt-5">
+                    <div class="row px-xl-5 pb-3">
+                        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                            <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                                <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
+                                <h5 class="font-weight-semi-bold m-0">Productos de Calidad</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                            <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                                <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
+                                <h5 class="font-weight-semi-bold m-0">Envio a todo el país</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                            <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                                <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
+                                <h5 class="font-weight-semi-bold m-0">Entrega 3-5 días</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                            <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                                <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
+                                <h5 class="font-weight-semi-bold m-0">Horario L-D 10am/8pm</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Featured End -->
+                <!-- Categories Start -->
+                <div class="container-fluid pt-5">
+                    <div class="text-center mb-4">
+                        <h2 class="section-title px-5"><span class="px-2">Categorías</span></h2>
+                    </div>
+                    <div class="row px-xl-5 pb-3">
+                        <div class="col-lg-4 col-md-6 pb-1">
+                            <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                                <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                                    <img class="img-fluid" src="~/img/labiales.jpg" alt="" style="width: 100%; height: 250px; object-fit: cover;">
+                                </a>
+                                <h5 class="font-weight-semi-bold m-0">Labiales</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 pb-1">
+                            <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                                <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                                    <img class="img-fluid" src="~/img/paletas.jpg" alt="" style="width: 100%; height: 250px; object-fit: cover;">
+                                </a>
+                                <h5 class="font-weight-semi-bold m-0">Paletas</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 pb-1">
+                            <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                                <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                                    <img class="img-fluid" src="~/img/accesorios.jpg" alt="" style="width: 100%; height: 250px; object-fit: cover;">
+                                </a>
+                                <h5 class="font-weight-semi-bold m-0">Accesorios</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 pb-1">
+                            <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                                <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                                    <img class="img-fluid" src="~/img/sombras.jpg" alt="" style="width: 100%; height: 250px; object-fit: cover;">
+                                </a>
+                                <h5 class="font-weight-semi-bold m-0">Sombras</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 pb-1">
+                            <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                                <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                                    <img class="img-fluid" src="~/img/estuches.jpg" alt="" style="width: 100%; height: 250px; object-fit: cover;">
+                                </a>
+                                <h5 class="font-weight-semi-bold m-0">Estuches</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 pb-1">
+                            <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                                <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                                    <img class="img-fluid" src="~/img/sets.jpg" alt="" style="width: 100%; height: 250px; object-fit: cover;">
+                                </a>
+                                <h5 class="font-weight-semi-bold m-0">Sets</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Categories End -->
+                <!-- Products Start -->
+                <div class="container-fluid pt-5">
+                    <div class="text-center mb-4">
+                        <h2 class="section-title px-5"><span class="px-2">Productos más Vendidos</span></h2>
+                    </div>
+                    <div class="row px-xl-5 pb-3">
+                        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                            <div class="card product-item border-0 mb-4">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    <img class="img-fluid w-100" src="~/img/paleta12beauty.jpg" alt="">
+                                </div>
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                    <h6 class="text-truncate mb-3">Paleta 12 tonos Beauty Creactions</h6>
+                                    
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                            <div class="card product-item border-0 mb-4">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    <img class="img-fluid w-100" src="~/img/tonicohidratante.jpg" alt="">
+                                </div>
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                    <h6 class="text-truncate mb-3">Tónico Hidratante</h6>
+                                    
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                            <div class="card product-item border-0 mb-4">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    <img class="img-fluid w-100" src="~/img/exfoliantescrub.jpg" alt="">
+                                </div>
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                    <h6 class="text-truncate mb-3">Exfoliante Scrub</h6>
+                                    
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                            <div class="card product-item border-0 mb-4">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    <img class="img-fluid w-100" src="~/img/toallitasbeau.jpg" alt="">
+                                </div>
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                    <h6 class="text-truncate mb-3">Toallitas Beau Visage</h6>
+                                    
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                            <div class="card product-item border-0 mb-4">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    <img class="img-fluid w-100" src="~/img/labialvelvet.jpg" alt="">
+                                </div>
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                    <h6 class="text-truncate mb-3">Labial Velvet Corals</h6>
+                                    
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                            <div class="card product-item border-0 mb-4">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    <img class="img-fluid w-100" src="~/img/selladormaquillaje.jpg" alt="">
+                                </div>
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                    <h6 class="text-truncate mb-3">Sellador de Maquillaje</h6>
+                                    
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                            <div class="card product-item border-0 mb-4">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    <img class="img-fluid w-100" src="~/img/shanpoopestañas.jpg" alt="">
+                                </div>
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                    <h6 class="text-truncate mb-3">Shampoo Limpiador de Pestañas</h6>
+                                    
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                            <div class="card product-item border-0 mb-4">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    <img class="img-fluid w-100" src="~/img/polvotraslucido.jpg" alt="">
+                                </div>
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                    <h6 class="text-truncate mb-3">Polvo Traslúcido Ultra Fino</h6>
+                                    
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Products End -->
+                <!-- Subscribe Start -->
+                <div class="container-fluid" style="background-color: #f2e2e2; margin-top: 3rem; margin-bottom: 3rem;">
+                    <div class="row justify-content-md-center py-5 px-xl-5">
+                        <div class="col-md-6 col-12 py-5">
+                            <div class="text-center mb-2 pb-2">
+                                <h2 class="section-title px-5 mb-3">
+                                    <span class="bg-secondary px-2">Mantente Actualizado</span>
+                                </h2>
+                                <p>Si te gustaría recibir recomendaciones y ofertas, puedes ingresar tu correo electrónico para enviarte notificaciones sobre nosotros.</p>
+                            </div>
+                            <form action="">
+                                <div class="input-group">
+                                    <input type="text" class="form-control border-white p-4" placeholder="Digita tu correo electrónico">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary px-4">Suscríbete</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Subscribe End -->
+                <!-- Products Start -->
+                <div class="container-fluid pt-5">
+                    <div class="text-center mb-4">
+                        <h2 class="section-title px-5"><span class="px-2">Nuevos Ingresos</span></h2>
+                    </div>
+                    <div class="row px-xl-5 pb-3">
+                        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                            <div class="card product-item border-0 mb-4">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    <img class="img-fluid w-100" src="~/img/contornoojos.jpg" alt="">
+                                </div>
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                    <h6 class="text-truncate mb-3">Contorno de Ojos</h6>
+                                   
+                                </div>
+                               
+                            </div>
+                        </div>
 
+                        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                            <div class="card product-item border-0 mb-4">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    <img class="img-fluid w-100" src="~/img/protectortrendy.jpg" alt="">
+                                </div>
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                    <h6 class="text-truncate mb-3">Protector Solar Trendy</h6>
+                                   
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                            <div class="card product-item border-0 mb-4">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    <img class="img-fluid w-100" src="~/img/sets.jpg" alt="">
+                                </div>
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                    <h6 class="text-truncate mb-3">Kit Acné</h6>
+                                    
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                            <div class="card product-item border-0 mb-4">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    <img class="img-fluid w-100" src="~/img/estuches.jpg" alt="">
+                                </div>
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                    <h6 class="text-truncate mb-3">Cosmetiquera Pequeña</h6>
+                                   
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Products End -->
+                <!-- Footer Start -->
+                <div class="container-fluid" style="background-color: #f2e2e2; color: #333; mt-5 pt-5;">
+                    <div class="row px-xl-5 pt-5">
+                        <!-- PRIMERA COLUMNA -->
+                        <div class="col-lg-4 col-md-12 mb-5">
+                            <a href="" class="text-decoration-none">
+                                <h1 class="mb-4 display-5 font-weight-semi-bold">
+                                    <span class="text-primary font-weight-bold border border-white px-3 mr-1">L</span>
+                                    Leah Make Up
+                                </h1>
+                            </a>
+                            <p>Sin maquillaje soy fantástica, maquillada soy una obra de arte.</p>
+                        </div>
 
-    <!-- Featured Start -->
-    <div class="container-fluid pt-5">
-        <div class="row px-xl-5 pb-3">
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
-                    <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
-                    <h5 class="font-weight-semi-bold m-0">Productos de Calidad</h5>
+                        <!-- SEGUNDA COLUMNA (LINKS RAPIDOS) -->
+                        <div class="col-lg-4 col-md-12 mb-5">
+                            <h5 class="font-weight-bold text-dark mb-4">Links Rápidos</h5>
+                            <div class="d-flex flex-column justify-content-start text-left">
+                                <a class="text-dark mb-2 text-left" href="http://localhost:5059"><i class="fa fa-angle-right mr-2"></i>Inicio</a>
+                                <a asp-controller="Inventarios" asp-action="Productos" class="text-dark mb-2 text-left"><i class="fa fa-angle-right mr-2"></i>Productos</a>
+                                <a asp-controller="MetodoPago" asp-action="Index" class="text-dark mb-2 text-left"><i class="fa fa-angle-right mr-2"></i>Métodos de Pago</a>
+                                <a asp-controller="Carritos" asp-action="Index" class="text-dark mb-2 text-left active"><i class="fa fa-angle-right mr-2"></i>Carrito</a>
+                            </div>
+                        </div>
+
+                        <!-- TERCERA COLUMNA (UBICACIONES) -->
+                        <div class="col-lg-4 col-md-12 mb-5">
+                            <h5 class="font-weight-bold text-dark mb-4">Ubicaciones</h5>
+                            <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Mall San Pedro, 3er piso</p>
+                            <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+506 7139-7781</p>
+                            <br>
+                            <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Expresso Desamparados</p>
+                            <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+506 7286-2118</p>
+                        </div>
+                    </div>
+
+                    <div class="row border-top border-light mx-xl-5 py-4">
+                        <div class="col-md-6 px-xl-0">
+                            <p class="mb-md-0 text-center text-md-left text-dark">
+                                &copy; <a class="text-dark font-weight-semi-bold" href="#">Leah Make Up</a>. Nos reservamos el derecho de admisión. Diseñado
+                                por <a class="text-dark font-weight-semi-bold" href="https://sistemas.ufidelitas.ac.cr/">Grupo 2</a>
+                            </p>
+                        </div>
+                        <div class="col-md-6 px-xl-0 text-center text-md-right">
+                            <img class="img-fluid" src="~/img/pagos.png" alt="">
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
-                    <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
-                    <h5 class="font-weight-semi-bold m-0">Envio a todo el país</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
-                    <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
-                    <h5 class="font-weight-semi-bold m-0">Entrega 3-5 días</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
-                    <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
-                    <h5 class="font-weight-semi-bold m-0">Horario L-D 10am/8pm</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Featured End -->
-    <!-- Categories Start -->
-    <div class="container-fluid pt-5">
-        <div class="text-center mb-4">
-            <h2 class="section-title px-5"><span class="px-2">Categorías</span></h2>
-        </div>
-        <div class="row px-xl-5 pb-3">
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="~/img/labiales.jpg" alt="" style="width: 100%; height: 250px; object-fit: cover;">
+                <!-- Footer End -->
+                <!--CHAT BOT-->
+
+                <div class="fabs" id="fabs-chat">
+                    <div class="chat">
+                        <div class="chat_header">
+                            <div class="chat_option">
+                                <span id="chat_head">LeahBot</span> <br>
+                                <span id="chat_fullscreen_loader" class="chat_fullscreen_loader">
+                                    <i style="font-size:14px" class="fas fa-window-maximize"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="chat_body chat_login">
+                            <a id="chat_fourth_screen" class="fab-chat">
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                            <p>¿Tienes dudas? Da click en la flecha de arriba para poder solucionarlas...</p>
+                        </div>
+
+                        <div id="chat_fullscreen" class="chat_conversion chat_converse">
+                            <span class="chat_msg_item chat_msg_item_admin">
+                                <div class="chat_avatar">
+                                    <img src="@Url.Content("~/img/Bot.gif")" />
+                                </div>¡Hola! Bienvenida al chat de preguntas, soy LeahBot....Selecciona alguna de las siguientes opciones:
+                            </span>
+                            <span class="chat_msg_item">
+                                <ul class="tags">
+                                    <li class="option" data-response="En la tienda actualmente sólo funcionamos por pagos en Sinpe o efectivo">¿Qué métodos de pago tienen?</li>
+                                    <li class="option" data-response="Contamos con dos surcursales, la primera se encuentra en el Mall San Pedro, San José. La segunda en Expresso, San José.... Si gustas información más exacta, dirígete al apartado de Contacto.">¿Dónde se ubican?</li>
+                                    <li class="option" data-response="Si quieres que te atienda alguno de nuestros encargados dirígete a este link [link]">Me gustaría que me atienda un asesor</li>
+                                </ul>
+                            </span>
+                        </div>
+                    </div>
+                    <a id="prime" class="fab-chat">
+                        <i class="far fa-comment"></i>
                     </a>
-                    <h5 class="font-weight-semi-bold m-0">Labiales</h5>
+
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="~/img/paletas.jpg" alt="" style="width: 100%; height: 250px; object-fit: cover;">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">Paletas</h5>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="~/img/accesorios.jpg" alt="" style="width: 100%; height: 250px; object-fit: cover;">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">Accesorios</h5>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="~/img/sombras.jpg" alt="" style="width: 100%; height: 250px; object-fit: cover;">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">Sombras</h5>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="~/img/estuches.jpg" alt="" style="width: 100%; height: 250px; object-fit: cover;">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">Estuches</h5>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="~/img/sets.jpg" alt="" style="width: 100%; height: 250px; object-fit: cover;">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">Sets</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Categories End -->
-    <!-- Products Start -->
-    <div class="container-fluid pt-5">
-        <div class="text-center mb-4">
-            <h2 class="section-title px-5"><span class="px-2">Productos más Vendidos</span></h2>
-        </div>
-        <div class="row px-xl-5 pb-3">
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="~/img/paleta12beauty.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Paleta 12 tonos Beauty Creactions</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>CRC 8500</h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Ver Producto</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Agregar al Carrito</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="~/img/tonicohidratante.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Tónico Hidratante</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>CRC 4950</h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Ver Producto</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Agregar al Carrito</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="~/img/exfoliantescrub.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Exfoliante Scrub</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>CRC 4900</h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Ver Producto</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Agregar al Carrito</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="~/img/toallitasbeau.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Toallitas Beau Visage</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>CRC 2150</h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Ver Producto</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Agregar al Carrito</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="~/img/labialvelvet.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Labial Velvet Corals</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>CRC 3500</h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Ver Producto</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Agregar al Carrito</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="~/img/selladormaquillaje.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Sellador de Maquillaje</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>CRC 5990</h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Ver Producto</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Agregar al Carrito</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="~/img/shanpoopestañas.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Shampoo Limpiador de Pestañas</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>CRC 3900</h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Ver Producto</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Agregar al Carrito</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="~/img/polvotraslucido.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Polvo Traslúcido Ultra Fino</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>CRC 6500</h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Ver Producto</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Agregar al Carrito</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Products End -->
-    <!-- Subscribe Start -->
-    <div class="container-fluid" style="background-color: #f2e2e2; margin-top: 3rem; margin-bottom: 3rem;">
-        <div class="row justify-content-md-center py-5 px-xl-5">
-            <div class="col-md-6 col-12 py-5">
-                <div class="text-center mb-2 pb-2">
-                    <h2 class="section-title px-5 mb-3">
-                        <span class="bg-secondary px-2">Mantente Actualizado</span>
-                    </h2>
-                    <p>Si te gustaría recibir recomendaciones y ofertas, puedes ingresar tu correo electrónico para enviarte notificaciones sobre nosotros.</p>
-                </div>
-                <form action="">
-                    <div class="input-group">
-                        <input type="text" class="form-control border-white p-4" placeholder="Digita tu correo electrónico">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary px-4">Suscríbete</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- Subscribe End -->
-    <!-- Products Start -->
-    <div class="container-fluid pt-5">
-        <div class="text-center mb-4">
-            <h2 class="section-title px-5"><span class="px-2">Nuevos Ingresos</span></h2>
-        </div>
-        <div class="row px-xl-5 pb-3">
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="~/img/contornoojos.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Contorno de Ojos</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>CRC 4900</h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Ver Producto</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Agregar al Carrito</a>
-                    </div>
-                </div>
-            </div>
+                <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+                <script>
+                    hideChat(0);
 
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="~/img/protectortrendy.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Protector Solar Trendy</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>CRC 5500</h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Ver Producto</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Agregar al Carrito</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="~/img/sets.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Kit Acné</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>CRC 18900</h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Ver Producto</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Agregar al Carrito</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="~/img/estuches.jpg" alt="">
-                    </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Cosmetiquera Pequeña</h6>
-                        <div class="d-flex justify-content-center">
-                            <h6>CRC 7000</h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Ver Producto</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Agregar al Carrito</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Products End -->
-    <!-- Footer Start -->
-    <div class="container-fluid" style="background-color: #f2e2e2; color: #333; mt-5 pt-5;">
-        <div class="row px-xl-5 pt-5">
-            <!-- PRIMERA COLUMNA -->
-            <div class="col-lg-4 col-md-12 mb-5">
-                <a href="" class="text-decoration-none">
-                    <h1 class="mb-4 display-5 font-weight-semi-bold">
-                        <span class="text-primary font-weight-bold border border-white px-3 mr-1">L</span>
-                        Leah Make Up
-                    </h1>
-                </a>
-                <p>Sin maquillaje soy fantástica, maquillada soy una obra de arte.</p>
-            </div>
+                    $('#prime').click(function () {
+                        toggleFab();
+                    });
 
-            <!-- SEGUNDA COLUMNA (LINKS RAPIDOS) -->
-            <div class="col-lg-4 col-md-12 mb-5">
-                <h5 class="font-weight-bold text-dark mb-4">Links Rápidos</h5>
-                <div class="d-flex flex-column justify-content-start text-left">
-                    <a class="text-dark mb-2 text-left" href="http://localhost:5059"><i class="fa fa-angle-right mr-2"></i>Inicio</a>
-                    <a asp-controller="Inventarios" asp-action="Productos" class="text-dark mb-2 text-left"><i class="fa fa-angle-right mr-2"></i>Productos</a>
-                    <a asp-controller="MetodoPago" asp-action="Index" class="text-dark mb-2 text-left"><i class="fa fa-angle-right mr-2"></i>Métodos de Pago</a>
-                    <a asp-controller="Carritos" asp-action="Index" class="text-dark mb-2 text-left active"><i class="fa fa-angle-right mr-2"></i>Carrito</a>
-                </div>
-            </div>
+                    //Toggle chat
+                    function toggleFab() {
+                        $('.prime').toggleClass('zmdi-comment-outline');
+                        $('.prime').toggleClass('zmdi-close');
+                        $('.prime').toggleClass('is-active');
+                        $('.prime').toggleClass('is-visible');
+                        $('#prime').toggleClass('is-float');
+                        $('.chat').toggleClass('is-visible');
+                        $('.fab-chat').toggleClass('is-visible');
 
-            <!-- TERCERA COLUMNA (UBICACIONES) -->
-            <div class="col-lg-4 col-md-12 mb-5">
-                <h5 class="font-weight-bold text-dark mb-4">Ubicaciones</h5>
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Mall San Pedro, 3er piso</p>
-                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+506 7139-7781</p>
-                <br>
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Expresso Desamparados</p>
-                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+506 7286-2118</p>
-            </div>
-        </div>
+                    }
+                    $('.option').click(function () {
+                        var userText = $(this).text();
+                        var responseText = $(this).data('response');
 
-        <div class="row border-top border-light mx-xl-5 py-4">
-            <div class="col-md-6 px-xl-0">
-                <p class="mb-md-0 text-center text-md-left text-dark">
-                    &copy; <a class="text-dark font-weight-semi-bold" href="#">Leah Make Up</a>. Nos reservamos el derecho de admisión. Diseñado
-                    por <a class="text-dark font-weight-semi-bold" href="https://sistemas.ufidelitas.ac.cr/">Grupo 2</a>
-                </p>
-            </div>
-            <div class="col-md-6 px-xl-0 text-center text-md-right">
-                <img class="img-fluid" src="~/img/pagos.png" alt="">
-            </div>
-        </div>
-    </div>
-    <!-- Footer End -->
-    <!--CHAT BOT-->
+                        $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_user">' + userText + '</span>');
+                        $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar"><img src="@Url.Content("~/img/Bot.gif")" /></div>' + responseText + '</span>');
 
-    <div class="fabs" id="fabs-chat">
-        <div class="chat">
-            <div class="chat_header">
-                <div class="chat_option">
-                    <span id="chat_head">LeahBot</span> <br>
-                    <span id="chat_fullscreen_loader" class="chat_fullscreen_loader">
-                        <i style="font-size:14px" class="fas fa-window-maximize"></i>
-                    </span>
-                </div>
-            </div>
-            <div class="chat_body chat_login">
-                <a id="chat_fourth_screen" class="fab-chat">
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-                <p>¿Tienes dudas? Da click en la flecha de arriba para poder solucionarlas...</p>
-            </div>
+                        scrollToBottom();
+                        showOptions();
+                    });
 
-            <div id="chat_fullscreen" class="chat_conversion chat_converse">
-                <span class="chat_msg_item chat_msg_item_admin">
-                    <div class="chat_avatar">
-                        <img src="@Url.Content("~/img/Bot.gif")" />
-                    </div>¡Hola! Bienvenida al chat de preguntas, soy LeahBot....Selecciona alguna de las siguientes opciones:
-                </span>
-                <span class="chat_msg_item">
-                    <ul class="tags">
-                        <li class="option" data-response="En la tienda actualmente sólo funcionamos por pagos en Sinpe o efectivo">¿Qué métodos de pago tienen?</li>
-                        <li class="option" data-response="Contamos con dos surcursales, la primera se encuentra en el Mall San Pedro, San José. La segunda en Expresso, San José.... Si gustas información más exacta, dirígete al apartado de Contacto.">¿Dónde se ubican?</li>
-                        <li class="option" data-response="Si quieres que te atienda alguno de nuestros encargados dirígete a este link [link]">Me gustaría que me atienda un asesor</li>
-                    </ul>
-                </span>
-            </div>
-        </div>
-        <a id="prime" class="fab-chat">
-            <i class="far fa-comment"></i>
-        </a>
+                    function showOptions() {
+                        $('#chat_fullscreen').append(
+                            '<span class="chat_msg_item">' +
+                            '<ul class="tags">' +
+                            '<li class="option" data-response="En la tienda actualmente sólo funcionamos por pagos en Sinpe o efectivo">¿Qué métodos de pago tienen?</li>' +
+                            '<li class="option" data-response="Contamos con dos surcursales, la primera se encuentra en el Mall San Pedro, San José. La segunda en Expresso, San José.... Si gustas información más exacta, dirígete al apartado de Contacto.">¿Dónde se ubican?</li>' +
+                            '<li class="option" data-response="Si quieres que te atienda alguno de nuestros encargados dirígete a este link [link]">Me gustaría que me atienda un asesor</li>' +
+                            '</ul>' +
+                            '</span>'
+                        );
 
-    </div>
-    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script>
-        hideChat(0);
+                        $('.option').off('click').on('click', function () {
+                            var userText = $(this).text();
+                            var responseText = $(this).data('response');
 
-        $('#prime').click(function () {
-            toggleFab();
-        });
+                            $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_user">' + userText + '</span>');
+                            $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar"><img src="@Url.Content("~/img/Bot.gif")"/></div>' + responseText + '</span>');
 
-        //Toggle chat
-        function toggleFab() {
-            $('.prime').toggleClass('zmdi-comment-outline');
-            $('.prime').toggleClass('zmdi-close');
-            $('.prime').toggleClass('is-active');
-            $('.prime').toggleClass('is-visible');
-            $('#prime').toggleClass('is-float');
-            $('.chat').toggleClass('is-visible');
-            $('.fab-chat').toggleClass('is-visible');
+                            scrollToBottom();
+                            showOptions();
+                        });
+                    }
 
-        }
-        $('.option').click(function () {
-            var userText = $(this).text();
-            var responseText = $(this).data('response');
+                    function scrollToBottom() {
+                        $('#chat_fullscreen').scrollTop($('#chat_fullscreen')[0].scrollHeight);
+                    }
+                    $('#chat_first_screen').click(function (e) {
+                        hideChat(1);
+                    });
 
-            $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_user">' + userText + '</span>');
-            $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar"><img src="@Url.Content("~/img/Bot.gif")" /></div>' + responseText + '</span>');
+                    $('#chat_fourth_screen').click(function (e) {
+                        hideChat(4);
+                    });
 
-            scrollToBottom();
-            showOptions();
-        });
+                    $('#chat_fullscreen_loader').click(function (e) {
+                        $('.fullscreen').toggleClass('zmdi-window-maximize');
+                        $('.fullscreen').toggleClass('zmdi-window-restore');
+                        $('.chat').toggleClass('chat_fullscreen');
+                        $('.fab').toggleClass('is-hide');
+                        $('.header_img').toggleClass('change_img');
+                        $('.img_container').toggleClass('change_img');
+                        $('.chat_header').toggleClass('chat_header2');
+                        $('.fab_field').toggleClass('fab_field2');
+                        $('.chat_converse').toggleClass('chat_converse2');
+                    });
 
-        function showOptions() {
-            $('#chat_fullscreen').append(
-                '<span class="chat_msg_item">' +
-                '<ul class="tags">' +
-                '<li class="option" data-response="En la tienda actualmente sólo funcionamos por pagos en Sinpe o efectivo">¿Qué métodos de pago tienen?</li>' +
-                '<li class="option" data-response="Contamos con dos surcursales, la primera se encuentra en el Mall San Pedro, San José. La segunda en Expresso, San José.... Si gustas información más exacta, dirígete al apartado de Contacto.">¿Dónde se ubican?</li>' +
-                '<li class="option" data-response="Si quieres que te atienda alguno de nuestros encargados dirígete a este link [link]">Me gustaría que me atienda un asesor</li>' +
-                '</ul>' +
-                '</span>'
-            );
+                    function hideChat(hide) {
+                        switch (hide) {
+                            case 0:
+                                $('#chat_converse').css('display', 'none');
+                                $('#chat_body').css('display', 'none');
+                                $('#chat_form').css('display', 'none');
+                                $('.chat_login').css('display', 'block');
+                                $('.chat_fullscreen_loader').css('display', 'none');
+                                $('#chat_fullscreen').css('display', 'none');
+                                break;
+                            case 1:
+                                $('#chat_converse').css('display', 'block');
+                                $('#chat_body').css('display', 'none');
+                                $('#chat_form').css('display', 'none');
+                                $('.chat_login').css('display', 'none');
+                                $('.chat_fullscreen_loader').css('display', 'block');
+                                break;
+                            case 2:
+                                $('#chat_converse').css('display', 'none');
+                                $('#chat_body').css('display', 'block');
+                                $('#chat_form').css('display', 'none');
+                                $('.chat_login').css('display', 'none');
+                                $('.chat_fullscreen_loader').css('display', 'block');
+                                break;
+                            case 3:
+                                $('#chat_converse').css('display', 'none');
+                                $('#chat_body').css('display', 'none');
+                                $('#chat_form').css('display', 'block');
+                                $('.chat_login').css('display', 'none');
+                                $('.chat_fullscreen_loader').css('display', 'block');
+                                break;
+                            case 4:
+                                $('#chat_converse').css('display', 'none');
+                                $('#chat_body').css('display', 'none');
+                                $('#chat_form').css('display', 'none');
+                                $('.chat_login').css('display', 'none');
+                                $('.chat_fullscreen_loader').css('display', 'block');
+                                $('#chat_fullscreen').css('display', 'block');
+                                break;
+                        }
+                    }
 
-            $('.option').off('click').on('click', function () {
-                var userText = $(this).text();
-                var responseText = $(this).data('response');
-
-                $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_user">' + userText + '</span>');
-                $('#chat_fullscreen').append('<span class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar"><img src="@Url.Content("~/img/Bot.gif")"/></div>' + responseText + '</span>');
-
-                scrollToBottom();
-                showOptions();
-            });
-        }
-
-        function scrollToBottom() {
-            $('#chat_fullscreen').scrollTop($('#chat_fullscreen')[0].scrollHeight);
-        }
-        $('#chat_first_screen').click(function (e) {
-            hideChat(1);
-        });
-
-        $('#chat_fourth_screen').click(function (e) {
-            hideChat(4);
-        });
-
-        $('#chat_fullscreen_loader').click(function (e) {
-            $('.fullscreen').toggleClass('zmdi-window-maximize');
-            $('.fullscreen').toggleClass('zmdi-window-restore');
-            $('.chat').toggleClass('chat_fullscreen');
-            $('.fab').toggleClass('is-hide');
-            $('.header_img').toggleClass('change_img');
-            $('.img_container').toggleClass('change_img');
-            $('.chat_header').toggleClass('chat_header2');
-            $('.fab_field').toggleClass('fab_field2');
-            $('.chat_converse').toggleClass('chat_converse2');
-        });
-
-        function hideChat(hide) {
-            switch (hide) {
-                case 0:
-                    $('#chat_converse').css('display', 'none');
-                    $('#chat_body').css('display', 'none');
-                    $('#chat_form').css('display', 'none');
-                    $('.chat_login').css('display', 'block');
-                    $('.chat_fullscreen_loader').css('display', 'none');
-                    $('#chat_fullscreen').css('display', 'none');
-                    break;
-                case 1:
-                    $('#chat_converse').css('display', 'block');
-                    $('#chat_body').css('display', 'none');
-                    $('#chat_form').css('display', 'none');
-                    $('.chat_login').css('display', 'none');
-                    $('.chat_fullscreen_loader').css('display', 'block');
-                    break;
-                case 2:
-                    $('#chat_converse').css('display', 'none');
-                    $('#chat_body').css('display', 'block');
-                    $('#chat_form').css('display', 'none');
-                    $('.chat_login').css('display', 'none');
-                    $('.chat_fullscreen_loader').css('display', 'block');
-                    break;
-                case 3:
-                    $('#chat_converse').css('display', 'none');
-                    $('#chat_body').css('display', 'none');
-                    $('#chat_form').css('display', 'block');
-                    $('.chat_login').css('display', 'none');
-                    $('.chat_fullscreen_loader').css('display', 'block');
-                    break;
-                case 4:
-                    $('#chat_converse').css('display', 'none');
-                    $('#chat_body').css('display', 'none');
-                    $('#chat_form').css('display', 'none');
-                    $('.chat_login').css('display', 'none');
-                    $('.chat_fullscreen_loader').css('display', 'block');
-                    $('#chat_fullscreen').css('display', 'block');
-                    break;
-            }
-        }
-
-    </script>
-    <!--Final CHAT BOT-->
-    <!-- Back to Top -->
-    <a href="#" style="bottom: 80px" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
-
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/easing/easing.min.js"></script>
-    <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
-
-    <!-- Contact Javascript File -->
-    <script src="~/mail/jqBootstrapValidation.min.js"></script>
-    <script src="~/mail/contact.js"></script>
-
-    <!-- Template Javascript -->
-    <script src="~/js/main.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
-
+                </script>
+                <!--Final CHAT BOT-->
 </body>
 
 </html>

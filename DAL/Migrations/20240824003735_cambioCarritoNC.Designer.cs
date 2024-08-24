@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(LeahDBContext))]
-    [Migration("20240823201035_Cambios_categ_marca")]
-    partial class Cambios_categ_marca
+    [Migration("20240824003735_cambioCarritoNC")]
+    partial class cambioCarritoNC
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
