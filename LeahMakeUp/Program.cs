@@ -12,33 +12,30 @@ using System.Configuration;
 
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("AuthDbContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthDbContextConnection' not found.");
 
-// Add services to the container.
+// Obtener la cadena de conexión de configuración
+var connectionString = builder.Configuration.GetConnectionString("AuthDbContextConnection")
+    ?? throw new InvalidOperationException("Connection string 'AuthDbContextConnection' not found.");
+
+// Añadir servicios al contenedor
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<LeahDBContext>(options => options.UseSqlServer("name=ConnRSDB").LogTo(Console.WriteLine, LogLevel.Information));
+builder.Services.AddDbContext<LeahDBContext>(options =>
+    options.UseSqlServer(connectionString).LogTo(Console.WriteLine, LogLevel.Information));
 
-//*** Identity*******
-builder.Services.AddDbContext<AuthDbContext>(Options => Options.UseSqlServer(connectionString));
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+// Configurar Identity
+builder.Services.AddDbContext<AuthDbContext>(options =>
+    options.UseSqlServer(connectionString));
+
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+    options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<AuthDbContext>()
     .AddDefaultUI();
 
 builder.Services.AddRazorPages();
-//*** Identity*******
 
 var app = builder.Build();
 
-/*public void ConfigureServices(IServiceCollection services)
-{
-    services.Configure<SmtpSettings>(Configuration.GetSection("SmtpSettings"));
-    services.AddTransient<IEmailSender, SmtpEmailSender>();
-
-    // Otras configuraciones de servicios
-}*/
-
-
-// Configure the HTTP request pipeline.
+// Configuración del pipeline de solicitudes HTTP
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -47,13 +44,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication(); // <-- Añade esto
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-//*** Identity*******
 app.MapRazorPages();
 
 app.Run();
