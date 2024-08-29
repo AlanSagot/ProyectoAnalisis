@@ -82,10 +82,9 @@ namespace LeahMakeUp.Controllers
 
                 var inventarios = await _context.Inventarios
                     .Include(i => i.Sucursal)
+                    .Include(i => i.Categoria)
+                    .Include(i => i.Marca)
                     .Where(i => i.FechaAgregado >= fechaInicio && i.FechaAgregado <= fechaFin && (string.IsNullOrEmpty(categoria)))
-
-
-
                     .ToListAsync();
 
 
@@ -103,33 +102,29 @@ namespace LeahMakeUp.Controllers
                             document.Add(new Paragraph($"Fecha: {DateTime.Now}"));
                             document.Add(new Paragraph(" "));
 
-                            var table = new Table(10);
+                            var table = new Table(8);
 
-                            table.AddCell("ProductoId");
-
-                            table.AddCell("NombreProducto");
-                            table.AddCell("Categoria");
-                            table.AddCell("DescripcionProducto");
+                            table.AddCell("ID del Producto");
+                            table.AddCell("Nombre del Producto");
+                            table.AddCell("Categoría");
+                            table.AddCell("Descripción del Producto");
                             table.AddCell("Marca");
-                            table.AddCell("PrecioXVenta");
-                            table.AddCell("PrecioXCosto");
+                            table.AddCell("Precio de Venta");
                             table.AddCell("Stock");
-                            table.AddCell("FechaAgregado");
-                            table.AddCell("FechaExpiracion");
+                            table.AddCell("Sucursal");
 
 
 
                             foreach (var item in inventarios)
                             {
                                 table.AddCell(item.ProductoId.ToString());
-
                                 table.AddCell(item.NombreProducto);
+                                table.AddCell(item.Categoria.Descripcion);
                                 table.AddCell(item.DescripcionProducto);
+                                table.AddCell(item.Marca.Descripcion);
                                 table.AddCell(item.PrecioXVenta.ToString());
-                                table.AddCell(item.PrecioXCosto.ToString());
                                 table.AddCell(item.Stock.ToString());
-                                table.AddCell(item.FechaAgregado.ToString("dd/MM/yyyy"));
-                                table.AddCell(item.FechaExpiracion.ToString("dd/MM/yyyy"));
+                                table.AddCell(item.Sucursal.Direccion);
 
                             }
 
