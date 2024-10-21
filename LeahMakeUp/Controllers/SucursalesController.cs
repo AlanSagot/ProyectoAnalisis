@@ -55,14 +55,24 @@ namespace LeahMakeUp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("SucursalId,Direccion,Horario")] Sucursal sucursal)
         {
+            var existingSucursal = await _context.Sucursales
+                .FirstOrDefaultAsync(s => s.Direccion == sucursal.Direccion);
+
+            if (existingSucursal != null)
+            {
+                ModelState.AddModelError("Direccion", "Ya existe una sucursal con esta dirección.");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(sucursal);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(sucursal);
+
+           return View(sucursal);
         }
+
 
         // GET: Sucursales/Edit/5
         public async Task<IActionResult> Edit(int? id)

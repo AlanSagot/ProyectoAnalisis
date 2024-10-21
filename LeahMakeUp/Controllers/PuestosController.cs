@@ -55,6 +55,16 @@ namespace LeahMakeUp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PuestoId,NombrePuesto,Departamento,Horario")] Puesto puesto)
         {
+            var existingPuesto = await _context.Puestos
+                .FirstOrDefaultAsync(p => p.NombrePuesto == puesto.NombrePuesto &&
+                                          p.Departamento == puesto.Departamento &&
+                                          p.Horario == puesto.Horario);
+
+            if (existingPuesto != null)
+            {
+                ModelState.AddModelError(string.Empty, "Ya existe un puesto con el mismo nombre, departamento y horario.");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(puesto);
@@ -63,6 +73,7 @@ namespace LeahMakeUp.Controllers
             }
             return View(puesto);
         }
+
 
         // GET: Puestos/Edit/5
         public async Task<IActionResult> Edit(int? id)
