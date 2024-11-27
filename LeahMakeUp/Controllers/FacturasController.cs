@@ -60,6 +60,14 @@ namespace LeahMakeUp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("FacturaId,FechaActual,Cantidad,Impuesto,ProductoId,PagoId")] Factura factura)
         {
+            var existingFactura = await _context.Facturas
+                .FirstOrDefaultAsync(f => f.FacturaId == factura.FacturaId);
+
+            if (existingFactura != null)
+            {
+                ModelState.AddModelError(string.Empty, "Ya existe una factura en el historial con el mismo Id");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(factura);

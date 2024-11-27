@@ -107,7 +107,7 @@
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.Nombre" class="form-control" placeholder="Nombre" />
+                <input asp-for="Input.Nombre" class="form-control" placeholder="Nombre" maxlength="20" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ]+" />
                 <label asp-for="Input.Nombre">Nombre</label>
                 <span asp-validation-for="Input.Nombre" class="text-danger"></span>
             </div>
@@ -123,12 +123,13 @@
             </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.Cedula" class="form-control" placeholder="Cédula" />
-                <label asp-for="Input.Cedula">Cédula</label>
+                <label asp-for="Input.Cedula">Cédula (100001000)</label>
                 <span asp-validation-for="Input.Cedula" class="text-danger"></span>
             </div>
+
             <div class="form-floating mb-3">
                 <input asp-for="Input.Telefono" class="form-control" placeholder="Teléfono" />
-                <label asp-for="Input.Telefono">Teléfono</label>
+                <label asp-for="Input.Telefono">Teléfono (60004500)</label>
                 <span asp-validation-for="Input.Telefono" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">

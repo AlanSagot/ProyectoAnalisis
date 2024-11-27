@@ -72,25 +72,26 @@ namespace LeahMakeUp.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required(ErrorMessage = "El campo de nombre es requerido")]
-            [MaxLength(100, ErrorMessage = "El largo maximo es de 100")]
+            [RegularExpression(@"^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$", ErrorMessage = "El nombre solo debe contener letras.")]
+            [MaxLength(20)]
             public string Nombre { get; set; }
 
             [Required(ErrorMessage = "El campo de apellido es requerido")]
-            [MaxLength(100)]
+            [MaxLength(20)]
             public string PrimerApellido { get; set; }
             [Required(ErrorMessage = "El campo de apellido es requerido")]
-            [MaxLength(100)]
+            [MaxLength(20)]
             public string SegundoApellido { get; set; }
 
             [Required(ErrorMessage = "El campo de Cedula es requerido")]
-            [MaxLength(100)]
+            [MaxLength(9)]
             public string Cedula { get; set; }
 
             [MaxLength(12)]
             public string Telefono { get; set; }
             [MaxLength(200)]
             public string Direccion { get; set; }
-            [MaxLength(7)]
+            [MaxLength(5)]
             public string CodigoPostal { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -106,7 +107,7 @@ namespace LeahMakeUp.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "La {0} debe tener al menos {2} y máximo {1} carácteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Contraseña")]
             public string Password { get; set; }
@@ -117,7 +118,7 @@ namespace LeahMakeUp.Areas.Identity.Pages.Account
             /// </summary>
             [DataType(DataType.Password)]
             [Display(Name = "Confirmar contraseña")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = "La contraseña y la confirmación no coinciden.")]
             public string ConfirmPassword { get; set; }
         }
 

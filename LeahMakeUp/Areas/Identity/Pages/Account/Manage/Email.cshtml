@@ -100,7 +100,6 @@
                 <div class="form-floating mb-3">
                     <input asp-for="Email" class="form-control" placeholder="Por favor, ingresa tu correo electrónico" disabled />
                     <label asp-for="Email" class="form-label"></label>
-                    <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-link">Enviar correo de verificación</button>
                 </div>
             }
             <div class="form-floating mb-3">
@@ -115,7 +114,7 @@
         </form>
     </div>
 
-    <script>
+    @* <script>
         document.querySelector('form').addEventListener('submit', function (event) {
             event.preventDefault(); // Prevenir el envío normal del formulario
 
@@ -138,7 +137,7 @@
                 alert('Hubo un problema al actualizar el correo electrónico.');
             });
         });
-    </script>
+    </script> *@
 </body>
 </html>
 

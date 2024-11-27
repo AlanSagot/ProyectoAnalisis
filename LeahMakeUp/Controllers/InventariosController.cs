@@ -188,6 +188,14 @@ namespace LeahMakeUp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(InventarioCreateViewModel inventario, IFormFile FotoProducto)
         {
+            var existingCodigo = await _context.Inventarios
+                .FirstOrDefaultAsync(i => i.Codigo == inventario.Codigo);
+
+            if(existingCodigo != null)
+            {
+                ModelState.AddModelError(string.Empty, "Ya existe un producto del inventario con este código. Por favor ingresa otro.");
+            }
+            
             if (ModelState.IsValid)
             {
                 byte[]? imagen = null;
