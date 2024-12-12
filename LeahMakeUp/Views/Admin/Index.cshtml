@@ -173,8 +173,6 @@
                     <th>Estado</th>
                     <th>Teléfono</th>
                     <th>Dirección</th>
-                    <th>Código Postal</th>
-                    <th>Fecha de Registro</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -190,8 +188,6 @@
                         <td>@(usuario.Estado == "Activo" ? "Activo" : "Inactivo")</td>
                         <td>@usuario.Telefono</td>
                         <td>@usuario.Direccion</td>
-                        <td>@usuario.CodigoPostal</td>
-                        <td>@usuario.FechaRegistro.ToString("dd/MM/yyyy")</td>
                         <td>
                             <div class="btn-group">
                                 <a href="@Url.Action("EditarUsuario", "Admin", new { id = usuario.Id })" class="btn btn-primary">Editar</a>

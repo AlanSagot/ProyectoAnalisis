@@ -24,9 +24,16 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
     <script src="~/js/index.js"></script>
-    <link rel="stylesheet" href="~/css/producto.css">
+
     <link href="~/css/chat.css" rel="stylesheet">
     <link href="~/img" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+
+
 </head>
 
 <body>
@@ -40,10 +47,10 @@
             </div>
             <div class="col-lg-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
-                    <a class="text-dark px-2" href="https://wa.me/71397781?text=Buenas%2C%20estoy%20interesada%20en%20un%20producto%21">
+                    <a class="text-dark px-2" href="https://wa.me/71397781?text=Buenas%2C%20estoy%20interesada%20en%20un%20producto%21" target="_blank">
                         <i class="fab fa-whatsapp"></i>
                     </a>
-                    <a class="text-dark px-2" href="https://www.instagram.com/leah_makeup_and_accesories/">
+                    <a class="text-dark px-2" href="https://www.instagram.com/leah_makeup_and_accesories/" target="_blank">
                         <i class="fab fa-instagram"></i>
                     </a>
                 </div>
@@ -52,9 +59,7 @@
         <div class="row align-items-center py-3">
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <a href="" class="text-decoration-none">
-                    <h1 class="m-0 display-5 font-weight-semi-bold">
-                        <span class="text-primary font-weight-bold border px-3 mr-1">L</span>Leah Make Up
-                    </h1>
+                    <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">L</span>Leah Make Up</h1>
                 </a>
             </div>
             <!-- BUSCAR -->
@@ -71,19 +76,17 @@
                 </form>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12 text-right">
-                <a asp-controller="Home" asp-action="Index" class="btn border">
-                    <i class="fas fa-home text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
-                <a asp-controller="Carritos" asp-action="Index" class="btn border">
-                    <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
+                @if (!User.IsInRole("Admin"))
+                {
+                    <a asp-controller="Carritos" asp-action="Index" class="btn border">
+                        <i class="fas fa-shopping-cart text-primary"></i>
+                        <span class="badge">0</span>
+                    </a>
+                }
             </div>
         </div>
     </div>
     <!-- Topbar End -->
-
     <!-- Navbar Start -->
     <div class="container-fluid mb-5">
         <div class="row border-top px-xl-5">
@@ -92,6 +95,9 @@
                     <a href="" class="text-decoration-none d-block d-lg-none">
                         <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">L</span>Leah Make Up</h1>
                     </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Inicio</a>
@@ -101,11 +107,7 @@
                                     Catálogos
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="catalogosDropdown">
-                                    @if (User.IsInRole("Admin"))
-                                    {
-                                        <a asp-controller="Catalogos" asp-action="Index" class="dropdown-item">Catálogo</a>
-                                        <div class="dropdown-divider"></div>
-                                    }
+
                                     <a asp-controller="Inventarios" asp-action="Maquillaje" class="dropdown-item">Maquillaje</a>
                                     <a asp-controller="Inventarios" asp-action="SkinCare" class="dropdown-item">SkinCare</a>
                                     <a asp-controller="Inventarios" asp-action="Articulos" class="dropdown-item">Artículos</a>
@@ -120,6 +122,7 @@
                                         Admin
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="adminDropdown">
+
                                         <a asp-controller="Admin" asp-action="Index" class="dropdown-item">Usuarios</a>
                                         <a asp-controller="Planillas" asp-action="Index" class="dropdown-item">Planillas</a>
                                         <a asp-controller="Empleados" asp-action="Index" class="dropdown-item">Empleados</a>
@@ -127,14 +130,22 @@
                                         <a asp-controller="Inventarios" asp-action="Index" class="dropdown-item">Inventario</a>
                                         <a asp-controller="Sucursales" asp-action="Index" class="dropdown-item">Sucursales</a>
                                         <a asp-controller="Puestos" asp-action="Index" class="dropdown-item">Puestos</a>
+
                                     </div>
                                 </div>
                             }
+
                             <a asp-controller="Inventarios" asp-action="Productos" class="nav-item nav-link">Productos</a>
                             <!-- METODO DE PAGO -->
-                            <a asp-controller="MetodoPago" asp-action="Index" class="nav-item nav-link">Métodos de Pago</a>
-                            <a href="detail.html" class="nav-item nav-link">Ofertas</a>
-                            <a href="contact.html" class="nav-item nav-link">Contacto</a>
+                            @if (!User.IsInRole("Admin"))
+                            {
+                                <a asp-controller="MetodoPago" asp-action="Index" class="nav-item nav-link">Métodos de Pago</a>
+                                //<a href="detail.html" class="nav-item nav-link">Ofertas</a>
+                                //<a asp-controller="Envios" asp-action="Index" class="nav-item nav-link">Envios</a>
+                                <a asp-controller="Contacto" asp-action="Index" class="nav-item nav-link">Contacto</a>
+                            }
+
+
                         </div>
                         <div class="navbar-nav ml-auto py-0">
                             <div id="LoginPartial">
